@@ -29,7 +29,7 @@ module.exports = function (environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true
   }
 
-  if(environment === 'e2e-test') {
+  if (environment === 'e2e-test') {
     ENV.baseURL = '/'
     ENV['ember-cli-mirage'] = {
       enabled: true

@@ -106,6 +106,7 @@ export default Ember.Component.extend({
 
   /**
    * If something has been deleted, remove it from our selected items.
+   * @returns Array of remaining Selected Items
    */
   getRemainingSelectedItems () {
     let selectedItems = this.get('selectedItems')
