@@ -1,5 +1,8 @@
 module.exports = function (environment) {
   var ENV = {
+    contentSecurityPolicy: {
+      'img-src': "'self' data: w3.org"
+    },
     modulePrefix: 'dummy',
     podModulePrefix: 'dummy/pods',
     environment: environment,
@@ -24,6 +27,14 @@ module.exports = function (environment) {
     // ENV.APP.LOG_TRANSITIONS = true
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true
     // ENV.APP.LOG_VIEW_LOOKUPS = true
+  }
+
+  if(environment === 'e2e-test') {
+    ENV.baseURL = '/'
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    }
+    ENV.mirageUrlPrefix = 'origin'
   }
 
   if (environment === 'test') {

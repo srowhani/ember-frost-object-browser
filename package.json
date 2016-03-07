@@ -1,7 +1,7 @@
 {
   "name": "ember-frost-object-browser",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Object browser addon for ember apps.",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -16,46 +16,64 @@
   "engines": {
     "node": ">= 5.0.0"
   },
-  "author": "",
+  "author": "Matthew Dahl (https://github.com/sandersky)",
+  "contributors": [
+    "Andres Gonzalez (https://github.com/agonza40)",
+    "Niko Skrypnik (https://github.com/nskrypnik)",
+    "Peter Banka (https://github.com/psbanka)",
+    "Sophy Pal (https://github.com/sophypal)",
+    "Adam Meadows (https://github.com/job13er)"
+  ],
   "license": "MIT",
   "devDependencies": {
-    "broccoli-asset-rev": "^2.2.0",
-    "ember-ajax": "0.7.1",
-    "ember-cli": "~2.3.0",
+    "broccoli-asset-rev": "^2.4.2",
+    "ember-cli": "^2.3.0",
     "ember-cli-app-version": "^1.0.0",
+    "ember-cli-autoprefixer": "0.6.0",
+    "ember-cli-babel": "^5.1.5",
+    "ember-cli-content-security-policy": "^0.5.0",
     "ember-cli-dependency-checker": "^1.2.0",
     "ember-cli-htmlbars-inline-precompile": "^0.3.1",
+    "ember-cli-ic-ajax": "^0.2.4",
     "ember-cli-inject-live-reload": "^1.4.0",
-    "ember-cli-release": "0.2.8",
-    "ember-cli-sri": "^2.0.0",
-    "ember-cli-uglify": "^1.2.0",
-    "ember-data": "~2.3.0",
-    "ember-disable-proxy-controllers": "^1.0.1",
-    "ember-export-application-global": "^1.0.4",
-    "ember-load-initializers": "^0.5.0",
-    "ember-resolver": "^2.0.3",
-    "ember-try": "^0.1.2",
-    "loader.js": "^4.0.0",
-    "ember-cli-mirage": "~0.1.11",
-    "ember-cli-mocha": "^0.10.0",
+    "ember-cli-mirage": "^0.1.11",
     "ember-cli-notifications": "^3.2.0",
-    "ember-lodash": "~0.0.6",
+    "ember-cli-qunit": "^1.2.4",
+    "ember-cli-uglify": "^1.2.0",
+    "ember-computed-decorators": "^0.2.2",
+    "ember-data": "^2.3.3",
+    "ember-disable-prototype-extensions": "^1.1.0",
+    "ember-disable-proxy-controllers": "^1.0.1",
+    "ember-export-application-global": "^1.0.5",
+    "ember-load-initializers": "^0.5.1",
+    "ember-lodash": "^0.0.6",
+    "ember-perfectscroll": "^0.1.0",
+    "ember-resolver": "^2.0.3",
+    "ember-sinon": "^0.5.0",
+    "ember-sinon-qunit": "^1.1.0",
     "ember-truth-helpers": "^1.2.0",
+    "ember-try": "^0.2.0",
     "eslint": "2.2.0",
     "eslint-config-frost-standard": "^1.0.0",
-    "ember-frost-css-core": "^1.0.0"
+    "loader.js": "^4.0.1",
+    "webdriverio-client": "^1.0.3"
   },
   "keywords": [
     "ember-addon",
     "frost"
   ],
   "dependencies": {
-    "ember-cli-babel": "^5.1.5",
-    "ember-computed-decorators": "^0.2.2",
-    "ember-cli-htmlbars": "^1.0.1",
-    "ember-cli-sass": "^5.2.0",
-    "ember-frost-theme": "^1.0.1",
-    "liquid-fire": "^0.22.0"
+    "ember-cli-babel": "^5.1.6",
+    "ember-cli-htmlbars": "^1.0.2",
+    "ember-cli-sass": "^5.1.0",
+    "ember-frost-button": "^1.1.0",
+    "ember-frost-css-core": "^1.0.0",
+    "ember-frost-icons": "^1.0.2",
+    "ember-frost-info-bar": "^1.0.3",
+    "ember-frost-theme": "^1.0.0",
+    "ember-frost-list": "^0.2.4",
+    "ember-frost-bunsen": "^1.0.0",
+    "liquid-fire": "^0.23.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"

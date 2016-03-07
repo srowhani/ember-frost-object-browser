@@ -10,3 +10,33 @@
   max-width: 400px;
   margin: auto;
 }
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+
+  > div {
+    flex: 1;
+  }
+}
+
+.frost-list-item {
+  display: flex;
+  align-items: center;
+
+  .frost-bunsen-detail {
+    flex: 1;
+  }
+}
+
+.dummy-body {
+  height: 100%;
+
+  .dummy-content {
+      height: 100%;
+
+    > .ember-view {
+        height: 100%;
+    }
+  }
+}
