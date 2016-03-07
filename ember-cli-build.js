@@ -6,7 +6,7 @@ module.exports = function (defaults) {
     babel: {
       optional: ['es7.decorators']
     },
-    'ember-cli-mocha': {
+    'ember-cli-qunit': {
       useLintTree: false
     },
     sassOptions: {
