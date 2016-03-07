@@ -6,7 +6,7 @@ module.exports = function (defaults) {
     babel: {
       optional: ['es7.decorators']
     },
-    'ember-cli-mocha': {
+    'ember-cli-qunit': {
       useLintTree: false
     },
     sassOptions: {
@@ -18,6 +18,9 @@ module.exports = function (defaults) {
   })
 
   app.import('bower_components/sinonjs/sinon.js')
+  if (app.env === 'development') {
+    app.import('bower_components/ember-renderspeed/ember-renderspeed.js')
+  }
 
   /*
     This build file specifes the options for the dummy test app of this

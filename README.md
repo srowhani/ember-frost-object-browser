@@ -1,20 +1,20 @@
-[ci-img]: https://img.shields.io/travis/ciena-frost/ember-frost-object-browser.svg "Travis CI Build Status"
+[ci-img]: https://img.shields.io/travis/ciena-frost/ember-frost-object-browser.svg "CI Build Status"
 [ci-url]: https://travis-ci.org/ciena-frost/ember-frost-object-browser
 
-[cov-img]: https://img.shields.io/coveralls/ciena-frost/ember-frost-object-browser.svg "Coveralls Code Coverage"
+[cov-img]: https://img.shields.io/coveralls/ciena-frost/ember-frost-object-browser.svg "Code Coverage"
 [cov-url]: https://coveralls.io/github/ciena-frost/ember-frost-object-browser
 
-[npm-img]: https://img.shields.io/npm/v/ember-frost-object-browser.svg "NPM Version"
+[npm-img]: https://img.shields.io/npm/v/ember-frost-object-browser.svg "Version"
 [npm-url]: https://www.npmjs.com/package/ember-frost-object-browser
 
 [![Travis][ci-img]][ci-url] [![Coveralls][cov-img]][cov-url] [![NPM][npm-img]][npm-url]
 
 # ember-frost-object-browser
 
- * [Installation](#Installation)
- * [API](#API)
- * [Examples](#Examples)
- * [Contributing](#Contributing)
+ * [Installation](#installation)
+ * [API](#api)
+ * [Examples](#examples)
+ * [Contributing](#contributing)
 
 ## Installation
 ```
@@ -28,11 +28,69 @@ ember install ember-frost-object-browser
 | ` ` | ` ` | ` ` | Coming soon |
 
 ## Examples
-
-### Example
+### Template:
 ```handlebars
-Coming soon
+{frost-object-browser
+  actionBarItems=actionBarItems
+  facets=model.facets
+  model=model.model
+  actionBarItems=actionBarItems
+  onCreate=(action "onCreate")
+  onFacetChange=(action "onOptionSelected")
+  onRowSelect=(action "onRowSelect")
+  onActionClick=(action "onActionClick")
+  title="Resources"
+  values=model.visibleResources
+  viewSchema=viewSchema
+}}
 ```
+
+### Controller:
+```
+  actionBarItems: [
+    {label: 'Details', id: 'details', enabled: false},
+    {label: 'Delete', id: 'delete', enabled: false},
+    {label: 'Edit', id: 'edit', enabled: false}
+  ],
+  viewSchema: {
+    low: {
+      'version': '1.0',
+      'type': 'form',
+      'rootContainers': [
+        {'label': 'Main', 'container': 'main'}
+      ],
+      'containers': [
+        {
+          'id': 'main',
+          'className': 'flex-row',
+          'rows': [
+            [
+              {'model': 'alias', 'labelClassName': 'ob-label', 'inputClassName': 'ob-input'}
+            ],
+            [
+              {
+                'model': 'updatedAt',
+                'label': 'Last Updated',
+                'labelClassName': 'ob-label',
+                'inputClassName': 'ob-input'
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  }
+
+```
+
+Your controller will also need to implement the following callbacks:
+
+`onCreate()`
+`onRowSelect(allSelected, newSelected, deSelected)`
+`onActionClick(actionId, currentSelection)`
+
+You can also check out the demo app bundled with this addon to see an example of using this addon.
+
 
 ## Development
 ### Setup

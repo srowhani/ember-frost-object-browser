@@ -1,2 +1,13 @@
-frost-object-browser testbed
-{{frost-object-browser}}
+{{frost-object-browser
+  actionBarItems=actionBarItems
+  itemsPerPage=6
+  model=model.model
+  onCreate=(action "onCreate")
+  onFacetChange=(action "onOptionSelected")
+  onRowSelect=(action "onRowSelect")
+  onActionClick=(action "onActionClick")
+  title="Resources"
+  subtitle="L3VPN Services"
+  values=model.resources
+  viewSchema=viewSchema
+}}

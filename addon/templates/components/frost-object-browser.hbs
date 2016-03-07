@@ -1,2 +1,86 @@
-ember-frost-object-browser component
-{{yield}}
+<div class="frost-object-browser">
+  <div class="frost-info-bar">
+    <div class="title">
+      <div class="primary-title">
+        {{title}}
+      </div>
+      {{# if subtitle}}
+       <div class='sub-title'>{{computedValuesTotal}} - {{subtitle}}</div>
+      {{/if}}
+    </div>
+    <div class="top-buttons" background-color='red'>
+      {{frost-button
+        icon="frost/infobar-create"
+        on-click=(action "onCreate")
+        priority="tertiary"
+        size="medium"
+        text="Create"
+        vertical=true
+      }}
+    </div>
+  </div>
+  <div class="body">
+    <div class="content">
+      <div class="tools">
+        <div class="sort"/>
+        <div class="pagination">
+          {{frost-object-browser-paginator
+            itemsPerPage=itemsPerPage
+            onPageChanged=(action 'onPageChanged')
+            page=computedPageNumber
+            total=computedValuesTotal
+          }}
+        </div>
+        <div class="detail">
+          <span class="text">
+            <!-- TODO: make this a variable to support i18n better -->
+            View:
+          </span>
+          <div class="button-bar {{ detailLevel }}">
+            {{frost-button
+              disabled=(eq detailLevel 'low')
+              on-click=(action 'onDetailChange' 'low')
+              priority="tertiary"
+              size="small"
+              icon="frost/list-small"
+            }}
+            {{frost-button
+              disabled=(eq detailLevel 'medium')
+              on-click=(action 'onDetailChange' 'medium')
+              priority="tertiary"
+              size="small"
+              icon="frost/list-medium"
+            }}
+            {{frost-button
+              disabled=(eq detailLevel 'high')
+              on-click=(action 'onDetailChange' 'high')
+              priority="tertiary"
+              size="small"
+              icon="frost/list-large"
+            }}
+          </div>
+        </div>
+      </div>
+      <div class="scrollable">
+        {{#frost-list on-select=(action 'onSelect') selections=selectedItems records=computedValues as |record|}}
+          {{#frost-object-browser-list-item model=record as |value|}}
+            {{frost-bunsen-detail renderers=renderers value=value model=model view=computedViewLevel}}
+          {{/frost-object-browser-list-item}}
+        {{/frost-list}}
+        {{yield}}
+      </div>
+      <div class="actions">
+        {{#each actionBarItems as |actionBarItem|}}
+          {{#frost-button
+            disabled=(not actionBarItem.enabled)
+            on-click=(action 'onButtonClick' actionBarItem.id)
+            priority="secondary"
+            size="large"
+          }}
+            <div class="text">{{actionBarItem.label}}</div>
+          {{/frost-button}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
