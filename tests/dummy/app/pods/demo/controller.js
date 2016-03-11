@@ -140,6 +140,10 @@ export default Ember.Controller.extend({
       } else {
         window.alert(`clicked ${buttonId} for ${ids}`)
       }
+    },
+
+    'on-detail-change': function (level) {
+      Ember.Logger.log(`Level of detail changed to ${level}`)
     }
   }
 })
