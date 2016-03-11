@@ -45,10 +45,10 @@ test('rightButtonsDisabled should be true when no records', function (assert) {
   assert.equal(component.get('rightButtonsDisabled'), true)
 })
 
-test('action: onPageChange sends onPageChanged action', function (assert) {
+test('action: on-page-changed sends on-page-changed action', function (assert) {
   const sendAction = this.stub()
   component.set('sendAction', sendAction)
 
-  component.onPageChange('back')
-  assert.deepEqual(sendAction.firstCall.args, ['onPageChanged', 'back'])
+  component['on-page-changed']('back')
+  assert.deepEqual(sendAction.firstCall.args, ['on-page-changed', 'back'])
 })

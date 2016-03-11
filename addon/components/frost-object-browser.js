@@ -129,7 +129,7 @@ export default Ember.Component.extend({
     if (selectedItems.length > remainingSelectedItems.length) {
       Ember.run.later(this, function () {
         this.set('selectedItems', remainingSelectedItems)
-        const onRowSelect = this.get('onRowSelect')
+        const onRowSelect = this.get('on-row-select')
         if (onRowSelect) {
           onRowSelect(remainingSelectedItems, [], [])
         }
@@ -143,10 +143,10 @@ export default Ember.Component.extend({
   actions: {
 
     /**
-     * Prepare arguments for and call our onRowSelect callback
+     * Prepare arguments for and call our on-row-select callback
      * @param {SelectedRecord} selectedRecord - record that was just selected
      */
-    onSelect (attr) {
+    'on-select': function (attr) {
       let newSelected = {}
       let deSelected = {}
       const allSelected = this.get('selectedItems')
@@ -157,25 +157,25 @@ export default Ember.Component.extend({
         allSelected.removeObject(attr.record)
         deSelected = attr.record
       }
-      const onRowSelect = this.get('onRowSelect')
+      const onRowSelect = this.get('on-row-select')
       if (onRowSelect) {
         onRowSelect(allSelected, newSelected, deSelected)
       }
     },
 
     /**
-     * Prepare argument for and call our onActionClick callback
+     * Prepare argument for and call our on-action-click callback
      * @param {String} buttonId - id of the button that got clicked
      */
-    onButtonClick (buttonId) {
-      const actionClick = this.get('onActionClick')
+    'on-button-click': function (buttonId) {
+      const actionClick = this.get('on-action-click')
       if (_.isFunction(actionClick)) {
         actionClick(buttonId, this.get('selectedItems'))
       }
     },
 
-    onCreate () {
-      const onCreate = this.get('onCreate')
+    'on-create': function () {
+      const onCreate = this.get('on-create')
 
       if (onCreate) {
         onCreate()
@@ -186,15 +186,21 @@ export default Ember.Component.extend({
      * Change our LOD
      * @param {String} newLevel - new level ('low', 'med', high')
      */
-    onDetailChange (newLevel) {
+    'on-detail-change': function (newLevel) {
+      const onDetailChange = this.get('on-detail-change')
+
       this.set('detailLevel', newLevel)
+
+      if (onDetailChange) {
+        onDetailChange(newLevel)
+      }
     },
 
     /**
      * When page number has been changed by paginaor
      * @param {String} where - new page number
      */
-    onPageChanged (where) {
+    'on-page-changed': function (where) {
       const externalPageNumber = this.get('pageNumber')
       const total = this.get('computedValuesTotal')
       const itemsPerPage = this.get('itemsPerPage')

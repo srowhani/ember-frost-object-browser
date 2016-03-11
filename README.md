@@ -35,10 +35,10 @@ ember install ember-frost-object-browser
   facets=model.facets
   model=model.model
   actionBarItems=actionBarItems
-  onCreate=(action "onCreate")
-  onFacetChange=(action "onOptionSelected")
-  onRowSelect=(action "onRowSelect")
-  onActionClick=(action "onActionClick")
+  on-create=(action "on-create")
+  on-facet-change=(action "on-option-selected")
+  on-row-select=(action "on-row-select")
+  on-action-click=(action "on-action-click")
   title="Resources"
   values=model.visibleResources
   viewSchema=viewSchema
@@ -85,9 +85,9 @@ ember install ember-frost-object-browser
 
 Your controller will also need to implement the following callbacks:
 
-`onCreate()`
-`onRowSelect(allSelected, newSelected, deSelected)`
-`onActionClick(actionId, currentSelection)`
+`'on-create': function () {}`
+`'on-row-select': function (allSelected, newSelected, deSelected) {}`
+`'on-action-click': function (actionId, currentSelection) {}`
 
 You can also check out the demo app bundled with this addon to see an example of using this addon.
 

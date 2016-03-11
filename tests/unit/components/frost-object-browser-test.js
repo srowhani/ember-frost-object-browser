@@ -74,10 +74,10 @@ test('computedValuesTotal should be computed properly', function (assert) {
   assert.equal(component.get('computedValuesTotal'), 8)
 })
 
-test('action: onSelect handles new selection', function (assert) {
-  // setup stub for onRowSelect callback
+test('action: on-select handles new selection', function (assert) {
+  // setup stub for on-row-select callback
   const onRowSelect = this.stub()
-  component.set('onRowSelect', onRowSelect)
+  component.set('on-row-select', onRowSelect)
 
   // setup existing selectedItems
   component.set('selectedItems', Ember.A([]))
@@ -87,7 +87,7 @@ test('action: onSelect handles new selection', function (assert) {
     record: {foo: 'bar'}
   }
 
-  component.actions.onSelect.call(component, attr)
+  component.actions['on-select'].call(component, attr)
   const expectedArgs = [
     [
       {
@@ -103,10 +103,10 @@ test('action: onSelect handles new selection', function (assert) {
   assert.deepEqual(onRowSelect.firstCall.args, expectedArgs)
 })
 
-test('action: onSelect handles de-selection', function (assert) {
-  // setup stub for onRowSelect callback
+test('action: on-select handles de-selection', function (assert) {
+  // setup stub for on-row-select callback
   const onRowSelect = this.stub()
-  component.set('onRowSelect', onRowSelect)
+  component.set('on-row-select', onRowSelect)
 
   // setup existing selectedItems
   const record1 = {foo: 'bar'}
@@ -121,7 +121,7 @@ test('action: onSelect handles de-selection', function (assert) {
   }
 
   // trigger the action
-  component.actions.onSelect.call(component, attr)
+  component.actions['on-select'].call(component, attr)
 
   const expectedArgs = [
     [
@@ -138,47 +138,47 @@ test('action: onSelect handles de-selection', function (assert) {
   assert.deepEqual(onRowSelect.firstCall.args, expectedArgs)
 })
 
-test('action: onButtonClick calls onActionClick with selectedItems', function (assert) {
-  // setup stub for onActionClick callback
+test('action: on-button-click calls on-action-click with selectedItems', function (assert) {
+  // setup stub for on-action-click callback
   const onActionClick = this.stub()
-  component.set('onActionClick', onActionClick)
+  component.set('on-action-click', onActionClick)
   const selectedItems = [{foo: 'bar'}, {bar: 'baz'}]
   component.set('selectedItems', selectedItems)
 
   // trigger the action
-  component.actions.onButtonClick.call(component, 'button-1')
+  component.actions['on-button-click'].call(component, 'button-1')
 
   assert.deepEqual(onActionClick.firstCall.args, ['button-1', selectedItems])
 })
 
-test('action: onDetailChange sets detailLevel', function (assert) {
+test('action: on-detail-change sets detailLevel', function (assert) {
   component.set('detailLevel', 'high')
 
   // trigger the action
-  component.actions.onDetailChange.call(component, 'low')
+  component.actions['on-detail-change'].call(component, 'low')
 
   assert.equal(component.get('detailLevel'), 'low')
 })
 
-test('action: onPageChange sets _pageNumber properly', function (assert) {
+test('action: on-page-changed sets _pageNumber properly', function (assert) {
   const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
   component.set('values', values)
   component.set('itemsPerPage', 3)
 
-  component.actions.onPageChanged.call(component, 'forward')
+  component.actions['on-page-changed'].call(component, 'forward')
   assert.equal(component.get('computedPageNumber'), 1)
 
-  component.actions.onPageChanged.call(component, 'back')
+  component.actions['on-page-changed'].call(component, 'back')
   assert.equal(component.get('computedPageNumber'), 0)
 
-  component.actions.onPageChanged.call(component, 'end')
+  component.actions['on-page-changed'].call(component, 'end')
   assert.equal(component.get('computedPageNumber'), 2)
 
-  component.actions.onPageChanged.call(component, 'begin')
+  component.actions['on-page-changed'].call(component, 'begin')
   assert.equal(component.get('computedPageNumber'), 0)
 })
 
-test('action: onPageChange sends action about page has been changed', function (assert) {
+test('action: on-page-changed sends action about page has been changed', function (assert) {
   const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
   component.set('values', values)
   component.set('itemsPerPage', 8)
@@ -188,15 +188,15 @@ test('action: onPageChange sends action about page has been changed', function (
   const sendAction = this.stub()
   component.set('sendAction', sendAction)
 
-  component.actions.onPageChanged.call(component, 'forward')
+  component.actions['on-page-changed'].call(component, 'forward')
   assert.deepEqual(sendAction.firstCall.args, ['pageChanged', 3])
 
-  component.actions.onPageChanged.call(component, 'back')
+  component.actions['on-page-changed'].call(component, 'back')
   assert.deepEqual(sendAction.args[1], ['pageChanged', 1])
 
-  component.actions.onPageChanged.call(component, 'end')
+  component.actions['on-page-changed'].call(component, 'end')
   assert.deepEqual(sendAction.args[2], ['pageChanged', 3])
 
-  component.actions.onPageChanged.call(component, 'begin')
+  component.actions['on-page-changed'].call(component, 'begin')
   assert.deepEqual(sendAction.args[3], ['pageChanged', 0])
 })
