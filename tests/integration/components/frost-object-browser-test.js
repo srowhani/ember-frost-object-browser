@@ -101,52 +101,62 @@ const resources = _.map(dummyData.resources, (resource) => {
 
 const model = {resources: Ember.A(resources), model: dummyData.model}
 
-describeComponent('frost-object-browser', 'Integration | Component | frost object browser', {
-  integration: true
-}, function () {
-  beforeEach(function () {
-    this.setProperties({
-      actionBarItems,
-      model,
-      viewSchema
-    })
-  })
+describeComponent(
+  'frost-object-browser',
+  'Integration | Component | frost object browser',
+  {
+    integration: true
+  },
+  function () {
+    beforeEach(function () {
+      this.timeout(5000) // takes too long to render the list
 
-  it('renders', function () {
-    // takes too long to render the list
-    this.timeout(5000)
-    this.render(hbs`{{frost-object-browser
-      actionBarItems=actionBarItems
-      values=model.resources
-      model=model.model
-    }}`)
-    expect(this.$()).to.have.length(1)
-  })
-
-  it('renders 6 items per page', function () {
-    this.render(hbs`{{frost-object-browser
-      actionBarItems=actionBarItems
-      itemsPerPage=6
-      values=model.resources
-      model=model.model
-    }}`)
-    expect(this.$().find('.frost-list-item')).to.have.length(6)
-  })
-
-  it('it changes page when we click to next change button', function (done) {
-    this.render(hbs`{{frost-object-browser
-      actionBarItems=actionBarItems
-      itemsPerPage=6
-      values=model.resources
-      model=model.model
-    }}`)
-
-    this.$().find('.pagination .button-bar.right button').eq(0).click()
-
-    wait()
-      .then(() => {
-        expect(this.$().find('.pagination').text().trim()).to.equal('7 to 12 of 20')
-        done()
+      this.setProperties({
+        actionBarItems,
+        model,
+        viewSchema
       })
-  })
-})
+
+      return wait()
+    })
+
+    afterEach(function () {
+      this.timeout(2000)
+    })
+
+    it('renders', function () {
+      this.render(hbs`{{frost-object-browser
+        actionBarItems=actionBarItems
+        values=model.resources
+        model=model.model
+      }}`)
+      expect(this.$()).to.have.length(1)
+    })
+
+    it('renders 6 items per page', function () {
+      this.render(hbs`{{frost-object-browser
+        actionBarItems=actionBarItems
+        itemsPerPage=6
+        values=model.resources
+        model=model.model
+      }}`)
+      expect(this.$().find('.frost-list-item')).to.have.length(6)
+    })
+
+    it('it changes page when we click to next change button', function () {
+      this.render(hbs`{{frost-object-browser
+        actionBarItems=actionBarItems
+        itemsPerPage=6
+        values=model.resources
+        model=model.model
+      }}`)
+
+      this.$().find('.pagination .button-bar.right button').eq(0).click()
+
+      return wait()
+        .then(() => {
+          expect(this.$().find('.pagination').text().trim()).to.equal('7 to 12 of 20')
+        })
+    })
+  }
+)
