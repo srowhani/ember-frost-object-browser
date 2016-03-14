@@ -58,98 +58,76 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
   })
 
   it('computedStyle is computed properly', function () {
-    Ember.run(() => {
-      component.set('contentHeight', 123)
-    })
+    component.set('contentHeight', 123)
     expect(component.get('computedStyle')).to.equal('height: 123px;')
   })
 
   it('computedViewLevel is computed properly (with a viewSchema)', function () {
-    Ember.run(() => {
-      component.set('detailLevel', 'high')
-    })
+    component.set('detailLevel', 'high')
     expect(component.get('computedViewLevel')).to.deep.equal({foo: 3})
   })
 
   it('computedViewLevel is computed properly (without a view schema)', function () {
-    Ember.run(() => {
-      component.set('viewSchema', null)
-    })
+    component.set('viewSchema', null)
     expect(component.get('computedViewLevel')).to.deep.equal({})
   })
 
   it('computedPageNumber is computed properly with internal pagination logic', function () {
-    Ember.run(() => {
-      component.set('_pageNumber', 4)
-    })
+    component.set('_pageNumber', 4)
     expect(component.get('computedPageNumber')).to.equal(4)
   })
 
   it('computedPageNumber is computed properly when internal pagination is assigned', function () {
-    Ember.run(() => {
-      component.setProperties({
-        valuesTotal: 20,
-        pageNumber: 7,
-        _pageNumber: 4
-      })
+    component.setProperties({
+      valuesTotal: 20,
+      pageNumber: 7,
+      _pageNumber: 4
     })
     expect(component.get('computedPageNumber')).to.equal(7)
   })
 
   it('computedValues should slice properly values', function () {
     const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    Ember.run(() => {
-      component.setProperties({
-        values,
-        itemsPerPage: 4
-      })
+    component.setProperties({
+      values,
+      itemsPerPage: 4
     })
     expect(component.get('computedValues')).to.deep.equal(values.slice(0, 4))
   })
 
   it('computedValues should be computed properly when page is set internally', function () {
     const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    Ember.run(() => {
-      component.setProperties({
-        values,
-        itemsPerPage: 3,
-        _pageNumber: 1
-      })
+    component.setProperties({
+      values,
+      itemsPerPage: 3,
+      _pageNumber: 1
     })
     expect(component.get('computedValues')).to.deep.equal(values.slice(3, 6))
   })
 
   it('computedValues should slice properly values when page is set externally', function () {
     const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    Ember.run(() => {
-      component.setProperties({
-        values,
-        itemsPerPage: 5,
-        pageNumber: 2
-      })
+    component.setProperties({
+      values,
+      itemsPerPage: 5,
+      pageNumber: 2
     })
     expect(component.get('computedValues')).to.deep.equal(values.slice(0, 5))
   })
 
   it('computedValuesTotal should be computed properly', function () {
     const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    Ember.run(() => {
-      component.set('values', values)
-    })
+    component.set('values', values)
     expect(component.get('computedValuesTotal')).to.equal(8)
   })
 
   it('action: on-select handles new selection', function () {
     // setup stub for on-row-select callback
     const onRowSelect = sandbox.stub()
-    Ember.run(() => {
-      component.set('on-row-select', onRowSelect)
-    })
+    component.set('on-row-select', onRowSelect)
 
     // setup existing selectedItems
-    Ember.run(() => {
-      component.set('selectedItems', Ember.A([]))
-    })
+    component.set('selectedItems', Ember.A([]))
 
     const attr = {
       isSelected: true,
@@ -166,16 +144,12 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
   it('action: on-select handles de-selection', function () {
     // setup stub for on-row-select callback
     const onRowSelect = sandbox.stub()
-    Ember.run(() => {
-      component.set('on-row-select', onRowSelect)
-    })
+    component.set('on-row-select', onRowSelect)
 
     // setup existing selectedItems
     const record1 = {foo: 'bar'}
     const record2 = {bar: 'baz'}
-    Ember.run(() => {
-      component.set('selectedItems', Ember.A([]))
-    })
+    component.set('selectedItems', Ember.A([]))
     component.get('selectedItems').addObject(record1)
     component.get('selectedItems').addObject(record2)
 
@@ -196,13 +170,10 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
   it('action: on-button-click calls on-action-click with selectedItems', function () {
     // setup stub for on-action-click callback
     const onActionClick = sandbox.stub()
-    Ember.run(() => {
-      component.set('on-action-click', onActionClick)
-    })
+    component.set('on-action-click', onActionClick)
+
     const selectedItems = [{foo: 'bar'}, {bar: 'baz'}]
-    Ember.run(() => {
-      component.set('selectedItems', selectedItems)
-    })
+    component.set('selectedItems', selectedItems)
 
     // trigger the action
     component.actions['on-button-click'].call(component, 'button-1')
@@ -211,9 +182,7 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
   })
 
   it('action: on-detail-change sets detailLevel', function () {
-    Ember.run(() => {
-      component.set('detailLevel', 'high')
-    })
+    component.set('detailLevel', 'high')
 
     // trigger the action
     component.actions['on-detail-change'].call(component, 'low')
@@ -223,11 +192,9 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
 
   it('action: on-page-change sets _pageNumber properly', function () {
     const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    Ember.run(() => {
-      component.setProperties({
-        values,
-        itemsPerPage: 3
-      })
+    component.setProperties({
+      values,
+      itemsPerPage: 3
     })
 
     component.actions['on-page-changed'].call(component, 'forward')
@@ -245,19 +212,15 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
 
   it('action: on-page-change sends action about page has been changed', function () {
     const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    Ember.run(() => {
-      component.setProperties({
-        values,
-        itemsPerPage: 8,
-        pageNumber: 2,
-        valuesTotal: 32
-      })
+    component.setProperties({
+      values,
+      itemsPerPage: 8,
+      pageNumber: 2,
+      valuesTotal: 32
     })
 
     const sendAction = sandbox.stub()
-    Ember.run(() => {
-      component.set('sendAction', sendAction)
-    })
+    component.set('sendAction', sendAction)
 
     component.actions['on-page-changed'].call(component, 'forward')
     expect(sendAction.firstCall).to.have.been.calledWith('pageChanged', 3)
@@ -274,9 +237,7 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
 
   it('sets detailLevel when LOD buttons are clicked', function () {
     const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    Ember.run(() => {
-      component.set('values', values)
-    })
+    component.set('values', values)
 
     this.render()
 

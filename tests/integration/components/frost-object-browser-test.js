@@ -104,12 +104,10 @@ describeComponent('frost-object-browser', 'Integration | Component | frost objec
   integration: true
 }, function () {
   beforeEach(function () {
-    Ember.run(() => {
-      this.setProperties({
-        actionBarItems,
-        model,
-        viewSchema
-      })
+    this.setProperties({
+      actionBarItems,
+      model,
+      viewSchema
     })
   })
 
