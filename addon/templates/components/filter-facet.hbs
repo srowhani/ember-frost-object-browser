@@ -1,0 +1,10 @@
+<p>Refine by</p>
+{{#each filters as |filterData|}}
+<div class="alias">{{filterData.label}}</div>
+{{#if (eq filterData.type 'select')}}
+{{frost-select
+  data=filterData.data
+  on-change=(action 'filter-change' filterData.name)
+}}
+{{/if}}
+{{/each}}

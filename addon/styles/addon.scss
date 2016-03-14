@@ -170,3 +170,23 @@
     }
   }
 }
+
+.facets {
+    padding: 0 20px;
+    p {
+      font-size: 18px;
+      color: $frost-color-grey-5;
+      margin-bottom: 10px;
+      margin-top: 0px;
+    }
+    div.alias {
+      font-size: 14px;
+      font-weight: bold;
+      color: $frost-color-night-1;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+    .frost-select input.trigger {
+      color: $frost-color-grey-5;
+    }
+}
