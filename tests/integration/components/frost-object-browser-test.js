@@ -142,7 +142,9 @@ describeComponent('frost-object-browser', 'Integration | Component | frost objec
       model=model.model
     }}`)
 
-    this.$().find('.pagination .button-bar.right button').eq(0).click()
+    Ember.run(() => {
+      this.$().find('.pagination .button-bar.right button').eq(0).click()
+    })
 
     expect(this.$().find('.pagination').text().trim()).to.equal('7 to 12 of 20')
   })
