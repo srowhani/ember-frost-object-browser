@@ -1,6 +1,7 @@
 import _ from 'lodash'
-import Ember from 'ember'
-import { moduleForComponent, test } from 'ember-qunit'
+import {expect} from 'chai'
+import {describeComponent, it} from 'ember-mocha'
+import wait from 'ember-test-helpers/wait'
 import hbs from 'htmlbars-inline-precompile'
 import dummyData from './dummyInput'
 
@@ -100,42 +101,62 @@ const resources = _.map(dummyData.resources, (resource) => {
 
 const model = {resources: Ember.A(resources), model: dummyData.model}
 
-moduleForComponent('frost-object-browser', 'Integration | Component | frost object browser', {
-  integration: true,
-  beforeEach: function () {
-    this.set('model', model)
-    this.set('viewSchema', viewSchema)
-    this.set('actionBarItems', actionBarItems)
+describeComponent(
+  'frost-object-browser',
+  'Integration | Component | frost object browser',
+  {
+    integration: true
+  },
+  function () {
+    beforeEach(function () {
+      Ember.run(() => {
+        this.setProperties({
+          actionBarItems,
+          model,
+          viewSchema
+        })
+      })
+    })
+
+    it('renders', function () {
+      this.timeout(10000) // takes too long to render the list (doesn't work in beforeEach)
+
+      this.render(hbs`{{frost-object-browser
+        actionBarItems=actionBarItems
+        values=model.resources
+        model=model.model
+      }}`)
+      expect(this.$()).to.have.length(1)
+    })
+
+    it('renders 6 items per page', function () {
+      this.timeout(10000) // takes too long to render the list (doesn't work in beforeEach)
+
+      this.render(hbs`{{frost-object-browser
+        actionBarItems=actionBarItems
+        itemsPerPage=6
+        values=model.resources
+        model=model.model
+      }}`)
+      expect(this.$().find('.frost-list-item')).to.have.length(6)
+    })
+
+    it('it changes page when we click to next change button', function () {
+      this.timeout(10000) // takes too long to render the list (doesn't work in beforeEach)
+
+      this.render(hbs`{{frost-object-browser
+        actionBarItems=actionBarItems
+        itemsPerPage=6
+        values=model.resources
+        model=model.model
+      }}`)
+
+      this.$().find('.pagination .button-bar.right button').eq(0).click()
+
+      return wait()
+        .then(() => {
+          expect(this.$().find('.pagination').text().trim()).to.equal('7 to 12 of 20')
+        })
+    })
   }
-})
-
-test('it renders', function (assert) {
-  this.render(hbs`{{frost-object-browser
-    actionBarItems=actionBarItems
-    values=model.resources
-    model=model.model
-  }}`)
-  assert.equal(this.$().length, 1)
-})
-
-test('it renders 6 items per page', function (assert) {
-  this.render(hbs`{{frost-object-browser
-    actionBarItems=actionBarItems
-    itemsPerPage=6
-    values=model.resources
-    model=model.model
-  }}`)
-  assert.equal(this.$().find('.frost-list-item').length, 6)
-})
-
-test('it changes page when we click to next change button', function (assert) {
-  this.render(hbs`{{frost-object-browser
-    actionBarItems=actionBarItems
-    itemsPerPage=6
-    values=model.resources
-    model=model.model
-  }}`)
-  this.$().find('.pagination .button-bar.right button').eq(0).click()
-  assert.equal(this.$().find('.pagination').text().trim(), '7 to 12 of 20')
-})
-
+)

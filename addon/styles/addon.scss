@@ -1,10 +1,4 @@
-@import 'node_modules/ember-frost-theme/scss/_colors.scss';
-
-// We want to display our "disabled but selected" view level buttons as just blue, not "disabled"
-@mixin disabled-selected-icon-button() {
-  opacity: 1 !important; // I hate using !important, but we're overriding an !important from frost-button
-  fill: $frost-color-blue-1;
-}
+@import 'node_modules/ember-frost-theme/scss/frost-theme';
 
 .frost-object-browser {
   display: flex;
@@ -112,31 +106,23 @@
 
           .button-bar {
             .frost-button {
+              svg * {
+                fill: $frost-color-grey-2;
+                stroke: none;
+              }
+
               &.small {
                 padding: 0 5px;
               }
 
               &:hover {
-                fill: $frost-color-blue-1;
                 background: none;
               }
-            }
-
-            &.low {
-              .frost-button.detail-low {
-                @include disabled-selected-icon-button();
-              }
-            }
-
-            &.medium {
-              .frost-button.detail-medium {
-                @include disabled-selected-icon-button();
-              }
-            }
-
-            &.high {
-              .frost-button.detail-high {
-                @include disabled-selected-icon-button();
+              &:disabled {
+                opacity: 1;
+                svg * {
+                  fill: $frost-color-blue-1;
+                }
               }
             }
           }

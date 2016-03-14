@@ -1,54 +1,66 @@
-import { moduleFor } from 'ember-qunit'
-import test from 'dummy/tests/ember-sinon-qunit/test'
+import {expect} from 'chai'
+import {describeComponent, it} from 'ember-mocha'
+import sinon from 'sinon'
 
-let component
-
-moduleFor('component:frost-object-browser-paginator', 'Unit | frost-object-browser-paginator', {
-  unit: true,
-  beforeEach: function () {
+describeComponent('frost-object-browser-paginator', 'Unit | frost-object-browser-paginator', {
+  unit: true
+}, function () {
+  let component, sandbox
+  beforeEach(function () {
+    sandbox = sinon.sandbox.create()
     component = this.subject()
-    component.set('itemsPerPage', 5)
-    component.set('total', 13)
-  }
-})
 
-test('computedOffset should be computed properly', function (assert) {
-  component.set('page', 1)
-  assert.equal(component.get('computedOffset'), 6)
-})
+    Ember.run(() => {
+      component.setProperties({
+        itemsPerPage: 5,
+        total: 13
+      })
+    })
+  })
 
-test('computedOffset should be computed properly when no records', function (assert) {
-  component.set('total', 0)
-  assert.equal(component.get('computedOffset'), 0)
-})
+  afterEach(function () {
+    sandbox.reset()
+  })
 
-test('computedEnd should be computed properly', function (assert) {
-  component.set('page', 1)
-  assert.equal(component.get('computedEnd'), 10)
+  it('computedOffset should be computed properly', function () {
+    component.set('page', 1)
+    expect(component.get('computedOffset')).to.equal(6)
+  })
 
-  component.set('page', 2)
-  assert.equal(component.get('computedEnd'), 13)
-})
+  it('computedOffset should be computed properly when no records', function () {
+    component.set('total', 0)
+    expect(component.get('computedOffset')).to.equal(0)
+  })
 
-test('leftButtonsDisabled should be true when page is 0', function (assert) {
-  component.set('page', 0)
-  assert.equal(component.get('leftButtonsDisabled'), true)
-})
+  it('computedEnd should be computed properly', function () {
+    component.set('page', 1)
+    expect(component.get('computedEnd')).to.equal(10)
 
-test('rightButtonsDisabled should be true when page is last', function (assert) {
-  component.set('page', 2)
-  assert.equal(component.get('rightButtonsDisabled'), true)
-})
+    component.set('page', 2)
+    expect(component.get('computedEnd')).to.equal(13)
+  })
 
-test('rightButtonsDisabled should be true when no records', function (assert) {
-  component.set('total', 0)
-  assert.equal(component.get('rightButtonsDisabled'), true)
-})
+  it('leftButtonsDisabled should be true when page is 0', function () {
+    component.set('page', 0)
+    expect(component.get('leftButtonsDisabled')).to.equal(true)
+  })
 
-test('action: onPageChange sends onPageChanged action', function (assert) {
-  const sendAction = this.stub()
-  component.set('sendAction', sendAction)
+  it('rightButtonsDisabled should be true when page is last', function () {
+    component.set('page', 2)
+    expect(component.get('rightButtonsDisabled')).to.equal(true)
+  })
 
-  component.onPageChange('back')
-  assert.deepEqual(sendAction.firstCall.args, ['onPageChanged', 'back'])
+  it('rightButtonsDisabled should be true when no records', function () {
+    component.set('total', 0)
+    expect(component.get('rightButtonsDisabled')).to.equal(true)
+  })
+
+  it('action: on-page-change sends on-page-changed action', function () {
+    const sendAction = sandbox.stub()
+    component.set('sendAction', sendAction)
+
+    component['on-page-changed']('back')
+    expect(sendAction.firstCall.args[0]).to.equal('on-page-changed')
+    expect(sendAction.firstCall.args[1]).to.equal('back')
+  })
 })

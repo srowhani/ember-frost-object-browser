@@ -11,7 +11,7 @@
     <div class="top-buttons" background-color='red'>
       {{frost-button
         icon="frost/infobar-create"
-        on-click=(action "onCreate")
+        on-click=(action "on-create")
         priority="tertiary"
         size="medium"
         text="Create"
@@ -26,7 +26,7 @@
         <div class="pagination">
           {{frost-object-browser-paginator
             itemsPerPage=itemsPerPage
-            onPageChanged=(action 'onPageChanged')
+            on-page-changed=(action 'on-page-changed')
             page=computedPageNumber
             total=computedValuesTotal
           }}
@@ -39,21 +39,21 @@
           <div class="button-bar {{ detailLevel }}">
             {{frost-button
               disabled=(eq detailLevel 'low')
-              on-click=(action 'onDetailChange' 'low')
+              on-click=(action 'on-detail-change' 'low')
               priority="tertiary"
               size="small"
               icon="frost/list-small"
             }}
             {{frost-button
               disabled=(eq detailLevel 'medium')
-              on-click=(action 'onDetailChange' 'medium')
+              on-click=(action 'on-detail-change' 'medium')
               priority="tertiary"
               size="small"
               icon="frost/list-medium"
             }}
             {{frost-button
               disabled=(eq detailLevel 'high')
-              on-click=(action 'onDetailChange' 'high')
+              on-click=(action 'on-detail-change' 'high')
               priority="tertiary"
               size="small"
               icon="frost/list-large"
@@ -62,9 +62,14 @@
         </div>
       </div>
       <div class="scrollable">
-        {{#frost-list on-select=(action 'onSelect') selections=selectedItems records=computedValues as |record|}}
+        {{#frost-list on-select=(action 'on-select') selections=selectedItems records=computedValues as |record|}}
           {{#frost-object-browser-list-item model=record as |value|}}
-            {{frost-bunsen-detail renderers=renderers value=value model=model view=computedViewLevel}}
+            {{frost-bunsen-detail
+              model=model
+              renderers=renderers
+              value=value
+              view=computedViewLevel
+            }}
           {{/frost-object-browser-list-item}}
         {{/frost-list}}
         {{yield}}
@@ -73,7 +78,7 @@
         {{#each actionBarItems as |actionBarItem|}}
           {{#frost-button
             disabled=(not actionBarItem.enabled)
-            on-click=(action 'onButtonClick' actionBarItem.id)
+            on-click=(action 'on-button-click' actionBarItem.id)
             priority="secondary"
             size="large"
           }}

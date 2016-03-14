@@ -1,13 +1,49 @@
+import {expect} from 'chai'
+import {describeComponent, it} from 'ember-mocha'
+import sinon from 'sinon'
 import Ember from 'ember'
-import { moduleFor } from 'ember-qunit'
-import test from 'dummy/tests/ember-sinon-qunit/test'
+import {registryHelper} from 'ember-test-utils'
+import resolver from '../../helpers/resolver'
 
-let component
-let viewSchema
+const FrostButtonComponent = Ember.Component.extend({
+  classNames: ['frost-button'],
+  click () {
+    if (this.attrs['on-click']) {
+      this.attrs['on-click']()
+    }
+  }
+})
 
-moduleFor('component:frost-object-browser', 'Unit | frost-object-browser', {
+describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
   unit: true,
-  beforeEach: function () {
+
+  needs: [
+    'component:frost-button',
+    'component:frost-object-browser-paginator',
+    'component:frost-list',
+    'component:frost-object-browser-list-item',
+    'component:frost-bunsen-detail',
+    'helper:eq'
+  ],
+
+  beforeSetup () {
+    registryHelper.setup(resolver, {
+      'component:frost-button': FrostButtonComponent,
+      'component:frost-object-browser-paginator': Ember.Component.extend(),
+      'component:frost-list': Ember.Component.extend(),
+      'component:frost-object-browser-list-item': Ember.Component.extend(),
+      'component:frost-bunsen-detail': Ember.Component.extend()
+    })
+  },
+
+  teardown () {
+    registryHelper.teardown()
+  }
+}, function () {
+  let component, viewSchema, sandbox
+  beforeEach(function () {
+    sandbox = sinon.sandbox.create()
+
     viewSchema = {
       low: {foo: 1},
       medium: {foo: 2},
@@ -15,188 +51,211 @@ moduleFor('component:frost-object-browser', 'Unit | frost-object-browser', {
     }
 
     component = this.subject({viewSchema})
-  }
-})
+  })
 
-test('computedStyle is computed properly', function (assert) {
-  component.set('contentHeight', 123)
-  assert.equal(component.get('computedStyle'), 'height: 123px;')
-})
+  afterEach(function () {
+    sandbox.reset()
+  })
 
-test('computedViewLevel is computed properly (with a viewSchema)', function (assert) {
-  component.set('detailLevel', 'high')
-  assert.deepEqual(component.get('computedViewLevel'), {foo: 3})
-})
+  it('computedStyle is computed properly', function () {
+    component.set('contentHeight', 123)
+    expect(component.get('computedStyle')).to.equal('height: 123px;')
+  })
 
-test('computedViewLevel is computed properly (without a view schema)', function (assert) {
-  component.set('viewSchema', null)
-  assert.deepEqual(component.get('computedViewLevel'), {})
-})
+  it('computedViewLevel is computed properly (with a viewSchema)', function () {
+    component.set('detailLevel', 'high')
+    expect(component.get('computedViewLevel')).to.deep.equal({foo: 3})
+  })
 
-test('computedPageNumber is computed properly with internal pagination logic', function (assert) {
-  component.set('_pageNumber', 4)
-  assert.equal(component.get('computedPageNumber'), 4)
-})
+  it('computedViewLevel is computed properly (without a view schema)', function () {
+    component.set('viewSchema', null)
+    expect(component.get('computedViewLevel')).to.deep.equal({})
+  })
 
-test('computedPageNumber is computed properly when internal pagination is assigned', function (assert) {
-  component.set('valuesTotal', 20)
-  component.set('pageNumber', 7)
-  component.set('_pageNumber', 4)
-  assert.equal(component.get('computedPageNumber'), 7)
-})
+  it('computedPageNumber is computed properly with internal pagination logic', function () {
+    component.set('_pageNumber', 4)
+    expect(component.get('computedPageNumber')).to.equal(4)
+  })
 
-test('computedValues should slice properly values', function (assert) {
-  const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-  component.set('values', values)
-  component.set('itemsPerPage', 4)
-  assert.deepEqual(component.get('computedValues'), values.slice(0, 4))
-})
+  it('computedPageNumber is computed properly when internal pagination is assigned', function () {
+    Ember.run(() => {
+      component.setProperties({
+        valuesTotal: 20,
+        pageNumber: 7,
+        _pageNumber: 4
+      })
+    })
+    expect(component.get('computedPageNumber')).to.equal(7)
+  })
 
-test('computedValues should be computed properly when page is set internally', function (assert) {
-  const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-  component.set('values', values)
-  component.set('itemsPerPage', 3)
-  component.set('_pageNumber', 1)
-  assert.deepEqual(component.get('computedValues'), values.slice(3, 6))
-})
+  it('computedValues should slice properly values', function () {
+    const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    Ember.run(() => {
+      component.setProperties({
+        values,
+        itemsPerPage: 4
+      })
+    })
+    expect(component.get('computedValues')).to.deep.equal(values.slice(0, 4))
+  })
 
-test('computedValues should slice properly values when page is set externally', function (assert) {
-  const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-  component.set('values', values)
-  component.set('itemsPerPage', 5)
-  component.set('pageNumber', 2)
-  assert.deepEqual(component.get('computedValues'), values.slice(0, 5))
-})
+  it('computedValues should be computed properly when page is set internally', function () {
+    const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    Ember.run(() => {
+      component.setProperties({
+        values,
+        itemsPerPage: 3,
+        _pageNumber: 1
+      })
+    })
+    expect(component.get('computedValues')).to.deep.equal(values.slice(3, 6))
+  })
 
-test('computedValuesTotal should be computed properly', function (assert) {
-  const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-  component.set('values', values)
-  assert.equal(component.get('computedValuesTotal'), 8)
-})
+  it('computedValues should slice properly values when page is set externally', function () {
+    const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    Ember.run(() => {
+      component.setProperties({
+        values,
+        itemsPerPage: 5,
+        pageNumber: 2
+      })
+    })
+    expect(component.get('computedValues')).to.deep.equal(values.slice(0, 5))
+  })
 
-test('action: onSelect handles new selection', function (assert) {
-  // setup stub for onRowSelect callback
-  const onRowSelect = this.stub()
-  component.set('onRowSelect', onRowSelect)
+  it('computedValuesTotal should be computed properly', function () {
+    const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    component.set('values', values)
+    expect(component.get('computedValuesTotal')).to.equal(8)
+  })
 
-  // setup existing selectedItems
-  component.set('selectedItems', Ember.A([]))
+  it('action: on-select handles new selection', function () {
+    // setup stub for on-row-select callback
+    const onRowSelect = sandbox.stub()
+    component.set('on-row-select', onRowSelect)
 
-  const attr = {
-    isSelected: true,
-    record: {foo: 'bar'}
-  }
+    // setup existing selectedItems
+    component.set('selectedItems', Ember.A([]))
 
-  component.actions.onSelect.call(component, attr)
-  const expectedArgs = [
-    [
-      {
-        foo: 'bar'
-      }
-    ],
-    {
-      foo: 'bar'
-    },
-    {}
-  ]
-
-  assert.deepEqual(onRowSelect.firstCall.args, expectedArgs)
-})
-
-test('action: onSelect handles de-selection', function (assert) {
-  // setup stub for onRowSelect callback
-  const onRowSelect = this.stub()
-  component.set('onRowSelect', onRowSelect)
-
-  // setup existing selectedItems
-  const record1 = {foo: 'bar'}
-  const record2 = {bar: 'baz'}
-  component.set('selectedItems', Ember.A([]))
-  component.get('selectedItems').addObject(record1)
-  component.get('selectedItems').addObject(record2)
-
-  const attr = {
-    isSelected: false,
-    record: record1
-  }
-
-  // trigger the action
-  component.actions.onSelect.call(component, attr)
-
-  const expectedArgs = [
-    [
-      {
-        bar: 'baz'
-      }
-    ],
-    {},
-    {
-      foo: 'bar'
+    const attr = {
+      isSelected: true,
+      record: {foo: 'bar'}
     }
-  ]
 
-  assert.deepEqual(onRowSelect.firstCall.args, expectedArgs)
-})
+    component.actions['on-select'].call(component, attr)
+    expect(onRowSelect.firstCall.args[0]).to.have.length(1)
+    expect(onRowSelect.firstCall.args[0][0]).to.eql({foo: 'bar'})
+    expect(onRowSelect.firstCall.args[1]).to.eql({foo: 'bar'})
+    expect(onRowSelect.firstCall.args[2]).to.eql({})
+  })
 
-test('action: onButtonClick calls onActionClick with selectedItems', function (assert) {
-  // setup stub for onActionClick callback
-  const onActionClick = this.stub()
-  component.set('onActionClick', onActionClick)
-  const selectedItems = [{foo: 'bar'}, {bar: 'baz'}]
-  component.set('selectedItems', selectedItems)
+  it('action: on-select handles de-selection', function () {
+    // setup stub for on-row-select callback
+    const onRowSelect = sandbox.stub()
+    component.set('on-row-select', onRowSelect)
 
-  // trigger the action
-  component.actions.onButtonClick.call(component, 'button-1')
+    // setup existing selectedItems
+    const record1 = {foo: 'bar'}
+    const record2 = {bar: 'baz'}
+    component.set('selectedItems', Ember.A([]))
+    component.get('selectedItems').addObject(record1)
+    component.get('selectedItems').addObject(record2)
 
-  assert.deepEqual(onActionClick.firstCall.args, ['button-1', selectedItems])
-})
+    const attr = {
+      isSelected: false,
+      record: record1
+    }
 
-test('action: onDetailChange sets detailLevel', function (assert) {
-  component.set('detailLevel', 'high')
+    // trigger the action
+    component.actions['on-select'].call(component, attr)
 
-  // trigger the action
-  component.actions.onDetailChange.call(component, 'low')
+    expect(onRowSelect.firstCall.args[0]).to.have.length(1)
+    expect(onRowSelect.firstCall.args[0][0]).to.eql({bar: 'baz'})
+    expect(onRowSelect.firstCall.args[1]).to.eql({})
+    expect(onRowSelect.firstCall.args[2]).to.eql({foo: 'bar'})
+  })
 
-  assert.equal(component.get('detailLevel'), 'low')
-})
+  it('action: on-button-click calls on-action-click with selectedItems', function () {
+    // setup stub for on-action-click callback
+    const onActionClick = sandbox.stub()
+    component.set('on-action-click', onActionClick)
 
-test('action: onPageChange sets _pageNumber properly', function (assert) {
-  const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-  component.set('values', values)
-  component.set('itemsPerPage', 3)
+    const selectedItems = [{foo: 'bar'}, {bar: 'baz'}]
+    component.set('selectedItems', selectedItems)
 
-  component.actions.onPageChanged.call(component, 'forward')
-  assert.equal(component.get('computedPageNumber'), 1)
+    // trigger the action
+    component.actions['on-button-click'].call(component, 'button-1')
 
-  component.actions.onPageChanged.call(component, 'back')
-  assert.equal(component.get('computedPageNumber'), 0)
+    expect(onActionClick.firstCall).to.have.been.calledWith('button-1', selectedItems)
+  })
 
-  component.actions.onPageChanged.call(component, 'end')
-  assert.equal(component.get('computedPageNumber'), 2)
+  it('action: on-detail-change sets detailLevel', function () {
+    component.set('detailLevel', 'high')
 
-  component.actions.onPageChanged.call(component, 'begin')
-  assert.equal(component.get('computedPageNumber'), 0)
-})
+    // trigger the action
+    component.actions['on-detail-change'].call(component, 'low')
 
-test('action: onPageChange sends action about page has been changed', function (assert) {
-  const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-  component.set('values', values)
-  component.set('itemsPerPage', 8)
-  component.set('pageNumber', 2)
-  component.set('valuesTotal', 32)
+    expect(component.get('detailLevel')).to.equal('low')
+  })
 
-  const sendAction = this.stub()
-  component.set('sendAction', sendAction)
+  it('action: on-page-change sets _pageNumber properly', function () {
+    const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    Ember.run(() => {
+      component.setProperties({
+        values,
+        itemsPerPage: 3
+      })
+    })
 
-  component.actions.onPageChanged.call(component, 'forward')
-  assert.deepEqual(sendAction.firstCall.args, ['pageChanged', 3])
+    component.actions['on-page-changed'].call(component, 'forward')
+    expect(component.get('computedPageNumber')).to.equal(1)
 
-  component.actions.onPageChanged.call(component, 'back')
-  assert.deepEqual(sendAction.args[1], ['pageChanged', 1])
+    component.actions['on-page-changed'].call(component, 'back')
+    expect(component.get('computedPageNumber')).to.equal(0)
 
-  component.actions.onPageChanged.call(component, 'end')
-  assert.deepEqual(sendAction.args[2], ['pageChanged', 3])
+    component.actions['on-page-changed'].call(component, 'end')
+    expect(component.get('computedPageNumber')).to.equal(2)
 
-  component.actions.onPageChanged.call(component, 'begin')
-  assert.deepEqual(sendAction.args[3], ['pageChanged', 0])
+    component.actions['on-page-changed'].call(component, 'begin')
+    expect(component.get('computedPageNumber')).to.equal(0)
+  })
+
+  it('action: on-page-change sends action about page has been changed', function () {
+    const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    Ember.run(() => {
+      component.setProperties({
+        values,
+        itemsPerPage: 8,
+        pageNumber: 2,
+        valuesTotal: 32
+      })
+    })
+
+    const sendAction = sandbox.stub()
+    component.set('sendAction', sendAction)
+
+    component.actions['on-page-changed'].call(component, 'forward')
+    expect(sendAction.firstCall).to.have.been.calledWith('pageChanged', 3)
+
+    component.actions['on-page-changed'].call(component, 'back')
+    expect(sendAction).to.have.been.calledWith('pageChanged', 1)
+
+    component.actions['on-page-changed'].call(component, 'end')
+    expect(sendAction).to.have.been.calledWith('pageChanged', 3)
+
+    component.actions['on-page-changed'].call(component, 'begin')
+    expect(sendAction).to.have.been.calledWith('pageChanged', 0)
+  })
+
+  it('sets detailLevel when LOD buttons are clicked', function () {
+    const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+    component.set('values', values)
+
+    this.render()
+
+    ;['low', 'medium', 'high'].forEach(function (detailLevel, idx) {
+      this.$('.button-bar .frost-button').eq(idx).click()
+      expect(component.get('detailLevel')).to.equal(detailLevel)
+    })
+  })
 })
