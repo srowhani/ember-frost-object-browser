@@ -92,6 +92,34 @@ export default Ember.Controller.extend({
     }
   },
 
+  filters: [
+    {
+      label: 'First Filter',
+      type: 'select',
+      name: 'first-filter',
+      data: [{
+        label: 'Test1',
+        value: 'poasdfkljqpoiasdfjae'
+      }, {
+        label: 'Test2',
+        value: 'asdfasdfkljqpoihaasf'
+      }, {
+        label: 'Test3',
+        value: 'poasSfaFFsacaejktdfe'
+      }, {
+        label: 'Test4',
+        value: 'asdfasdffeacrhASHASD'
+      }]
+    },
+    {
+      label: 'Second filter',
+      type: 'checkbox',
+      name: 'second-filter',
+      data: [{
+      }]
+    }
+  ],
+
   actions: {
     onCreate () {
       window.alert('One does not merely create things')

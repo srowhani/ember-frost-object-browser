@@ -20,7 +20,9 @@
     </div>
   </div>
   <div class="body">
-    {{filter-facet}}
+    {{#if filters}}
+    {{filter-facet filters=filters}}
+    {{/if}}
     <div class="content">
       <div class="tools">
         <div class="sort"/>
