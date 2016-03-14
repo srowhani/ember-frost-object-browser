@@ -12,7 +12,6 @@
     "jquery": "2.1.4",
     "lodash": "^3.10.1",
     "mocha": "^2.2.4",
-    "perfect-scrollbar": "^0.6.10",
     "pretender": "^0.10.1",
     "sinon-chai": "^2.8.0",
     "z-schema": "3.16.1"
