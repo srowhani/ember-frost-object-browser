@@ -78,39 +78,47 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
   })
 
   it('computedPageNumber is computed properly when internal pagination is assigned', function () {
-    component.setProperties({
-      valuesTotal: 20,
-      pageNumber: 7,
-      _pageNumber: 4
+    Ember.run(() => {
+      component.setProperties({
+        valuesTotal: 20,
+        pageNumber: 7,
+        _pageNumber: 4
+      })
     })
     expect(component.get('computedPageNumber')).to.equal(7)
   })
 
   it('computedValues should slice properly values', function () {
     const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    component.setProperties({
-      values,
-      itemsPerPage: 4
+    Ember.run(() => {
+      component.setProperties({
+        values,
+        itemsPerPage: 4
+      })
     })
     expect(component.get('computedValues')).to.deep.equal(values.slice(0, 4))
   })
 
   it('computedValues should be computed properly when page is set internally', function () {
     const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    component.setProperties({
-      values,
-      itemsPerPage: 3,
-      _pageNumber: 1
+    Ember.run(() => {
+      component.setProperties({
+        values,
+        itemsPerPage: 3,
+        _pageNumber: 1
+      })
     })
     expect(component.get('computedValues')).to.deep.equal(values.slice(3, 6))
   })
 
   it('computedValues should slice properly values when page is set externally', function () {
     const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    component.setProperties({
-      values,
-      itemsPerPage: 5,
-      pageNumber: 2
+    Ember.run(() => {
+      component.setProperties({
+        values,
+        itemsPerPage: 5,
+        pageNumber: 2
+      })
     })
     expect(component.get('computedValues')).to.deep.equal(values.slice(0, 5))
   })
@@ -192,9 +200,11 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
 
   it('action: on-page-change sets _pageNumber properly', function () {
     const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    component.setProperties({
-      values,
-      itemsPerPage: 3
+    Ember.run(() => {
+      component.setProperties({
+        values,
+        itemsPerPage: 3
+      })
     })
 
     component.actions['on-page-changed'].call(component, 'forward')
@@ -212,11 +222,13 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
 
   it('action: on-page-change sends action about page has been changed', function () {
     const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    component.setProperties({
-      values,
-      itemsPerPage: 8,
-      pageNumber: 2,
-      valuesTotal: 32
+    Ember.run(() => {
+      component.setProperties({
+        values,
+        itemsPerPage: 8,
+        pageNumber: 2,
+        valuesTotal: 32
+      })
     })
 
     const sendAction = sandbox.stub()

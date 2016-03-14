@@ -10,9 +10,11 @@ describeComponent('frost-object-browser-paginator', 'Unit | frost-object-browser
     sandbox = sinon.sandbox.create()
     component = this.subject()
 
-    component.setProperties({
-      itemsPerPage: 5,
-      total: 13
+    Ember.run(() => {
+      component.setProperties({
+        itemsPerPage: 5,
+        total: 13
+      })
     })
   })
 

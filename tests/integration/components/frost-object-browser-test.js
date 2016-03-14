@@ -109,8 +109,6 @@ describeComponent(
   },
   function () {
     beforeEach(function () {
-      this.timeout(5000) // takes too long to render the list
-
       Ember.run(() => {
         this.setProperties({
           actionBarItems,
@@ -120,11 +118,9 @@ describeComponent(
       })
     })
 
-    afterEach(function () {
-      this.timeout(2000)
-    })
-
     it('renders', function () {
+      this.timeout(10000) // takes too long to render the list (doesn't work in beforeEach)
+
       this.render(hbs`{{frost-object-browser
         actionBarItems=actionBarItems
         values=model.resources
