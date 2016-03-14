@@ -3,7 +3,6 @@ import {expect} from 'chai'
 import {describeComponent, it} from 'ember-mocha'
 import hbs from 'htmlbars-inline-precompile'
 import dummyData from './dummyInput'
-import wait from 'ember-test-helpers/wait'
 
 const viewSchema = {
   low: {
@@ -131,7 +130,7 @@ describeComponent('frost-object-browser', 'Integration | Component | frost objec
     expect(this.$().find('.frost-list-item')).to.have.length(6)
   })
 
-  it('it changes page when we click to next change button', function (done) {
+  it('it changes page when we click to next change button', function () {
     this.render(hbs`{{frost-object-browser
       actionBarItems=actionBarItems
       itemsPerPage=6
@@ -139,11 +138,10 @@ describeComponent('frost-object-browser', 'Integration | Component | frost objec
       model=model.model
     }}`)
 
-    this.$().find('.pagination .button-bar.right button').eq(0).click()
-
-    wait().then(() => {
-      expect(this.$().find('.pagination').text().trim()).to.equal('7 to 12 of 20')
-      done()
+    Ember.run(() => {
+      this.$().find('.pagination .button-bar.right button').eq(0).click()
     })
+
+    expect(this.$().find('.pagination').text().trim()).to.equal('7 to 12 of 20')
   })
 })
