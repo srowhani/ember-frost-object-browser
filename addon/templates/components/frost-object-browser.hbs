@@ -64,7 +64,12 @@
       <div class="scrollable">
         {{#frost-list on-select=(action 'on-select') selections=selectedItems records=computedValues as |record|}}
           {{#frost-object-browser-list-item model=record as |value|}}
-            {{frost-bunsen-detail renderers=renderers value=value model=model view=computedViewLevel}}
+            {{frost-bunsen-detail
+              model=model
+              renderers=renderers
+              value=value
+              view=computedViewLevel
+            }}
           {{/frost-object-browser-list-item}}
         {{/frost-list}}
         {{yield}}

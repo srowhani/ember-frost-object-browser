@@ -1,3 +1,5 @@
+@import 'node_modules/ember-frost-theme/scss/frost-theme';
+
 .frost-object-browser {
   display: flex;
   flex-direction: column;
@@ -108,7 +110,7 @@
                 fill: $frost-color-grey-2;
                 stroke: none;
               }
-              
+
               &.small {
                 padding: 0 5px;
               }
