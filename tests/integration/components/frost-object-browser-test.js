@@ -134,7 +134,7 @@ describeComponent('frost-object-browser', 'Integration | Component | frost objec
     expect(this.$().find('.frost-list-item')).to.have.length(6)
   })
 
-  it('it changes page when we click to next change button', function () {
+  it.skip('it changes page when we click to next change button', function () {
     this.render(hbs`{{frost-object-browser
       actionBarItems=actionBarItems
       itemsPerPage=6
