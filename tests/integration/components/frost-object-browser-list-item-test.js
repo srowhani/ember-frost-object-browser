@@ -6,14 +6,18 @@ describeComponent('frost-object-browser-list-item', 'Integration | Component | o
   integration: true
 }, function () {
   it('list item renders', function () {
-    this.set('foo', () => {})
+    Ember.run(() => {
+      this.set('foo', () => {})
+    })
     this.render(hbs`{{frost-object-browser-list-item on-select=foo}}`)
     expect(this.$()).to.have.length(1)
   })
 
   ;['small', 'medium', 'large'].forEach((level) => {
     it(`list item sets appropriate class name for detailLevel = ${level}`, function () {
-      this.set('level', level)
+      Ember.run(() => {
+        this.set('level', level)
+      })
       this.render(hbs`{{frost-object-browser-list-item detailLevel=level}}`)
       const $el = this.$('.frost-list-item')
       expect($el.hasClass(level)).to.equal(true)

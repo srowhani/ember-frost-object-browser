@@ -8,10 +8,14 @@ describeComponent('frost-object-browser-paginator', 'Unit | frost-object-browser
   let component, sandbox
   beforeEach(function () {
     sandbox = sinon.sandbox.create()
-
     component = this.subject()
-    component.set('itemsPerPage', 5)
-    component.set('total', 13)
+
+    Ember.run(() => {
+      component.setProperties({
+        itemsPerPage: 5,
+        total: 13
+      })
+    })
   })
 
   afterEach(function () {
@@ -19,41 +23,57 @@ describeComponent('frost-object-browser-paginator', 'Unit | frost-object-browser
   })
 
   it('computedOffset should be computed properly', function () {
-    component.set('page', 1)
+    Ember.run(() => {
+      component.set('page', 1)
+    })
     expect(component.get('computedOffset')).to.equal(6)
   })
 
   it('computedOffset should be computed properly when no records', function () {
-    component.set('total', 0)
+    Ember.run(() => {
+      component.set('total', 0)
+    })
     expect(component.get('computedOffset')).to.equal(0)
   })
 
   it('computedEnd should be computed properly', function () {
-    component.set('page', 1)
+    Ember.run(() => {
+      component.set('page', 1)
+    })
     expect(component.get('computedEnd')).to.equal(10)
 
-    component.set('page', 2)
+    Ember.run(() => {
+      component.set('page', 2)
+    })
     expect(component.get('computedEnd')).to.equal(13)
   })
 
   it('leftButtonsDisabled should be true when page is 0', function () {
-    component.set('page', 0)
+    Ember.run(() => {
+      component.set('page', 0)
+    })
     expect(component.get('leftButtonsDisabled')).to.equal(true)
   })
 
   it('rightButtonsDisabled should be true when page is last', function () {
-    component.set('page', 2)
+    Ember.run(() => {
+      component.set('page', 2)
+    })
     expect(component.get('rightButtonsDisabled')).to.equal(true)
   })
 
   it('rightButtonsDisabled should be true when no records', function () {
-    component.set('total', 0)
+    Ember.run(() => {
+      component.set('total', 0)
+    })
     expect(component.get('rightButtonsDisabled')).to.equal(true)
   })
 
   it('action: on-page-change sends on-page-changed action', function () {
     const sendAction = sandbox.stub()
-    component.set('sendAction', sendAction)
+    Ember.run(() => {
+      component.set('sendAction', sendAction)
+    })
 
     component['on-page-changed']('back')
     expect(sendAction.firstCall.args[0]).to.equal('on-page-changed')
