@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import {expect} from 'chai'
 import {describeComponent, it} from 'ember-mocha'
+import wait from 'ember-test-helpers/wait'
 import hbs from 'htmlbars-inline-precompile'
 import dummyData from './dummyInput'
 
@@ -142,9 +143,10 @@ describeComponent('frost-object-browser', 'Integration | Component | frost objec
 
     this.$().find('.pagination .button-bar.right button').eq(0).click()
 
-    Ember.run.next(this, () => {
-      expect(this.$().find('.pagination').text().trim()).to.equal('7 to 12 of 20')
-      done()
-    })
+    wait()
+      .then(() => {
+        expect(this.$().find('.pagination').text().trim()).to.equal('7 to 12 of 20')
+        done()
+      })
   })
 })
