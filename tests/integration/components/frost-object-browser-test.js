@@ -119,7 +119,7 @@ describeComponent(
     })
 
     it('renders', function () {
-      this.timeout(10000) // takes too long to render the list (doesn't work in beforeEach)
+      this.timeout(5000) // takes too long to render the list (doesn't work in beforeEach)
 
       this.render(hbs`{{frost-object-browser
         actionBarItems=actionBarItems
@@ -130,6 +130,8 @@ describeComponent(
     })
 
     it('renders 6 items per page', function () {
+      this.timeout(5000) // takes too long to render the list (doesn't work in beforeEach)
+
       this.render(hbs`{{frost-object-browser
         actionBarItems=actionBarItems
         itemsPerPage=6
@@ -140,6 +142,8 @@ describeComponent(
     })
 
     it('it changes page when we click to next change button', function () {
+      this.timeout(5000) // takes too long to render the list (doesn't work in beforeEach)
+
       this.render(hbs`{{frost-object-browser
         actionBarItems=actionBarItems
         itemsPerPage=6
