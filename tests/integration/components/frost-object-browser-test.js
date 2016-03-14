@@ -111,13 +111,13 @@ describeComponent(
     beforeEach(function () {
       this.timeout(5000) // takes too long to render the list
 
-      this.setProperties({
-        actionBarItems,
-        model,
-        viewSchema
+      Ember.run(() => {
+        this.setProperties({
+          actionBarItems,
+          model,
+          viewSchema
+        })
       })
-
-      return wait()
     })
 
     afterEach(function () {
