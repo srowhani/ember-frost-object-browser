@@ -19,6 +19,7 @@ export default Ember.Component.extend({
   // ================================================================
 
   actionBarItems: Ember.A([]),
+  className: 'frost-object-browser',
   contentHeight: 505,
   detailLevel: 'low',
   itemsPerPage: 20,
