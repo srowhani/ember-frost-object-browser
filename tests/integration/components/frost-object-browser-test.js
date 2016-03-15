@@ -119,6 +119,7 @@ describeComponent(
     })
 
     it('renders', function () {
+      this.timeout(8000)
       this.render(hbs`{{frost-object-browser
         actionBarItems=actionBarItems
         values=model.resources
@@ -128,6 +129,7 @@ describeComponent(
     })
 
     it('renders 6 items per page', function () {
+      this.timeout(8000)
       this.render(hbs`{{frost-object-browser
         actionBarItems=actionBarItems
         itemsPerPage=6
@@ -138,6 +140,7 @@ describeComponent(
     })
 
     it('it changes page when we click to next change button', function () {
+      this.timeout(8000)
       this.render(hbs`{{frost-object-browser
         actionBarItems=actionBarItems
         itemsPerPage=6
