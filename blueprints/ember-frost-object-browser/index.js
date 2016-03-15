@@ -15,6 +15,7 @@ module.exports = {
         {name: 'ember-frost-bunsen', target: '^2.2.0'},
         {name: 'ember-frost-button', target: '^1.4.2'},
         {name: 'ember-frost-checkbox', target: '^1.2.0'},
+        {name: 'ember-frost-info-bar', target: '^1.0.0'},
         {name: 'ember-frost-list', target: '^0.4.2'}
       ]
     })

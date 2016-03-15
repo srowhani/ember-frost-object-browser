@@ -19,7 +19,7 @@ export default Ember.Component.extend({
   // ================================================================
 
   actionBarItems: Ember.A([]),
-  className: 'frost-object-browser',
+  classNames: ['frost-object-browser'],
   contentHeight: 505,
   detailLevel: 'low',
   itemsPerPage: 20,
@@ -222,7 +222,7 @@ export default Ember.Component.extend({
       }
 
       if (externalPageNumber !== null) {
-        this.sendAction('pageChanged', currentPage)
+        this.sendAction('on-page-changed', currentPage)
       } else {
         this.set('_pageNumber', currentPage)
       }
