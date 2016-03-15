@@ -42,17 +42,13 @@
     background-color: $frost-color-lgrey-3;
     display: flex;
     flex-direction: row;
-    height: calc(100% - 90px);
+    max-height: calc(100% - 90px);
 
     .content {
       flex: 1;
       display: flex;
       flex-direction: column;
       position: relative;
-
-      .scrollable {
-        overflow-y:auto;
-      }
 
       > .actions {
         height: 75px;
