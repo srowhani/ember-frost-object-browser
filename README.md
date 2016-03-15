@@ -27,7 +27,7 @@ ember install ember-frost-object-browser
 | --------- | ---- | ----- | ----------- |
 | ` ` | ` ` | ` ` | Coming soon |
 
-## Examples
+## Examples 
 ### Template:
 ```handlebars
 {frost-object-browser
