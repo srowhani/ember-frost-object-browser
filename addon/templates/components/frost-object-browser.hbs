@@ -36,27 +36,33 @@
           View:
         </span>
         <div class="button-bar {{ detailLevel }}">
-          {{frost-button
-            disabled=(eq detailLevel 'low')
-            on-click=(action 'on-detail-change' 'low')
-            priority="tertiary"
-            size="small"
-            icon="frost/list-small"
-          }}
-          {{frost-button
-            disabled=(eq detailLevel 'medium')
-            on-click=(action 'on-detail-change' 'medium')
-            priority="tertiary"
-            size="small"
-            icon="frost/list-medium"
-          }}
-          {{frost-button
-            disabled=(eq detailLevel 'high')
-            on-click=(action 'on-detail-change' 'high')
-            priority="tertiary"
-            size="small"
-            icon="frost/list-large"
-          }}
+          {{#if viewSchema.low}}
+            {{frost-button
+              disabled=(eq detailLevel 'low')
+              on-click=(action 'on-detail-change' 'low')
+              priority="tertiary"
+              size="small"
+              icon="frost/list-small"
+            }}
+          {{/if}}
+          {{#if viewSchema.medium}}
+            {{frost-button
+              disabled=(eq detailLevel 'medium')
+              on-click=(action 'on-detail-change' 'medium')
+              priority="tertiary"
+              size="small"
+              icon="frost/list-medium"
+            }}
+          {{/if}}
+          {{#if viewSchema.high}}
+            {{frost-button
+              disabled=(eq detailLevel 'high')
+              on-click=(action 'on-detail-change' 'high')
+              priority="tertiary"
+              size="small"
+              icon="frost/list-large"
+            }}
+          {{/if}}
         </div>
       </div>
     </div>
