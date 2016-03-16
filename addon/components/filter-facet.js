@@ -15,9 +15,11 @@ export default Ember.Component.extend({
   classNames: ['facets'],
   actions: {
     'filter-change' (filterName, value) {
-      console.log(filterName)
       let filterState = this.get('activeFilters')
+      // Create a new filter state object, this helps with observers
+      filterState = _.extend({}, filterState)
       filterState[filterName] = value
+      this.set('activeFilters', filterState)
       callIfDefined(this, 'on-filter', filterState)
     }
   },
