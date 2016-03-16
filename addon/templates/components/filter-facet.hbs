@@ -5,6 +5,7 @@
 {{frost-select
   data=filterData.data
   on-change=(action 'filter-change' filterData.name)
+  selectedValue=filterData.selectedValue
 }}
 {{/if}}
 {{/each}}
