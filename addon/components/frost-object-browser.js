@@ -101,24 +101,6 @@ export default Ember.Component.extend({
     return length
   },
 
-  @readOnly
-  @computed('viewSchema')
-  isHighDetailVisible () {
-    return this.get('viewSchema.high')
-  },
-
-  @readOnly
-  @computed('viewSchema')
-  isLowDetailVisible () {
-    return this.get('viewSchema.low')
-  },
-
-  @readOnly
-  @computed('viewSchema')
-  isMediumDetailVisible () {
-    return this.get('viewSchema.medium')
-  },
-
   // ================================================================
   // Functions
   // ================================================================

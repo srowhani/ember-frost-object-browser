@@ -36,7 +36,7 @@
           View:
         </span>
         <div class="button-bar {{ detailLevel }}">
-          {{#if isLowDetailVisible}}
+          {{#if viewSchema.low}}
             {{frost-button
               disabled=(eq detailLevel 'low')
               on-click=(action 'on-detail-change' 'low')
@@ -45,7 +45,7 @@
               icon="frost/list-small"
             }}
           {{/if}}
-          {{#if isMediumDetailVisible}}
+          {{#if viewSchema.medium}}
             {{frost-button
               disabled=(eq detailLevel 'medium')
               on-click=(action 'on-detail-change' 'medium')
@@ -54,7 +54,7 @@
               icon="frost/list-medium"
             }}
           {{/if}}
-          {{#if isHighDetailVisible}}
+          {{#if viewSchema.high}}
             {{frost-button
               disabled=(eq detailLevel 'high')
               on-click=(action 'on-detail-change' 'high')
