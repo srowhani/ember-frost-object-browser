@@ -51,7 +51,6 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     }
 
     component = this.subject({viewSchema})
-    component.set('isMediumDetailVisible', true)
   })
 
   afterEach(function () {

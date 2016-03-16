@@ -22,9 +22,6 @@ export default Ember.Component.extend({
   classNames: ['frost-object-browser'],
   contentHeight: 505,
   detailLevel: 'low',
-  isHighDetailVisible: true,
-  isLowDetailVisible: true,
-  isMediumDetailVisible: false,
   itemsPerPage: 20,
   layout,
   pageNumber: null,
@@ -102,6 +99,24 @@ export default Ember.Component.extend({
     }
 
     return length
+  },
+
+  @readOnly
+  @computed('viewSchema')
+  isHighDetailVisible () {
+    return this.get('viewSchema.high')
+  },
+
+  @readOnly
+  @computed('viewSchema')
+  isLowDetailVisible () {
+    return this.get('viewSchema.low')
+  },
+
+  @readOnly
+  @computed('viewSchema')
+  isMediumDetailVisible () {
+    return this.get('viewSchema.medium')
   },
 
   // ================================================================
