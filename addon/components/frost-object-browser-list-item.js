@@ -27,7 +27,7 @@ export default FrostListItem.extend({
   },
 
   @readOnly
-  @computed('model.hasDirtyAttributes') // This forces bunsen to re-render when editing starts or save completes
+  @computed('model._hash', 'model.hasDirtyAttributes') // This forces bunsen to re-render when editing starts or save completes
   record () {
     return this.get('model')
   }
