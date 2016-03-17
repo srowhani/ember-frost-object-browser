@@ -23,12 +23,12 @@ export default Ember.Component.extend({
       // Create a new filter state object, this helps with observers
       filterState = _.extend({}, filterState)
       filterState[filterName] = value
+      this.updateFilterState(filterState)
     },
     'clear-filter' (filterName) {
       let filterState = this.get('activeFilters')
       filterState = _.extend({}, filterState)
-      delete filterState[filterName]
-
+      filterState[filterName] = [null]
 
       let filterData = this.get('filters')
       let filterIndex = _.findIndex(filterData, function (item) {
@@ -36,7 +36,8 @@ export default Ember.Component.extend({
       })
 
       this.set(`filters.${filterIndex}.selectedValue`, null)
-      console.log(filterName)
+
+      this.updateFilterState(filterState)
     },
     'toggle-hidden' (index) {
       let filter = `filters.${index}.showing`
