@@ -97,6 +97,7 @@ export default Ember.Controller.extend({
       label: 'First Filter',
       type: 'select',
       name: 'first-filter',
+      clearable: true,
       data: [{
         label: 'Test1',
         value: 'poasdfkljqpoiasdfjae'
