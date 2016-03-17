@@ -1,5 +1,5 @@
 import Ember from 'ember'
-import layout from '../templates/components/filter-facet'
+import layout from '../templates/components/frost-object-browser-filter'
 import _ from 'lodash'
 
 function callIfDefined (context, functionName, ...args) {
