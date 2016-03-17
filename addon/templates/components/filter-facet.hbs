@@ -1,11 +1,20 @@
 <p>Refine by</p>
-{{#each filters as |filterData|}}
-<div class="alias">{{filterData.label}}</div>
-{{#if (eq filterData.type 'select')}}
-{{frost-select
-  data=filterData.data
-  on-change=(action 'filter-change' filterData.name)
-  selectedValue=filterData.selectedValue
-}}
-{{/if}}
+{{#each filters as |filterData index|}}
+<div class='filter-header'>
+  <div onclick={{action 'toggle-hidden' index}} class='down-arrow {{if filterData.showing '' 'collapsed'}}'>
+    <svg viewBox="0 0 15 15">
+      <polygon points="7.5,11.4 1.1,5 2.5,3.6 7.5,8.6 12.5,3.6 13.9,5 "></polygon>
+    </svg>
+  </div>
+  <div class="alias">{{filterData.label}}</div><div class='filter-clear' onclick={{action 'clear-filter' filterData.name}}>Clear</div>
+  <div style="{{if filterData.showing '' 'display:none;'}}">
+  {{#if (eq filterData.type 'select')}}
+  {{frost-select
+    data=filterData.data
+    on-change=(action 'filter-change' filterData.name)
+    selectedValue=filterData.selectedValue
+  }}
+  {{/if}}
+  </div>
+</div>
 {{/each}}
