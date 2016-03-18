@@ -27,7 +27,7 @@ ember install ember-frost-object-browser
 | --------- | ---- | ----- | ----------- |
 | ` ` | ` ` | ` ` | Coming soon |
 
-## Examples 
+## Examples
 ### Template:
 ```handlebars
 {frost-object-browser
@@ -43,6 +43,8 @@ ember install ember-frost-object-browser
   title="Resources"
   values=model.visibleResources
   viewSchema=viewSchema
+  filters=filters
+  on-filter=on-filter
 }}
 ```
 
@@ -81,7 +83,6 @@ ember install ember-frost-object-browser
       ]
     }
   }
-
 ```
 
 Your controller will also need to implement the following callbacks:
@@ -90,9 +91,37 @@ Your controller will also need to implement the following callbacks:
 `'on-detail-change': function (level) {…}`
 `'on-row-select': function (allSelected, newSelected, deSelected) {…}`
 `'on-action-click': function (actionId, currentSelection) {…}`
+`'on-filter': function (filterState) {...} //Optional, used with filters`
 
 You can also check out the demo app bundled with this addon to see an example of using this addon.
 
+###Adding filters
+An optional `filters` attribute can be passed to the component. `filters` should be an array of objects
+
+```javascript
+    filters: [{
+      label: 'A label for the filter',
+      name: '', // Key for filter state hash
+      type: 'select', // Currently only 'select' type is supported
+      clearable: true, // Whether or not the value can be cleared
+      showing: true,  // True for expanded and false for collapsed, optional
+      selectedValue: 'value', // Value in the list to set as selected, should match
+                              // the value attribute of an item in the 'data' list
+
+      // List of values
+      data: [{
+        label: 'Label for an item',
+        value: 'value'
+      }]
+    }]
+
+```
+
+Currently `frost-select` style filters are supported.
+
+When a filter is changed or cleared, the `on-filter` callback is called with the argument
+`filterState`, which is a hash where the keys correspond to the filter names and the value is
+the value currently reported by the filter.
 
 ## Development
 ### Setup

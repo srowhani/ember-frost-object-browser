@@ -92,6 +92,46 @@ export default Ember.Controller.extend({
     }
   },
 
+  filters: [
+    {
+      label: 'First Filter',
+      type: 'select',
+      name: 'first-filter',
+      clearable: true,
+      data: [{
+        label: 'Test1',
+        value: 'poasdfkljqpoiasdfjae'
+      }, {
+        label: 'Test2',
+        value: 'asdfasdfkljqpoihaasf'
+      }, {
+        label: 'Test3',
+        value: 'poasSfaFFsacaejktdfe'
+      }, {
+        label: 'Test4',
+        value: 'asdfasdffeacrhASHASD'
+      }]
+    },
+    {
+      label: 'Second filter',
+      type: 'select',
+      name: 'second-filter',
+      data: [{
+        label: 'Test1',
+        value: 'poasdfkljqpoiasdfjae'
+      }, {
+        label: 'Test2',
+        value: 'asdfasdfkljqpoihaasf'
+      }, {
+        label: 'Test3',
+        value: 'poasSfaFFsacaejktdfe'
+      }, {
+        label: 'Test4',
+        value: 'asdfasdffeacrhASHASD'
+      }]
+    }
+  ],
+
   actions: {
     'on-create': function () {
       window.alert('One does not merely create things')
