@@ -21,7 +21,7 @@ export default Ember.Component.extend({
     'filter-change' (filterName, value) {
       let filterState = this.get('activeFilters')
       // Create a new filter state object, this helps with observers
-      filterState = _.extend({}, filterState)
+      filterState = _.clone(filterState)
       filterState[filterName] = value
       this.updateFilterState(filterState)
     },
@@ -40,18 +40,10 @@ export default Ember.Component.extend({
       this.updateFilterState(filterState)
     },
     'toggle-hidden' (index) {
-      let filter = `filters.${index}.showing`
+      const filterIsShowing = `filters.${index}.showing`
 
-      let isShowing = this.get(filter)
-      let newVal
-      if (isShowing) {
-        newVal = false
-      } else {
-        newVal = true
-      }
-      let showing = []
-      showing[index] = newVal
-      this.set(filter, newVal)
+      const newVal = !this.get(filterIsShowing)
+      this.set(filterIsShowing, newVal)
     }
   },
   init () {
@@ -61,6 +53,5 @@ export default Ember.Component.extend({
     if (filters === undefined || filters === null) {
       this.set('activeFilters', {})
     }
-    this.set('showing', [])
   }
 })

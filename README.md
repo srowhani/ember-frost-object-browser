@@ -119,7 +119,7 @@ An optional `filters` attribute can be passed to the component. `filters` should
 
 Currently `frost-select` style filters are supported.
 
-When a filter is changed or clear, the `on-filter` callback is called with the argument
+When a filter is changed or cleared, the `on-filter` callback is called with the argument
 `filterState`, which is a hash where the keys correspond to the filter names and the value is
 the value currently reported by the filter.
 
