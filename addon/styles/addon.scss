@@ -3,13 +3,6 @@
 .frost-object-browser {
   display: flex;
   flex-direction: column;
-  padding: 0 30px;
-
-  .frost-info-bar {
-    .title {
-      margin: 0;
-    }
-  }
 
   .frost-list-item {
     .select-checkbox {
@@ -38,12 +31,12 @@
   }
 
   > .body {
+    padding: 0 20px;
     flex: 1;
     background-color: $frost-color-lgrey-3;
     display: flex;
     flex-direction: row;
     max-height: calc(100% - 90px);
-
     .content {
       flex: 1;
       display: flex;
@@ -154,8 +147,7 @@
 }
 
 .facets {
-    padding: 0 20px;
-    width: 250px;
+    width: 165px;
     p {
       font-size: 18px;
       color: $frost-color-grey-5;
@@ -170,8 +162,11 @@
       margin-top: 5px;
       margin-bottom: 10px;
     }
-    .frost-select input.trigger {
-      color: $frost-color-grey-5;
+    .frost-select {
+      width: 155px;
+      input.trigger {
+        color: $frost-color-grey-5;
+      }
     }
     .filter-header {
       margin-top: 10px;
