@@ -207,16 +207,16 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
       })
     })
 
-    component.actions['onPageChangedd'].call(component, 'forward')
+    component.actions['onPageChanged'].call(component, 'forward')
     expect(component.get('computedPageNumber')).to.equal(1)
 
-    component.actions['onPageChangedd'].call(component, 'back')
+    component.actions['onPageChanged'].call(component, 'back')
     expect(component.get('computedPageNumber')).to.equal(0)
 
-    component.actions['onPageChangedd'].call(component, 'end')
+    component.actions['onPageChanged'].call(component, 'end')
     expect(component.get('computedPageNumber')).to.equal(2)
 
-    component.actions['onPageChangedd'].call(component, 'begin')
+    component.actions['onPageChanged'].call(component, 'begin')
     expect(component.get('computedPageNumber')).to.equal(0)
   })
 
@@ -254,7 +254,7 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     this.render()
 
     ;['low', 'medium', 'high'].forEach(function (detailLevel, idx) {
-      this.$('.buttonRowSelectbar .frost-button').eq(idx).click()
+      this.$('.button-bar .frost-button').eq(idx).click()
       expect(component.get('detailLevel')).to.equal(detailLevel)
     })
   })

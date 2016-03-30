@@ -1,4 +1,4 @@
-@import 'node_modules/ember-frost-theme/scss/frost-theme';
+@import 'node_modules/ember-frost-core/addon/styles/frost-theme';
 
 .frost-object-browser {
   display: flex;
@@ -73,7 +73,7 @@
 
         .detail, .pagination {
           display: table;
-          .buttonRowSelectbar, .text {
+          .button-bar, .text {
             display: table-cell;
             vertical-align: middle;
             padding-right: 26px;
@@ -93,7 +93,7 @@
             padding-right: 5px;
           }
 
-          .buttonRowSelectbar {
+          .button-bar {
             .frost-button {
               svg * {
                 fill: $frost-color-grey-2;

@@ -47,14 +47,14 @@ describe('frost-object-browser e2e tests using ' + url, function () {
 
   it('has correct med LOD view', (done) => {
     client
-      .click('.detail .buttonRowSelectbar.low .frost-button:nth-child(2)')
+      .click('.detail .button-bar.low .frost-button:nth-child(2)')
       .verifyScreenshots('medium-LOD', [commonScreenshots])
       .call(done)
   })
 
   it('has correct high LOD view', (done) => {
     client
-      .click('.detail .buttonRowSelectbar.low .frost-button:nth-child(3)')
+      .click('.detail .button-bar.low .frost-button:nth-child(3)')
       .verifyScreenshots('high-LOD', [commonScreenshots])
       .call(done)
   })

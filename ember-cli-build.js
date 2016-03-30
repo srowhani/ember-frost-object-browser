@@ -11,8 +11,6 @@ module.exports = function (defaults) {
     },
     sassOptions: {
       includePaths: [
-        'node_modules/ember-frost-css-core/scss',
-        'node_modules/ember-frost-theme/scss'
       ]
     }
   })
@@ -22,7 +20,7 @@ module.exports = function (defaults) {
   }
 
   if (app.env === 'test') {
-    app.import('bower_components/sinonRowSelectchai/lib/sinonRowSelectchai.js', {type: 'test'})
+    app.import('bower_components/sinon-chai/lib/sinon-chai.js', {type: 'test'})
   }
 
   return app.toTree()

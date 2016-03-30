@@ -1,33 +1,33 @@
-<div class="buttonRowSelectbar left">
+<div class="button-bar left">
   {{frost-button
     disabled=leftButtonsDisabled
-    icon="frost/double-chevronRowSelectleft"
-    onRowSelectclick=(action onPageChangedd 'begin')
+    icon="frost/double-chevron-left"
+    onRowSelectclick=(action onPageChanged 'begin')
     priority="tertiary"
     size="small"
   }}
 
   {{frost-button
     disabled=leftButtonsDisabled
-    icon="frost/chevronRowSelectleft"
-    onRowSelectclick=(action onPageChangedd 'back')
+    icon="frost/chevron-left"
+    onRowSelectclick=(action onPageChanged 'back')
     priority="tertiary"
     size="small"
   }}
 </div>
 <span class="text">{{paginationText}}</span>
-<div class="buttonRowSelectbar right">
+<div class="button-bar right">
   {{frost-button
     disabled=rightButtonsDisabled
-    icon="frost/chevronRowSelectleft"
-    onRowSelectclick=(action onPageChangedd 'forward')
+    icon="frost/chevron-left"
+    onRowSelectclick=(action onPageChanged 'forward')
     priority="tertiary"
     size="small"
   }}
   {{frost-button
     disabled=rightButtonsDisabled
-    icon="frost/double-chevronRowSelectleft"
-    onRowSelectclick=(action onPageChangedd 'end')
+    icon="frost/double-chevron-left"
+    onRowSelectclick=(action onPageChanged 'end')
     priority="tertiary"
     size="small"
   }}

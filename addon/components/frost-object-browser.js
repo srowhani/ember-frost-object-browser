@@ -201,7 +201,7 @@ export default Ember.Component.extend({
      * When page number has been changed by paginaor
      * @param {String} where - new page number
      */
-    'onPageChangedd': function (where) {
+    onPageChanged (where) {
       const externalPageNumber = this.get('pageNumber')
       const total = this.get('computedValuesTotal')
       const itemsPerPage = this.get('itemsPerPage')
@@ -222,7 +222,7 @@ export default Ember.Component.extend({
       }
 
       if (externalPageNumber !== null) {
-        this.sendAction('onPageChangedd', currentPage)
+        this.sendAction('onPageChanged', currentPage)
       } else {
         this.set('_pageNumber', currentPage)
       }

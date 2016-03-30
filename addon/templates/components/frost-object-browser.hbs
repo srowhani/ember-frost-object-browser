@@ -28,7 +28,7 @@
       <div class="pagination">
         {{frost-object-browser-paginator
           itemsPerPage=itemsPerPage
-          onPageChangedd=(action 'onPageChangedd')
+          onPageChanged=(action 'onPageChanged')
           page=computedPageNumber
           total=computedValuesTotal
         }}
@@ -38,7 +38,7 @@
           <!-- TODO: make this a variable to support i18n better -->
           View:
         </span>
-        <div class="buttonRowSelectbar {{ detailLevel }}">
+        <div class="button-bar {{ detailLevel }}">
           {{#if viewSchema.low}}
             {{frost-button
               disabled=(eq detailLevel 'low')
