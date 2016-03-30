@@ -133,7 +133,7 @@ export default Ember.Controller.extend({
   ],
 
   actions: {
-    'onRowSelectcreate': function () {
+    'on-create': function () {
       window.alert('One does not merely create things')
     },
 
@@ -149,7 +149,7 @@ export default Ember.Controller.extend({
       this.set('selected', selected)
     },
 
-    'onRowSelectrow-select': function (allSelected, newSelected, deSelected) {
+    'on-row-select': function (allSelected, newSelected, deSelected) {
       if (allSelected.length === 1) {
         this.set('actionBarItems', [
           {label: 'Details', id: 'details', enabled: true},

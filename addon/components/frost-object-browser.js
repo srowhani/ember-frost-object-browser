@@ -130,7 +130,7 @@ export default Ember.Component.extend({
     if (selectedItems.length > remainingSelectedItems.length) {
       Ember.run.later(this, function () {
         this.set('selectedItems', remainingSelectedItems)
-        const onRowSelect = this.get('onRowSelectrow-select')
+        const onRowSelect = this.get('on-row-select')
         if (onRowSelect) {
           onRowSelect(remainingSelectedItems, [], [])
         }
@@ -144,7 +144,7 @@ export default Ember.Component.extend({
   actions: {
 
     /**
-     * Prepare arguments for and call our onRowSelectrow-select callback
+     * Prepare arguments for and call our on-row-select callback
      * @param {SelectedRecord} selectedRecord - record that was just selected
      */
     'onRowSelectselect': function (attr) {
@@ -158,7 +158,7 @@ export default Ember.Component.extend({
         allSelected.removeObject(attr.record)
         deSelected = attr.record
       }
-      const onRowSelect = this.get('onRowSelectrow-select')
+      const onRowSelect = this.get('on-row-select')
       if (onRowSelect) {
         onRowSelect(allSelected, newSelected, deSelected)
       }
@@ -175,8 +175,8 @@ export default Ember.Component.extend({
       }
     },
 
-    'onRowSelectcreate': function () {
-      const onCreate = this.get('onRowSelectcreate')
+    'on-create': function () {
+      const onCreate = this.get('on-create')
 
       if (onCreate) {
         onCreate()

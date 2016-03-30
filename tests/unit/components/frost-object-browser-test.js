@@ -130,9 +130,9 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
   })
 
   it('action: onRowSelectselect handles new selection', function () {
-    // setup stub for onRowSelectrow-select callback
+    // setup stub for on-row-select callback
     const onRowSelect = sandbox.stub()
-    component.set('onRowSelectrow-select', onRowSelect)
+    component.set('on-row-select', onRowSelect)
 
     // setup existing selectedItems
     component.set('selectedItems', Ember.A([]))
@@ -150,9 +150,9 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
   })
 
   it('action: onRowSelectselect handles de-selection', function () {
-    // setup stub for onRowSelectrow-select callback
+    // setup stub for on-row-select callback
     const onRowSelect = sandbox.stub()
-    component.set('onRowSelectrow-select', onRowSelect)
+    component.set('on-row-select', onRowSelect)
 
     // setup existing selectedItems
     const record1 = {foo: 'bar'}
