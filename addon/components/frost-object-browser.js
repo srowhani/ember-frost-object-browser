@@ -165,11 +165,11 @@ export default Ember.Component.extend({
     },
 
     /**
-     * Prepare argument for and call our onRowSelectactionRowSelectclick callback
+     * Prepare argument for and call our onRowSelectaction-lick callback
      * @param {String} buttonId - id of the button that got clicked
      */
-    'onRowSelectbuttonRowSelectclick': function (buttonId) {
-      const actionClick = this.get('onRowSelectactionRowSelectclick')
+    'onRowSelectbutton-lick': function (buttonId) {
+      const actionClick = this.get('onRowSelectaction-lick')
       if (_.isFunction(actionClick)) {
         actionClick(buttonId, this.get('selectedItems'))
       }

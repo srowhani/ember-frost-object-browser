@@ -8,8 +8,8 @@ import resolver from '../../helpers/resolver'
 const FrostButtonComponent = Ember.Component.extend({
   classNames: ['frost-button'],
   click () {
-    if (this.attrs['onRowSelectclick']) {
-      this.attrs['onRowSelectclick']()
+    if (this.attrs['on-lick']) {
+      this.attrs['on-lick']()
     }
   }
 })
@@ -175,16 +175,16 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     expect(onRowSelect.firstCall.args[2]).to.eql({foo: 'bar'})
   })
 
-  it('action: onRowSelectbuttonRowSelectclick calls onRowSelectactionRowSelectclick with selectedItems', function () {
-    // setup stub for onRowSelectactionRowSelectclick callback
+  it('action: onRowSelectbutton-lick calls onRowSelectaction-lick with selectedItems', function () {
+    // setup stub for onRowSelectaction-lick callback
     const onActionClick = sandbox.stub()
-    component.set('onRowSelectactionRowSelectclick', onActionClick)
+    component.set('onRowSelectaction-lick', onActionClick)
 
     const selectedItems = [{foo: 'bar'}, {bar: 'baz'}]
     component.set('selectedItems', selectedItems)
 
     // trigger the action
-    component.actions['onRowSelectbuttonRowSelectclick'].call(component, 'buttonRowSelect1')
+    component.actions['onRowSelectbutton-lick'].call(component, 'buttonRowSelect1')
 
     expect(onActionClick.firstCall).to.have.been.calledWith('buttonRowSelect1', selectedItems)
   })

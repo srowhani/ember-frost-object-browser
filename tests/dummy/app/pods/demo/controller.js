@@ -171,7 +171,7 @@ export default Ember.Controller.extend({
       }
     },
 
-    'onRowSelectactionRowSelectclick': function (buttonId, selectedItems) {
+    'onRowSelectaction-lick': function (buttonId, selectedItems) {
       const ids = selectedItems.map((si) => si.get('id')).join(', ')
       if (buttonId === 'delete') {
         selectedItems.forEach((item) => {

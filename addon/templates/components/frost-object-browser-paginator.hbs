@@ -2,7 +2,7 @@
   {{frost-button
     disabled=leftButtonsDisabled
     icon="frost/double-chevron-left"
-    onRowSelectclick=(action onPageChanged 'begin')
+    on-lick=(action onPageChanged 'begin')
     priority="tertiary"
     size="small"
   }}
@@ -10,7 +10,7 @@
   {{frost-button
     disabled=leftButtonsDisabled
     icon="frost/chevron-left"
-    onRowSelectclick=(action onPageChanged 'back')
+    on-lick=(action onPageChanged 'back')
     priority="tertiary"
     size="small"
   }}
@@ -20,14 +20,14 @@
   {{frost-button
     disabled=rightButtonsDisabled
     icon="frost/chevron-left"
-    onRowSelectclick=(action onPageChanged 'forward')
+    on-lick=(action onPageChanged 'forward')
     priority="tertiary"
     size="small"
   }}
   {{frost-button
     disabled=rightButtonsDisabled
     icon="frost/double-chevron-left"
-    onRowSelectclick=(action onPageChanged 'end')
+    on-lick=(action onPageChanged 'end')
     priority="tertiary"
     size="small"
   }}

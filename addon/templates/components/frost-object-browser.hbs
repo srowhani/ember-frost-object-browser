@@ -10,7 +10,7 @@
   <div class="top-buttons" background-color='red'>
     {{frost-button
       icon="frost/infobar-create"
-      onRowSelectclick=(action "on-create")
+      on-lick=(action "on-create")
       priority="tertiary"
       size="medium"
       text="Create"
@@ -42,7 +42,7 @@
           {{#if viewSchema.low}}
             {{frost-button
               disabled=(eq detailLevel 'low')
-              onRowSelectclick=(action 'onDetailChange' 'low')
+              on-lick=(action 'onDetailChange' 'low')
               priority="tertiary"
               size="small"
               icon="frost/list-small"
@@ -51,7 +51,7 @@
           {{#if viewSchema.medium}}
             {{frost-button
               disabled=(eq detailLevel 'medium')
-              onRowSelectclick=(action 'onDetailChange' 'medium')
+              on-lick=(action 'onDetailChange' 'medium')
               priority="tertiary"
               size="small"
               icon="frost/list-medium"
@@ -60,7 +60,7 @@
           {{#if viewSchema.high}}
             {{frost-button
               disabled=(eq detailLevel 'high')
-              onRowSelectclick=(action 'onDetailChange' 'high')
+              on-lick=(action 'onDetailChange' 'high')
               priority="tertiary"
               size="small"
               icon="frost/list-large"
@@ -84,7 +84,7 @@
       {{#each actionBarItems as |actionBarItem|}}
         {{#frost-button
           disabled=(not actionBarItem.enabled)
-          onRowSelectclick=(action 'onRowSelectbuttonRowSelectclick' actionBarItem.id)
+          on-lick=(action 'onRowSelectbutton-lick' actionBarItem.id)
           priority="secondary"
           size="large"
         }}
