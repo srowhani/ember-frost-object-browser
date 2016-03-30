@@ -84,7 +84,7 @@
       {{#each actionBarItems as |actionBarItem|}}
         {{#frost-button
           disabled=(not actionBarItem.enabled)
-          on-click=(action 'onRowSelectbutton-click' actionBarItem.id)
+          on-click=(action 'on-button-click' actionBarItem.id)
           priority="secondary"
           size="large"
         }}

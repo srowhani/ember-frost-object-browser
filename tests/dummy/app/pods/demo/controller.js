@@ -137,7 +137,7 @@ export default Ember.Controller.extend({
       window.alert('One does not merely create things')
     },
 
-    'onRowSelectoption-selected': function () {
+    'on-option-selected': function () {
       let selected = this.get('selected')
       console.log('Facet changed')
       const facet = arguments[0]

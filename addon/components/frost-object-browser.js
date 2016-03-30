@@ -168,7 +168,7 @@ export default Ember.Component.extend({
      * Prepare argument for and call our on-action-click callback
      * @param {String} buttonId - id of the button that got clicked
      */
-    'onRowSelectbutton-click': function (buttonId) {
+    'on-button-click': function (buttonId) {
       const actionClick = this.get('on-action-click')
       if (_.isFunction(actionClick)) {
         actionClick(buttonId, this.get('selectedItems'))

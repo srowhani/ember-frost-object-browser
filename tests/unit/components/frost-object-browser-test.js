@@ -175,7 +175,7 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     expect(onRowSelect.firstCall.args[2]).to.eql({foo: 'bar'})
   })
 
-  it('action: onRowSelectbutton-click calls on-action-click with selectedItems', function () {
+  it('action: on-button-click calls on-action-click with selectedItems', function () {
     // setup stub for on-action-click callback
     const onActionClick = sandbox.stub()
     component.set('on-action-click', onActionClick)
@@ -184,7 +184,7 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     component.set('selectedItems', selectedItems)
 
     // trigger the action
-    component.actions['onRowSelectbutton-click'].call(component, 'button-1')
+    component.actions['on-button-click'].call(component, 'button-1')
 
     expect(onActionClick.firstCall).to.have.been.calledWith('button-1', selectedItems)
   })
