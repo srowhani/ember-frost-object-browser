@@ -35,16 +35,16 @@ ember install ember-frost-object-browser
   facets=model.facets
   model=model.model
   actionBarItems=actionBarItems
-  on-create=(action "on-create")
+  onCreate=(action "onCreate")
   onDetailChange=(action "onDetailChange")
-  onFacetChange=(action "on-option-selected")
-  on-row-select=(action "on-row-select")
-  on-action-click=(action "on-action-click")
+  onFacetChange=(action "onOptionSelected")
+  onRowSelect=(action "onRowSelect")
+  onActionClick=(action "onActionClick")
   title="Resources"
   values=model.visibleResources
   viewSchema=viewSchema
   filters=filters
-  on-filter=on-filter
+  onFilter=onFilter
 }}
 ```
 
@@ -119,7 +119,7 @@ An optional `filters` attribute can be passed to the component. `filters` should
 
 Currently `frost-select` style filters are supported.
 
-When a filter is changed or cleared, the `on-filter` callback is called with the argument
+When a filter is changed or cleared, the `onFilter` callback is called with the argument
 `filterState`, which is a hash where the keys correspond to the filter names and the value is
 the value currently reported by the filter.
 

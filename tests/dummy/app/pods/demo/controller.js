@@ -133,7 +133,7 @@ export default Ember.Controller.extend({
   ],
 
   actions: {
-    'on-create': function () {
+    'onCreate': function () {
       window.alert('One does not merely create things')
     },
 
@@ -171,7 +171,7 @@ export default Ember.Controller.extend({
       }
     },
 
-    'on-action-click': function (buttonId, selectedItems) {
+    'onActionClick': function (buttonId, selectedItems) {
       const ids = selectedItems.map((si) => si.get('id')).join(', ')
       if (buttonId === 'delete') {
         selectedItems.forEach((item) => {

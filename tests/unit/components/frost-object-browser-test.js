@@ -8,8 +8,8 @@ import resolver from '../../helpers/resolver'
 const FrostButtonComponent = Ember.Component.extend({
   classNames: ['frost-button'],
   click () {
-    if (this.attrs['on-click']) {
-      this.attrs['on-click']()
+    if (this.attrs.onClick) {
+      this.attrs.onClick()
     }
   }
 })
@@ -129,10 +129,10 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     expect(component.get('computedValuesTotal')).to.equal(8)
   })
 
-  it('action: on-select handles new selection', function () {
-    // setup stub for on-row-select callback
+  it('action: onSelect handles new selection', function () {
+    // setup stub for onRowSelect callback
     const onRowSelect = sandbox.stub()
-    component.set('on-row-select', onRowSelect)
+    component.set('onRowSelect', onRowSelect)
 
     // setup existing selectedItems
     component.set('selectedItems', Ember.A([]))
@@ -142,17 +142,17 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
       record: {foo: 'bar'}
     }
 
-    component.actions['on-select'].call(component, attr)
+    component.actions.onSelect.call(component, attr)
     expect(onRowSelect.firstCall.args[0]).to.have.length(1)
     expect(onRowSelect.firstCall.args[0][0]).to.eql({foo: 'bar'})
     expect(onRowSelect.firstCall.args[1]).to.eql({foo: 'bar'})
     expect(onRowSelect.firstCall.args[2]).to.eql({})
   })
 
-  it('action: on-select handles de-selection', function () {
-    // setup stub for on-row-select callback
+  it('action: onSelect handles de-selection', function () {
+    // setup stub for onRowSelect callback
     const onRowSelect = sandbox.stub()
-    component.set('on-row-select', onRowSelect)
+    component.set('onRowSelect', onRowSelect)
 
     // setup existing selectedItems
     const record1 = {foo: 'bar'}
@@ -167,7 +167,7 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     }
 
     // trigger the action
-    component.actions['on-select'].call(component, attr)
+    component.actions.onSelect.call(component, attr)
 
     expect(onRowSelect.firstCall.args[0]).to.have.length(1)
     expect(onRowSelect.firstCall.args[0][0]).to.eql({bar: 'baz'})
@@ -175,16 +175,16 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     expect(onRowSelect.firstCall.args[2]).to.eql({foo: 'bar'})
   })
 
-  it('action: on-button-click calls on-action-click with selectedItems', function () {
-    // setup stub for on-action-click callback
+  it('action: onButtonClick calls onActionClick with selectedItems', function () {
+    // setup stub for onActionClick callback
     const onActionClick = sandbox.stub()
-    component.set('on-action-click', onActionClick)
+    component.set('onActionClick', onActionClick)
 
     const selectedItems = [{foo: 'bar'}, {bar: 'baz'}]
     component.set('selectedItems', selectedItems)
 
     // trigger the action
-    component.actions['on-button-click'].call(component, 'button-1')
+    component.actions.onButtonClick.call(component, 'button-1')
 
     expect(onActionClick.firstCall).to.have.been.calledWith('button-1', selectedItems)
   })
@@ -207,16 +207,16 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
       })
     })
 
-    component.actions['onPageChanged'].call(component, 'forward')
+    component.actions.onPageChanged.call(component, 'forward')
     expect(component.get('computedPageNumber')).to.equal(1)
 
-    component.actions['onPageChanged'].call(component, 'back')
+    component.actions.onPageChanged.call(component, 'back')
     expect(component.get('computedPageNumber')).to.equal(0)
 
-    component.actions['onPageChanged'].call(component, 'end')
+    component.actions.onPageChanged.call(component, 'end')
     expect(component.get('computedPageNumber')).to.equal(2)
 
-    component.actions['onPageChanged'].call(component, 'begin')
+    component.actions.onPageChanged.call(component, 'begin')
     expect(component.get('computedPageNumber')).to.equal(0)
   })
 
@@ -234,16 +234,16 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     const sendAction = sandbox.stub()
     component.set('sendAction', sendAction)
 
-    component.actions['onPageChanged'].call(component, 'forward')
+    component.actions.onPageChanged.call(component, 'forward')
     expect(sendAction.firstCall).to.have.been.calledWith('onPageChanged', 3)
 
-    component.actions['onPageChanged'].call(component, 'back')
+    component.actions.onPageChanged.call(component, 'back')
     expect(sendAction).to.have.been.calledWith('onPageChanged', 1)
 
-    component.actions['onPageChanged'].call(component, 'end')
+    component.actions.onPageChanged.call(component, 'end')
     expect(sendAction).to.have.been.calledWith('onPageChanged', 3)
 
-    component.actions['onPageChanged'].call(component, 'begin')
+    component.actions.onPageChanged.call(component, 'begin')
     expect(sendAction).to.have.been.calledWith('onPageChanged', 0)
   })
 

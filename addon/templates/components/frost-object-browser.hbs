@@ -10,7 +10,7 @@
   <div class="top-buttons" background-color='red'>
     {{frost-button
       icon="frost/infobar-create"
-      on-click=(action "on-create")
+      onClick=(action "onCreate")
       priority="tertiary"
       size="medium"
       text="Create"
@@ -20,7 +20,7 @@
 </div>
 <div class="body">
     {{#if filters}}
-    {{frost-object-browser-filter filters=filters on-filter=on-filter}}
+    {{frost-object-browser-filter filters=filters onFilter=onFilter}}
     {{/if}}
   <div class="content">
     <div class="tools">
@@ -42,7 +42,7 @@
           {{#if viewSchema.low}}
             {{frost-button
               disabled=(eq detailLevel 'low')
-              on-click=(action 'onDetailChange' 'low')
+              onClick=(action 'onDetailChange' 'low')
               priority="tertiary"
               size="small"
               icon="frost/list-small"
@@ -51,7 +51,7 @@
           {{#if viewSchema.medium}}
             {{frost-button
               disabled=(eq detailLevel 'medium')
-              on-click=(action 'onDetailChange' 'medium')
+              onClick=(action 'onDetailChange' 'medium')
               priority="tertiary"
               size="small"
               icon="frost/list-medium"
@@ -60,7 +60,7 @@
           {{#if viewSchema.high}}
             {{frost-button
               disabled=(eq detailLevel 'high')
-              on-click=(action 'onDetailChange' 'high')
+              onClick=(action 'onDetailChange' 'high')
               priority="tertiary"
               size="small"
               icon="frost/list-large"
@@ -69,7 +69,7 @@
         </div>
       </div>
     </div>
-    {{#frost-list on-select=(action 'on-select') selections=selectedItems records=computedValues as |record|}}
+    {{#frost-list onSelect=(action 'onSelect') selections=selectedItems records=computedValues as |record|}}
       {{#frost-object-browser-list-item model=record as |value|}}
         {{frost-bunsen-detail
           model=model
@@ -84,7 +84,7 @@
       {{#each actionBarItems as |actionBarItem|}}
         {{#frost-button
           disabled=(not actionBarItem.enabled)
-          on-click=(action 'on-button-click' actionBarItem.id)
+          onClick=(action 'onButtonClick' actionBarItem.id)
           priority="secondary"
           size="large"
         }}

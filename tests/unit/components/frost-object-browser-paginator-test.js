@@ -59,7 +59,7 @@ describeComponent('frost-object-browser-paginator', 'Unit | frost-object-browser
     const sendAction = sandbox.stub()
     component.set('sendAction', sendAction)
 
-    component['onPageChanged']('back')
+    component.onPageChanged('back')
     expect(sendAction.firstCall.args[0]).to.equal('onPageChanged')
     expect(sendAction.firstCall.args[1]).to.equal('back')
   })

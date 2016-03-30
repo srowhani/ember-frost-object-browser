@@ -130,7 +130,7 @@ export default Ember.Component.extend({
     if (selectedItems.length > remainingSelectedItems.length) {
       Ember.run.later(this, function () {
         this.set('selectedItems', remainingSelectedItems)
-        const onRowSelect = this.get('on-row-select')
+        const onRowSelect = this.get('onRowSelect')
         if (onRowSelect) {
           onRowSelect(remainingSelectedItems, [], [])
         }
@@ -147,7 +147,7 @@ export default Ember.Component.extend({
      * Prepare arguments for and call our on-row-select callback
      * @param {SelectedRecord} selectedRecord - record that was just selected
      */
-    'on-select': function (attr) {
+    onSelect (attr) {
       let newSelected = {}
       let deSelected = {}
       const allSelected = this.get('selectedItems')
@@ -158,25 +158,25 @@ export default Ember.Component.extend({
         allSelected.removeObject(attr.record)
         deSelected = attr.record
       }
-      const onRowSelect = this.get('on-row-select')
+      const onRowSelect = this.get('onRowSelect')
       if (onRowSelect) {
         onRowSelect(allSelected, newSelected, deSelected)
       }
     },
 
     /**
-     * Prepare argument for and call our on-action-click callback
+     * Prepare argument for and call our onActionClick callback
      * @param {String} buttonId - id of the button that got clicked
      */
-    'on-button-click': function (buttonId) {
-      const actionClick = this.get('on-action-click')
+    onButtonClick (buttonId) {
+      const actionClick = this.get('onActionClick')
       if (_.isFunction(actionClick)) {
         actionClick(buttonId, this.get('selectedItems'))
       }
     },
 
-    'on-create': function () {
-      const onCreate = this.get('on-create')
+    onCreate () {
+      const onCreate = this.get('onCreate')
 
       if (onCreate) {
         onCreate()
