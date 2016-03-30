@@ -80,7 +80,7 @@
 
         .detail, .pagination {
           display: table;
-          .button-bar, .text {
+          .buttonRowSelectbar, .text {
             display: table-cell;
             vertical-align: middle;
             padding-right: 26px;
@@ -100,7 +100,7 @@
             padding-right: 5px;
           }
 
-          .button-bar {
+          .buttonRowSelectbar {
             .frost-button {
               svg * {
                 fill: $frost-color-grey-2;

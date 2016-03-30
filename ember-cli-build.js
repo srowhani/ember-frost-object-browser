@@ -22,7 +22,7 @@ module.exports = function (defaults) {
   }
 
   if (app.env === 'test') {
-    app.import('bower_components/sinon-chai/lib/sinon-chai.js', {type: 'test'})
+    app.import('bower_components/sinonRowSelectchai/lib/sinonRowSelectchai.js', {type: 'test'})
   }
 
   return app.toTree()

@@ -130,7 +130,7 @@ export default Ember.Component.extend({
     if (selectedItems.length > remainingSelectedItems.length) {
       Ember.run.later(this, function () {
         this.set('selectedItems', remainingSelectedItems)
-        const onRowSelect = this.get('on-row-select')
+        const onRowSelect = this.get('onRowSelectrow-select')
         if (onRowSelect) {
           onRowSelect(remainingSelectedItems, [], [])
         }
@@ -144,10 +144,10 @@ export default Ember.Component.extend({
   actions: {
 
     /**
-     * Prepare arguments for and call our on-row-select callback
+     * Prepare arguments for and call our onRowSelectrow-select callback
      * @param {SelectedRecord} selectedRecord - record that was just selected
      */
-    'on-select': function (attr) {
+    'onRowSelectselect': function (attr) {
       let newSelected = {}
       let deSelected = {}
       const allSelected = this.get('selectedItems')
@@ -158,25 +158,25 @@ export default Ember.Component.extend({
         allSelected.removeObject(attr.record)
         deSelected = attr.record
       }
-      const onRowSelect = this.get('on-row-select')
+      const onRowSelect = this.get('onRowSelectrow-select')
       if (onRowSelect) {
         onRowSelect(allSelected, newSelected, deSelected)
       }
     },
 
     /**
-     * Prepare argument for and call our on-action-click callback
+     * Prepare argument for and call our onRowSelectactionRowSelectclick callback
      * @param {String} buttonId - id of the button that got clicked
      */
-    'on-button-click': function (buttonId) {
-      const actionClick = this.get('on-action-click')
+    'onRowSelectbuttonRowSelectclick': function (buttonId) {
+      const actionClick = this.get('onRowSelectactionRowSelectclick')
       if (_.isFunction(actionClick)) {
         actionClick(buttonId, this.get('selectedItems'))
       }
     },
 
-    'on-create': function () {
-      const onCreate = this.get('on-create')
+    'onRowSelectcreate': function () {
+      const onCreate = this.get('onRowSelectcreate')
 
       if (onCreate) {
         onCreate()
@@ -187,8 +187,8 @@ export default Ember.Component.extend({
      * Change our LOD
      * @param {String} newLevel - new level ('low', 'med', high')
      */
-    'on-detail-change': function (newLevel) {
-      const onDetailChange = this.get('on-detail-change')
+    onDetailChange (newLevel) {
+      const onDetailChange = this.get('onDetailChange')
 
       this.set('detailLevel', newLevel)
 
@@ -201,7 +201,7 @@ export default Ember.Component.extend({
      * When page number has been changed by paginaor
      * @param {String} where - new page number
      */
-    'on-page-changed': function (where) {
+    'onPageChangedd': function (where) {
       const externalPageNumber = this.get('pageNumber')
       const total = this.get('computedValuesTotal')
       const itemsPerPage = this.get('itemsPerPage')
@@ -222,7 +222,7 @@ export default Ember.Component.extend({
       }
 
       if (externalPageNumber !== null) {
-        this.sendAction('on-page-changed', currentPage)
+        this.sendAction('onPageChangedd', currentPage)
       } else {
         this.set('_pageNumber', currentPage)
       }

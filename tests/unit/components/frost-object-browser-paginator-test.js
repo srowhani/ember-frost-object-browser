@@ -55,12 +55,12 @@ describeComponent('frost-object-browser-paginator', 'Unit | frost-object-browser
     expect(component.get('rightButtonsDisabled')).to.equal(true)
   })
 
-  it('action: on-page-change sends on-page-changed action', function () {
+  it('action: onPageChanged sends onPageChangedd action', function () {
     const sendAction = sandbox.stub()
     component.set('sendAction', sendAction)
 
-    component['on-page-changed']('back')
-    expect(sendAction.firstCall.args[0]).to.equal('on-page-changed')
+    component['onPageChangedd']('back')
+    expect(sendAction.firstCall.args[0]).to.equal('onPageChangedd')
     expect(sendAction.firstCall.args[1]).to.equal('back')
   })
 })

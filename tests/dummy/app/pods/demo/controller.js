@@ -93,11 +93,11 @@ export default Ember.Controller.extend({
   },
 
   actions: {
-    'on-create': function () {
+    'onRowSelectcreate': function () {
       window.alert('One does not merely create things')
     },
 
-    'on-option-selected': function () {
+    'onRowSelectoptionRowSelectselected': function () {
       let selected = this.get('selected')
       console.log('Facet changed')
       const facet = arguments[0]
@@ -109,7 +109,7 @@ export default Ember.Controller.extend({
       this.set('selected', selected)
     },
 
-    'on-row-select': function (allSelected, newSelected, deSelected) {
+    'onRowSelectrow-select': function (allSelected, newSelected, deSelected) {
       if (allSelected.length === 1) {
         this.set('actionBarItems', [
           {label: 'Details', id: 'details', enabled: true},
@@ -131,7 +131,7 @@ export default Ember.Controller.extend({
       }
     },
 
-    'on-action-click': function (buttonId, selectedItems) {
+    'onRowSelectactionRowSelectclick': function (buttonId, selectedItems) {
       const ids = selectedItems.map((si) => si.get('id')).join(', ')
       if (buttonId === 'delete') {
         selectedItems.forEach((item) => {
@@ -142,7 +142,7 @@ export default Ember.Controller.extend({
       }
     },
 
-    'on-detail-change': function (level) {
+    onDetailChange (level) {
       Ember.Logger.log(`Level of detail changed to ${level}`)
     }
   }

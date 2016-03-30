@@ -10,7 +10,7 @@
   <div class="top-buttons" background-color='red'>
     {{frost-button
       icon="frost/infobar-create"
-      on-click=(action "on-create")
+      onRowSelectclick=(action "onRowSelectcreate")
       priority="tertiary"
       size="medium"
       text="Create"
@@ -25,7 +25,7 @@
       <div class="pagination">
         {{frost-object-browser-paginator
           itemsPerPage=itemsPerPage
-          on-page-changed=(action 'on-page-changed')
+          onPageChangedd=(action 'onPageChangedd')
           page=computedPageNumber
           total=computedValuesTotal
         }}
@@ -35,11 +35,11 @@
           <!-- TODO: make this a variable to support i18n better -->
           View:
         </span>
-        <div class="button-bar {{ detailLevel }}">
+        <div class="buttonRowSelectbar {{ detailLevel }}">
           {{#if viewSchema.low}}
             {{frost-button
               disabled=(eq detailLevel 'low')
-              on-click=(action 'on-detail-change' 'low')
+              onRowSelectclick=(action 'onDetailChange' 'low')
               priority="tertiary"
               size="small"
               icon="frost/list-small"
@@ -48,7 +48,7 @@
           {{#if viewSchema.medium}}
             {{frost-button
               disabled=(eq detailLevel 'medium')
-              on-click=(action 'on-detail-change' 'medium')
+              onRowSelectclick=(action 'onDetailChange' 'medium')
               priority="tertiary"
               size="small"
               icon="frost/list-medium"
@@ -57,7 +57,7 @@
           {{#if viewSchema.high}}
             {{frost-button
               disabled=(eq detailLevel 'high')
-              on-click=(action 'on-detail-change' 'high')
+              onRowSelectclick=(action 'onDetailChange' 'high')
               priority="tertiary"
               size="small"
               icon="frost/list-large"
@@ -66,7 +66,7 @@
         </div>
       </div>
     </div>
-    {{#frost-list on-select=(action 'on-select') selections=selectedItems records=computedValues as |record|}}
+    {{#frost-list onRowSelectselect=(action 'onRowSelectselect') selections=selectedItems records=computedValues as |record|}}
       {{#frost-object-browser-list-item model=record as |value|}}
         {{frost-bunsen-detail
           model=model
@@ -81,7 +81,7 @@
       {{#each actionBarItems as |actionBarItem|}}
         {{#frost-button
           disabled=(not actionBarItem.enabled)
-          on-click=(action 'on-button-click' actionBarItem.id)
+          onRowSelectclick=(action 'onRowSelectbuttonRowSelectclick' actionBarItem.id)
           priority="secondary"
           size="large"
         }}

@@ -148,7 +148,7 @@ describeComponent(
         model=model.model
       }}`)
 
-      this.$().find('.pagination .button-bar.right button').eq(0).click()
+      this.$().find('.pagination .buttonRowSelectbar.right button').eq(0).click()
 
       return wait()
         .then(() => {
