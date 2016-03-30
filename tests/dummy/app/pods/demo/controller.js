@@ -137,7 +137,7 @@ export default Ember.Controller.extend({
       window.alert('One does not merely create things')
     },
 
-    'onRowSelectoptionRowSelectselected': function () {
+    'onRowSelectoption-selected': function () {
       let selected = this.get('selected')
       console.log('Facet changed')
       const facet = arguments[0]
@@ -171,7 +171,7 @@ export default Ember.Controller.extend({
       }
     },
 
-    'onRowSelectaction-lick': function (buttonId, selectedItems) {
+    'on-action-click': function (buttonId, selectedItems) {
       const ids = selectedItems.map((si) => si.get('id')).join(', ')
       if (buttonId === 'delete') {
         selectedItems.forEach((item) => {

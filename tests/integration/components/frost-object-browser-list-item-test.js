@@ -11,7 +11,7 @@ describeComponent(
   function () {
     it('list item renders', function () {
       this.set('foo', () => {})
-      this.render(hbs`{{frost-object-browser-list-item onRowSelectselect=foo}}`)
+      this.render(hbs`{{frost-object-browser-list-item on-select=foo}}`)
       expect(this.$()).to.have.length(1)
     })
 

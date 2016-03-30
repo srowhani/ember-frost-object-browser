@@ -8,8 +8,8 @@ import resolver from '../../helpers/resolver'
 const FrostButtonComponent = Ember.Component.extend({
   classNames: ['frost-button'],
   click () {
-    if (this.attrs['on-lick']) {
-      this.attrs['on-lick']()
+    if (this.attrs['on-click']) {
+      this.attrs['on-click']()
     }
   }
 })
@@ -129,7 +129,7 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     expect(component.get('computedValuesTotal')).to.equal(8)
   })
 
-  it('action: onRowSelectselect handles new selection', function () {
+  it('action: on-select handles new selection', function () {
     // setup stub for on-row-select callback
     const onRowSelect = sandbox.stub()
     component.set('on-row-select', onRowSelect)
@@ -142,14 +142,14 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
       record: {foo: 'bar'}
     }
 
-    component.actions['onRowSelectselect'].call(component, attr)
+    component.actions['on-select'].call(component, attr)
     expect(onRowSelect.firstCall.args[0]).to.have.length(1)
     expect(onRowSelect.firstCall.args[0][0]).to.eql({foo: 'bar'})
     expect(onRowSelect.firstCall.args[1]).to.eql({foo: 'bar'})
     expect(onRowSelect.firstCall.args[2]).to.eql({})
   })
 
-  it('action: onRowSelectselect handles de-selection', function () {
+  it('action: on-select handles de-selection', function () {
     // setup stub for on-row-select callback
     const onRowSelect = sandbox.stub()
     component.set('on-row-select', onRowSelect)
@@ -167,7 +167,7 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     }
 
     // trigger the action
-    component.actions['onRowSelectselect'].call(component, attr)
+    component.actions['on-select'].call(component, attr)
 
     expect(onRowSelect.firstCall.args[0]).to.have.length(1)
     expect(onRowSelect.firstCall.args[0][0]).to.eql({bar: 'baz'})
@@ -175,18 +175,18 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     expect(onRowSelect.firstCall.args[2]).to.eql({foo: 'bar'})
   })
 
-  it('action: onRowSelectbutton-lick calls onRowSelectaction-lick with selectedItems', function () {
-    // setup stub for onRowSelectaction-lick callback
+  it('action: onRowSelectbutton-click calls on-action-click with selectedItems', function () {
+    // setup stub for on-action-click callback
     const onActionClick = sandbox.stub()
-    component.set('onRowSelectaction-lick', onActionClick)
+    component.set('on-action-click', onActionClick)
 
     const selectedItems = [{foo: 'bar'}, {bar: 'baz'}]
     component.set('selectedItems', selectedItems)
 
     // trigger the action
-    component.actions['onRowSelectbutton-lick'].call(component, 'buttonRowSelect1')
+    component.actions['onRowSelectbutton-click'].call(component, 'button-1')
 
-    expect(onActionClick.firstCall).to.have.been.calledWith('buttonRowSelect1', selectedItems)
+    expect(onActionClick.firstCall).to.have.been.calledWith('button-1', selectedItems)
   })
 
   it('action: onDetailChange sets detailLevel', function () {

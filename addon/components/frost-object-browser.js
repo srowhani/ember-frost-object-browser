@@ -147,7 +147,7 @@ export default Ember.Component.extend({
      * Prepare arguments for and call our on-row-select callback
      * @param {SelectedRecord} selectedRecord - record that was just selected
      */
-    'onRowSelectselect': function (attr) {
+    'on-select': function (attr) {
       let newSelected = {}
       let deSelected = {}
       const allSelected = this.get('selectedItems')
@@ -165,11 +165,11 @@ export default Ember.Component.extend({
     },
 
     /**
-     * Prepare argument for and call our onRowSelectaction-lick callback
+     * Prepare argument for and call our on-action-click callback
      * @param {String} buttonId - id of the button that got clicked
      */
-    'onRowSelectbutton-lick': function (buttonId) {
-      const actionClick = this.get('onRowSelectaction-lick')
+    'onRowSelectbutton-click': function (buttonId) {
+      const actionClick = this.get('on-action-click')
       if (_.isFunction(actionClick)) {
         actionClick(buttonId, this.get('selectedItems'))
       }

@@ -37,9 +37,9 @@ ember install ember-frost-object-browser
   actionBarItems=actionBarItems
   on-create=(action "on-create")
   onDetailChange=(action "onDetailChange")
-  onRowSelectfacet-change=(action "onRowSelectoptionRowSelectselected")
+  onRowSelectfacet-change=(action "onRowSelectoption-selected")
   on-row-select=(action "on-row-select")
-  onRowSelectaction-lick=(action "onRowSelectaction-lick")
+  on-action-click=(action "on-action-click")
   title="Resources"
   values=model.visibleResources
   viewSchema=viewSchema

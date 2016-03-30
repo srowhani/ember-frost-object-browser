@@ -10,7 +10,7 @@
   <div class="top-buttons" background-color='red'>
     {{frost-button
       icon="frost/infobar-create"
-      on-lick=(action "on-create")
+      on-click=(action "on-create")
       priority="tertiary"
       size="medium"
       text="Create"
@@ -42,7 +42,7 @@
           {{#if viewSchema.low}}
             {{frost-button
               disabled=(eq detailLevel 'low')
-              on-lick=(action 'onDetailChange' 'low')
+              on-click=(action 'onDetailChange' 'low')
               priority="tertiary"
               size="small"
               icon="frost/list-small"
@@ -51,7 +51,7 @@
           {{#if viewSchema.medium}}
             {{frost-button
               disabled=(eq detailLevel 'medium')
-              on-lick=(action 'onDetailChange' 'medium')
+              on-click=(action 'onDetailChange' 'medium')
               priority="tertiary"
               size="small"
               icon="frost/list-medium"
@@ -60,7 +60,7 @@
           {{#if viewSchema.high}}
             {{frost-button
               disabled=(eq detailLevel 'high')
-              on-lick=(action 'onDetailChange' 'high')
+              on-click=(action 'onDetailChange' 'high')
               priority="tertiary"
               size="small"
               icon="frost/list-large"
@@ -69,7 +69,7 @@
         </div>
       </div>
     </div>
-    {{#frost-list onRowSelectselect=(action 'onRowSelectselect') selections=selectedItems records=computedValues as |record|}}
+    {{#frost-list on-select=(action 'on-select') selections=selectedItems records=computedValues as |record|}}
       {{#frost-object-browser-list-item model=record as |value|}}
         {{frost-bunsen-detail
           model=model
@@ -84,7 +84,7 @@
       {{#each actionBarItems as |actionBarItem|}}
         {{#frost-button
           disabled=(not actionBarItem.enabled)
-          on-lick=(action 'onRowSelectbutton-lick' actionBarItem.id)
+          on-click=(action 'onRowSelectbutton-click' actionBarItem.id)
           priority="secondary"
           size="large"
         }}
