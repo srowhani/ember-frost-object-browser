@@ -59,7 +59,7 @@ describeComponent(
         onFilter: sinon.spy()
       }
       this.setProperties(props)
-      this.render(hbs`{{frost-object-browser-filter filters=filters on-filter=onFilter}}`)
+      this.render(hbs`{{frost-object-browser-filter filters=filters onFilter=onFilter}}`)
     })
 
     it('displays a list of filters', function () {

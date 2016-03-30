@@ -52,8 +52,8 @@ export default Ember.Component.extend({
    * Handle command buttons for changing pagination
    * @param {String} where - one of begin|back|forward|end
    */
-  'on-page-changed': function (where) {
-    this.sendAction('on-page-changed', where)
+  onPageChanged (where) {
+    this.sendAction('onPageChanged', where)
   }
 
 })

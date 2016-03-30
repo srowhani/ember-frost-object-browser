@@ -15,7 +15,7 @@ export default Ember.Component.extend({
   classNames: ['facets'],
   updateFilterState (filterState) {
     this.set('activeFilters', filterState)
-    callIfDefined(this, 'on-filter', filterState)
+    callIfDefined(this, 'onFilter', filterState)
   },
   actions: {
     'filter-change' (filterName, value) {

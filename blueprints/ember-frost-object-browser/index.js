@@ -11,12 +11,10 @@ module.exports = {
   afterInstall: function () {
     return this.addAddonsToProject({
       packages: [
-        {name: 'ember-frost-theme', target: '^1.3.2'},
-        {name: 'ember-frost-bunsen', target: '^2.2.0'},
-        {name: 'ember-frost-button', target: '^1.4.2'},
-        {name: 'ember-frost-checkbox', target: '^1.2.0'},
-        {name: 'ember-frost-info-bar', target: '^1.0.0'},
-        {name: 'ember-frost-list', target: '^0.4.2'}
+        {name: 'ember-frost-core', target: '>=0.0.14 <2.0.0'},
+        {name: 'ember-frost-bunsen', target: '^3.0.0'},
+        {name: 'ember-frost-info-bar', target: '^2.0.0'},
+        {name: 'ember-frost-list', target: '>=0.5.0 <2.0.0'}
       ]
     })
   }
