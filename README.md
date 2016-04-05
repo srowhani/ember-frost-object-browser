@@ -33,18 +33,17 @@ ember install ember-frost-object-browser
 {frost-object-browser
   actionBarItems=actionBarItems
   facets=model.facets
+  filters=filters
   model=model.model
-  actionBarItems=actionBarItems
+  onActionClick=(action "onActionClick")
   onCreate=(action "onCreate")
   onDetailChange=(action "onDetailChange")
   onFacetChange=(action "onOptionSelected")
+  onFilter=onFilter
   onRowSelect=(action "onRowSelect")
-  onActionClick=(action "onActionClick")
   title="Resources"
   values=model.visibleResources
   viewSchema=viewSchema
-  filters=filters
-  onFilter=onFilter
 }}
 ```
 
