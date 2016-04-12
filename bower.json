@@ -10,12 +10,11 @@
     "ember-qunit-notifications": "^0.1.0",
     "Faker": "^3.0.1",
     "jquery": "2.1.4",
-    "lodash": "^3.10.1",
+    "lodash": "^4.10.0",
     "mocha": "^2.2.4",
     "pretender": "^0.10.1",
     "sinon-chai": "^2.8.0",
     "z-schema": "3.16.1"
-
   },
   "resolutions": {
     "ember": "~2.3.0"
