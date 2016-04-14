@@ -15,10 +15,6 @@ module.exports = function (defaults) {
     }
   })
 
-  if (app.env === 'development') {
-    app.import('bower_components/ember-renderspeed/ember-renderspeed.js')
-  }
-
   if (app.env === 'test') {
     app.import('bower_components/sinon-chai/lib/sinon-chai.js', {type: 'test'})
   }
