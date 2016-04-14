@@ -11,7 +11,7 @@
   <div class='filter-clear' onclick={{action 'clear-filter' filterData.name}}>Clear</div>
   {{/if}}
 </div>
-<div style="{{if filterData.showing '' 'display:none;'}}">
+<div class="{{if filterData.showing '' 'no-display'}}">
 {{#if (eq filterData.type 'select')}}
 {{frost-select
   data=filterData.data
