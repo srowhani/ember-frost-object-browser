@@ -23,6 +23,7 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     'component:frost-list',
     'component:frost-object-browser-list-item',
     'component:frost-bunsen-detail',
+    'component:yield-slot',
     'helper:eq'
   ],
 
@@ -173,20 +174,6 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     expect(onRowSelect.firstCall.args[0][0]).to.eql({bar: 'baz'})
     expect(onRowSelect.firstCall.args[1]).to.eql({})
     expect(onRowSelect.firstCall.args[2]).to.eql({foo: 'bar'})
-  })
-
-  it('action: onButtonClick calls onActionClick with selectedItems', function () {
-    // setup stub for onActionClick callback
-    const onActionClick = sandbox.stub()
-    component.set('onActionClick', onActionClick)
-
-    const selectedItems = [{foo: 'bar'}, {bar: 'baz'}]
-    component.set('selectedItems', selectedItems)
-
-    // trigger the action
-    component.actions.onButtonClick.call(component, 'button-1')
-
-    expect(onActionClick.firstCall).to.have.been.calledWith('button-1', selectedItems)
   })
 
   it('action: onDetailChange sets detailLevel', function () {

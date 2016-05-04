@@ -18,7 +18,6 @@ export default Ember.Component.extend({
   // Properties
   // ================================================================
 
-  actionBarItems: Ember.A([]),
   classNames: ['frost-object-browser'],
   contentHeight: 505,
   detailLevel: 'low',
@@ -161,17 +160,6 @@ export default Ember.Component.extend({
       const onRowSelect = this.get('onRowSelect')
       if (onRowSelect) {
         onRowSelect(allSelected, newSelected, deSelected)
-      }
-    },
-
-    /**
-     * Prepare argument for and call our onActionClick callback
-     * @param {String} buttonId - id of the button that got clicked
-     */
-    onButtonClick (buttonId) {
-      const actionClick = this.get('onActionClick')
-      if (_.isFunction(actionClick)) {
-        actionClick(buttonId, this.get('selectedItems'))
       }
     },
 

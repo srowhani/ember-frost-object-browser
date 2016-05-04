@@ -89,12 +89,6 @@ const viewSchema = {
   }
 }
 
-const actionBarItems = [
-  {label: 'Details', id: 'details', enabled: false},
-  {label: 'Delete', id: 'delete', enabled: false},
-  {label: 'Edit', id: 'edit', enabled: false}
-]
-
 const resources = _.map(dummyData.resources, (resource) => {
   return Ember.Object.create(resource)
 })
@@ -111,7 +105,6 @@ describeComponent(
     beforeEach(function () {
       Ember.run(() => {
         this.setProperties({
-          actionBarItems,
           model,
           viewSchema
         })
@@ -121,7 +114,6 @@ describeComponent(
     it('renders', function () {
       this.timeout(8000)
       this.render(hbs`{{frost-object-browser
-        actionBarItems=actionBarItems
         values=model.resources
         model=model.model
       }}`)
@@ -131,7 +123,6 @@ describeComponent(
     it('renders 6 items per page', function () {
       this.timeout(8000)
       this.render(hbs`{{frost-object-browser
-        actionBarItems=actionBarItems
         itemsPerPage=6
         values=model.resources
         model=model.model
@@ -142,7 +133,6 @@ describeComponent(
     it('it changes page when we click to next change button', function () {
       this.timeout(8000)
       this.render(hbs`{{frost-object-browser
-        actionBarItems=actionBarItems
         itemsPerPage=6
         values=model.resources
         model=model.model

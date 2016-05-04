@@ -81,16 +81,9 @@
     {{/frost-list}}
     {{yield}}
     <div class="actions">
-      {{#each actionBarItems as |actionBarItem|}}
-        {{#frost-button
-          disabled=(not actionBarItem.enabled)
-          onClick=(action 'onButtonClick' actionBarItem.id)
-          priority="secondary"
-          size="large"
-        }}
-          <div class="text">{{actionBarItem.label}}</div>
-        {{/frost-button}}
-      {{/each}}
+      {{#yield-slot 'actions'}}
+        {{yield 'actions'}}
+      {{/yield-slot}}
     </div>
   </div>
 </div>
