@@ -105,7 +105,7 @@ describeComponent(
 
     it('filters can be cleared', function (done) {
       this.$('.frost-select li:first-child').click()
-      this.$('.filter-header .filter-clear').click()
+      this.$('.filter-header .frost-button').click()
 
       Ember.run.later(() => {
         expect(props.filters[0].selectedValue).to.be.null
