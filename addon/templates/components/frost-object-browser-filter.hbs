@@ -8,7 +8,13 @@
   </div>
   <div class="alias">{{filterData.label}}</div>
   {{#if filterData.clearable}}
-  <div class='filter-clear' onclick={{action 'clear-filter' filterData.name}}>Clear</div>
+  {{#frost-button
+    onClick=(action "clear-filter" filterData.name)
+    priority="tertiary"
+    size="small"
+  }}
+    Clear
+  {{/frost-button}}
   {{/if}}
 </div>
 <div class="{{if filterData.showing '' 'no-display'}}">
