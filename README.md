@@ -30,12 +30,10 @@ ember install ember-frost-object-browser
 ## Examples
 ### Template:
 ```handlebars
-{frost-object-browser
-  actionBarItems=actionBarItems
+{f#rost-object-browser
   facets=model.facets
   filters=filters
   model=model.model
-  onActionClick=(action "onActionClick")
   onCreate=(action "onCreate")
   onDetailChange=(action "onDetailChange")
   onFacetChange=(action "onOptionSelected")
@@ -45,15 +43,14 @@ ember install ember-frost-object-browser
   values=model.visibleResources
   viewSchema=viewSchema
 }}
+  {{block-slot slot 'actions'}}
+    <!-- actions go here -->
+  {{/block-slot}}
+{{/frost-object-browser}}
 ```
 
 ### Controller:
 ```
-  actionBarItems: [
-    {label: 'Details', id: 'details', enabled: false},
-    {label: 'Delete', id: 'delete', enabled: false},
-    {label: 'Edit', id: 'edit', enabled: false}
-  ],
   viewSchema: {
     low: {
       'version': '1.0',
@@ -88,9 +85,8 @@ Your controller will also need to implement the following callbacks:
 
 `onCreate () {…}`
 `onDetailChange (level) {…}`
-`onRowSelect (allSelected, newSelected, deSelected) {…}`
-`onActionClick (actionId, currentSelection) {…}`
 `onFilter (filterState) {...} //Optional, used with filters`
+`onRowSelect (allSelected, newSelected, deSelected) {…}`
 
 You can also check out the demo app bundled with this addon to see an example of using this addon.
 
