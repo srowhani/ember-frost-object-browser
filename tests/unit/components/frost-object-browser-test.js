@@ -245,4 +245,25 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
       expect(component.get('detailLevel')).to.equal(detailLevel)
     })
   })
+
+  it('computedSubtitle is computed properly when showCountInSubTitle is false', function () {
+    Ember.run(() => {
+      component.setProperties({
+        showCountInSubTitle: false,
+        subtitle: 'hello'
+      })
+    })
+    expect(component.get('computedSubtitle')).to.equal('hello')
+  })
+
+  it('computedSubtitle is computed properly when showCountInSubTitle is true', function () {
+    Ember.run(() => {
+      component.setProperties({
+        showCountInSubTitle: true,
+        subtitle: 'hello',
+        valuesTotal: 2
+      })
+    })
+    expect(component.get('computedSubtitle')).to.equal('2 – hello')
+  })
 })
