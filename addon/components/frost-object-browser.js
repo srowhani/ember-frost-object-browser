@@ -30,6 +30,7 @@ export default Ember.Component.extend({
   subtitle: '',
   title: '',
   valuesTotal: null,
+  showCountInSubTitle: true,
 
   // ================================================================
   // Computed Properties
@@ -49,6 +50,16 @@ export default Ember.Component.extend({
     } else {
       return {}
     }
+  },
+  
+  /**
+   * Verifies the state of showCountInSubTitle variable before showing the subtitle
+   * (in case someone doesn't need the counts)
+   */
+  @readOnly
+  @computed('subtitle', 'showCountInSubTitle', 'computedValuesTotal')
+  computedSubtitle (subtitle, showCountInSubTitle, count) {
+    return showCountInSubTitle ? `${count} – ${subtitle}` : subtitle
   },
 
   /**
