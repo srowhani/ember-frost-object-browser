@@ -1,3 +1,4 @@
+{{yield}}
 <div class="frost-info-bar">
   <div class="title">
     <div class="primary-title">
@@ -19,9 +20,9 @@
   </div>
 </div>
 <div class="body">
-    {{#if filters}}
-    {{frost-object-browser-filter filters=filters onFilter=onFilter}}
-    {{/if}}
+  {{#yield-slot 'filters'}}
+    {{yield (block-params filters onFilter)}}
+  {{/yield-slot}}
   <div class="content">
     <div class="tools">
       <div class="sort"/>
@@ -79,7 +80,6 @@
         }}
       {{/frost-object-browser-list-item}}
     {{/frost-list}}
-    {{yield}}
     <div class="actions">
       {{#yield-slot 'actions'}}
         {{yield 'actions'}}

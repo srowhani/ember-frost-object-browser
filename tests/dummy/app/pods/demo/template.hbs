@@ -10,7 +10,7 @@
   values=model.resources
   viewSchema=viewSchema
   filters=filters
-}}
+as |slot|}}
   {{#block-slot slot 'actions'}}
     {{#each actionBarItems as |actionBarItem|}}
       {{#frost-button
@@ -23,4 +23,8 @@
       {{/frost-button}}
     {{/each}}
   {{/block-slot}}
+  {{#block-slot slot 'filters' as |filters onFilter|}}
+    {{frost-object-browser-filter filters=filters onFilter=onFilter}}
+  {{/block-slot}}
+
 {{/frost-object-browser}}
