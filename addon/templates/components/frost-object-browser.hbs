@@ -1,12 +1,9 @@
 {{yield}}
 <div class="frost-info-bar">
   <div class="title">
-    <div class="primary-title">
-      {{title}}
-    </div>
-    <div class="sub-title">
-      {{computedSubtitle}}
-    </div>
+    {{#yield-slot 'titles'}}
+      {{yield (block-params this)}}
+    {{/yield-slot}}
   </div>
   <div class="top-buttons" background-color='red'>
     {{frost-button
