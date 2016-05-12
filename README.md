@@ -49,12 +49,12 @@ as |slot|}}
   {{#block-slot slot 'filters' as |filters onFilter|}}
     {{frost-object-browser-filter filters=filters onFilter=onFilter}}
   {{/block-slot}}
-  {{#block-slot slot 'titles' as |titles|}}
+  {{#block-slot slot 'info-bar' as |infoBar|}}
     <div class="primary-title">
-      {{titles.title}}
+      {{infoBar.title}}
     </div>
     <div class="sub-title">
-      {{titles.computedSubtitle}}
+      {{infoBar.summary}}
     </div>
   {{/block-slot}}
 {{/frost-object-browser}}

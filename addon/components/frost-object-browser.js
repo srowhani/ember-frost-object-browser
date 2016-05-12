@@ -79,7 +79,7 @@ export default Ember.Component.extend(PropTypeMixin, {
    * @param {Number} count - number of items in list
    * @returns {String} full subtitle to show in UI
    */
-  computedSubtitle (subtitle, showCountInSubTitle, count) {
+  summary (subtitle, showCountInSubTitle, count) {
     return showCountInSubTitle ? `${count} – ${subtitle}` : subtitle
   },
 
