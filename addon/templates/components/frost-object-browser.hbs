@@ -36,35 +36,9 @@
           <!-- TODO: make this a variable to support i18n better -->
           View:
         </span>
-        <div class="button-bar {{ detailLevel }}">
-          {{#if viewSchema.low}}
-            {{frost-button
-              disabled=(eq detailLevel 'low')
-              onClick=(action 'onDetailChange' 'low')
-              priority="tertiary"
-              size="small"
-              icon="frost/list-small"
-            }}
-          {{/if}}
-          {{#if viewSchema.medium}}
-            {{frost-button
-              disabled=(eq detailLevel 'medium')
-              onClick=(action 'onDetailChange' 'medium')
-              priority="tertiary"
-              size="small"
-              icon="frost/list-medium"
-            }}
-          {{/if}}
-          {{#if viewSchema.high}}
-            {{frost-button
-              disabled=(eq detailLevel 'high')
-              onClick=(action 'onDetailChange' 'high')
-              priority="tertiary"
-              size="small"
-              icon="frost/list-large"
-            }}
-          {{/if}}
-        </div>
+        {{#yield-slot 'view-controls'}}
+          {{yield (block-params this viewSchema (action 'onDetailChange'))}}
+        {{/yield-slot}}
       </div>
     </div>
     {{#frost-list onSelect=(action 'onSelect') selections=selectedItems records=computedValues as |record|}}

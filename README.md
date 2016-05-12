@@ -57,6 +57,37 @@ as |slot|}}
       {{infoBar.summary}}
     </div>
   {{/block-slot}}
+  {{#block-slot slot 'view-controls' as |viewControl viewLevel onDetailChange|}}
+    <div class="button-bar {{ viewControl.detailLevel }}">
+    {{#if viewLevel.low}}
+      {{frost-button
+        disabled=(eq viewControl.detailLevel 'low')
+        onClick=(action onDetailChange 'low')
+        priority="tertiary"
+        size="small"
+        icon="frost/list-small"
+      }}
+    {{/if}}
+    {{#if viewLevel.medium}}
+      {{frost-button
+        disabled=(eq viewControl.detailLevel 'medium')
+        onClick=(action onDetailChange 'medium')
+        priority="tertiary"
+        size="small"
+        icon="frost/list-medium"
+      }}
+    {{/if}}
+    {{#if viewLevel.high}}
+      {{frost-button
+        disabled=(eq viewControl.detailLevel 'high')
+        onClick=(action onDetailChange 'high')
+        priority="tertiary"
+        size="small"
+        icon="frost/list-large"
+      }}
+    {{/if}}
+    </div>
+  {{/block-slot}}
 {{/frost-object-browser}}
 ```
 

@@ -60,6 +60,12 @@ export default Ember.Component.extend(PropTypeMixin, {
   },
 
   @readOnly
+  @computed('detailLevel')
+  computedDetailLevel: function (detailLevel) {
+    return detailLevel
+  },
+
+  @readOnly
   @computed('detailLevel', 'viewSchema')
   computedViewLevel: function (detailLevel, viewSchema) {
     if (viewSchema) {
