@@ -26,4 +26,12 @@ as |slot|}}
   {{#block-slot slot 'filters' as |filters onFilter|}}
     {{frost-object-browser-filter filters=filters onFilter=onFilter}}
   {{/block-slot}}
+  {{#block-slot slot 'info-bar' as |infoBar|}}
+    <div class="primary-title">
+      {{infoBar.title}}
+    </div>
+    <div class="sub-title">
+      {{infoBar.summary}}
+    </div>
+  {{/block-slot}}
 {{/frost-object-browser}}

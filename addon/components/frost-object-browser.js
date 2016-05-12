@@ -30,7 +30,7 @@ export default Ember.Component.extend(PropTypeMixin, {
     pageNumber: PropTypes.number,
     selectedItems: PropTypes.array,
     subtitle: PropTypes.string,
-    showCountInSubTitle: PropTypes.bool,
+    showCountInSummary: PropTypes.bool,
     title: PropTypes.string,
     valuesTotal: PropTypes.number
   },
@@ -45,7 +45,7 @@ export default Ember.Component.extend(PropTypeMixin, {
       subtitle: '',
       title: '',
       valuesTotal: null,
-      showCountInSubTitle: true
+      showCountInSummary: true
     }
   },
 
@@ -70,17 +70,17 @@ export default Ember.Component.extend(PropTypeMixin, {
   },
 
   @readOnly
-  @computed('subtitle', 'showCountInSubTitle', 'computedValuesTotal')
+  @computed('subtitle', 'showCountInSummary', 'computedValuesTotal')
   /**
-   * Verifies the state of showCountInSubTitle variable before showing the subtitle
+   * Verifies the state of showCountInSummary variable before showing the subtitle
    * (in case someone doesn't need the counts)
    * @param {String} subtitle - subtitle text
-   * @param {Boolean} showCountInSubTitle - whether or not to show count in subtitle
+   * @param {Boolean} showCountInSummary - whether or not to show count in subtitle
    * @param {Number} count - number of items in list
    * @returns {String} full subtitle to show in UI
    */
-  computedSubtitle (subtitle, showCountInSubTitle, count) {
-    return showCountInSubTitle ? `${count} – ${subtitle}` : subtitle
+  summary (subtitle, showCountInSummary, count) {
+    return showCountInSummary ? `${count} – ${subtitle}` : subtitle
   },
 
   /**
