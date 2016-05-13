@@ -34,12 +34,12 @@ ember install ember-frost-object-browser
   facets=model.facets
   filters=filters
   model=model.model
-  onCreate=(action "onCreate")
-  onDetailChange=(action "onDetailChange")
-  onFacetChange=(action "onOptionSelected")
+  onCreate=(action 'onCreate')
+  onDetailChange=(action 'onDetailChange')
+  onFacetChange=(action 'onOptionSelected')
   onFilter=onFilter
-  onRowSelect=(action "onRowSelect")
-  title="Resources"
+  onRowSelect=(action 'onRowSelect')
+  title='Resources'
   values=model.visibleResources
   viewSchema=viewSchema
 as |slot|}}
@@ -63,27 +63,27 @@ as |slot|}}
       {{frost-button
         disabled=(eq viewControl.detailLevel 'low')
         onClick=(action onDetailChange 'low')
-        priority="tertiary"
-        size="small"
-        icon="frost/list-small"
+        priority='tertiary'
+        size='small'
+        icon='frost/list-small'
       }}
     {{/if}}
     {{#if viewLevel.medium}}
       {{frost-button
         disabled=(eq viewControl.detailLevel 'medium')
         onClick=(action onDetailChange 'medium')
-        priority="tertiary"
-        size="small"
-        icon="frost/list-medium"
+        priority='tertiary'
+        size='small'
+        icon='frost/list-medium'
       }}
     {{/if}}
     {{#if viewLevel.high}}
       {{frost-button
         disabled=(eq viewControl.detailLevel 'high')
         onClick=(action onDetailChange 'high')
-        priority="tertiary"
-        size="small"
-        icon="frost/list-large"
+        priority='tertiary'
+        size='small'
+        icon='frost/list-large'
       }}
     {{/if}}
     </div>
