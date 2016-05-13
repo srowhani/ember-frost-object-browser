@@ -6,7 +6,7 @@
     {{/yield-slot}}
   </div>
   <div class="top-buttons" background-color='red'>
-    {{#yield-slot 'app-level-actions'}}
+    {{#yield-slot 'app-actions'}}
       {{yield (block-params (action 'onCreate'))}}
     {{/yield-slot}}
   </div>
@@ -47,7 +47,7 @@
       {{/frost-object-browser-list-item}}
     {{/frost-list}}
     <div class="actions">
-      {{#yield-slot 'actions'}}
+      {{#yield-slot 'row-actions'}}
         {{yield 'actions'}}
       {{/yield-slot}}
     </div>
