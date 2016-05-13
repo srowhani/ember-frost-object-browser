@@ -120,16 +120,6 @@ describeComponent(
       expect(this.$()).to.have.length(1)
     })
 
-    it('renders 6 items per page', function () {
-      this.timeout(8000)
-      this.render(hbs`{{frost-object-browser
-        itemsPerPage=6
-        values=model.resources
-        model=model.model
-      }}`)
-      expect(this.$().find('.frost-list-item')).to.have.length(6)
-    })
-
     it('it changes page when we click to next change button', function () {
       this.timeout(8000)
       this.render(hbs`{{frost-object-browser

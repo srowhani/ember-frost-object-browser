@@ -53,9 +53,6 @@ as |slot|}}
       vertical=true
     }}
   {{/block-slot}}
-  {{block-slot slot 'row-actions'}}
-    <!-- actions go here -->
-  {{/block-slot}}
   {{#block-slot slot 'filters' as |filters onFilter|}}
     {{frost-object-browser-filter filters=filters onFilter=onFilter}}
   {{/block-slot}}
@@ -66,6 +63,21 @@ as |slot|}}
     <div class="sub-title">
       {{infoBar.summary}}
     </div>
+  {{/block-slot}}
+  {{#block-slot slot 'objects' as |object onSelect|}}
+    {{#frost-list onSelect=(action onSelect) selections=object.selectedItems records=object.computedValues as |record|}}
+      {{#frost-object-browser-list-item model=record as |value|}}
+        {{frost-bunsen-detail
+          model=object.model
+          renderers=object.renderers
+          value=value
+          view=object.computedViewLevel
+        }}
+      {{/frost-object-browser-list-item}}
+    {{/frost-list}}
+  {{/block-slot}}
+  {{block-slot slot 'object-actions'}}
+    <!-- actions go here -->
   {{/block-slot}}
   {{#block-slot slot 'view-controls' as |viewControl viewLevel onDetailChange|}}
     <div class="button-bar {{ viewControl.detailLevel }}">
