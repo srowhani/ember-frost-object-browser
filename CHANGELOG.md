@@ -189,7 +189,7 @@
     values=model.visibleResources
     viewSchema=viewSchema
   as |slot|}}
-    {{#block-slot slot 'row-actions'}}
+    {{#block-slot slot 'actions'}}
       {{#each actionBarItems as |actionBarItem|}}
         {{#frost-button
           disabled=(not actionBarItem.enabled)
