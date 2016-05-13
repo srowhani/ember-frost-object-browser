@@ -1,8 +1,47 @@
+# 10.0
+
+## Breaking Changes
+* **Removed** support for the frost-list being built into the object-browser (what is showing the object data in list view)
+* **Added** support for the object data as a named block slot
+  This was done to increase the flexibilty of what can be set to handle the object data.
+  The new usage allows for this object data to be passed into the component's block
+  section:
+
+  ```handlebars
+  {#frost-object-browser
+    facets=model.facets
+    filters=filters
+    model=model.model
+    onCreate=(action 'onCreate')
+    onDetailChange=(action 'onDetailChange')
+    onFacetChange=(action 'onOptionSelected')
+    onFilter=onFilter
+    onRowSelect=(action 'onRowSelect')
+    title='Resources'
+    values=model.visibleResources
+    viewSchema=viewSchema
+  as |slot|}}
+    {{#block-slot slot 'objects' as |object onSelect|}}
+      {{#frost-list onSelect=(action onSelect) selections=object.selectedItems records=object.computedValues as |record|}}
+        {{#frost-object-browser-list-item model=record as |value|}}
+          {{frost-bunsen-detail
+            model=object.model
+            renderers=object.renderers
+            value=value
+            view=object.computedViewLevel
+          }}
+        {{/frost-object-browser-list-item}}
+      {{/frost-list}}
+    {{/block-slot}}
+  {{/frost-object-browser}}
+  ```
+
+
 # 9.0
 
 ## Breaking Changes
-* **Removed** support for `app-actions` (create at the app level)
-* **Added** for `app-actions` as a named block slot
+* **Removed** support for application level actions (create at the app level)
+* **Added** support for application level actions as a named block slot
   This was done to increase the flexibilty of what can be set as the `app-actions`.
   The new usage allows for these actions to be passed into the component's block
   section:
@@ -37,11 +76,11 @@
 # 8.0
 
 ## Breaking Changes
-* **Removed** support for `button-bar` (level of detail controls)
-* **Added** for `button-bar` level of detail controls as a named block slot
-  This was done to increase the flexibilty of what can be used as the `button-bar`
-  level of detail controls. The new usage allows for these controls to be passed into
-  the component's block section:
+* **Removed** support for the button bar (level of detail controls)
+* **Added** support for the button bar level of detail controls as a named block slot
+  This was done to increase the flexibilty of what can be used as the level of detail
+  controls. The new usage allows for these controls to be passed into the component's
+  block section:
 
   ```handlebars
   {#frost-object-browser
@@ -94,9 +133,9 @@
 # 7.0
 
 ## Breaking Changes
-* **Removed** support for `info-bar` content (title and subtitle information)
-* **Added** for `info-bar` content as a named block slot
-  This was done to increase the flexibilty of what can be used as the `info-bar`
+* **Removed** support for the info bar content (title and subtitle information)
+* **Added** support for the info bar content as a named block slot
+  This was done to increase the flexibilty of what can be used as the info bar
   content. The new usage allows for these content to be passed into
   the component's block section:
 
@@ -128,9 +167,9 @@
 # 6.0
 
 ## Breaking Changes
-* **Removed** support for `filter-pane` content (filters)
-* **Added** for `filter-pane` content as a named block slot
-  This was done to increase the flexibilty of what can be used as the `filter-pane`
+* **Removed** support for the filter pane content (filters)
+* **Added** support for the filter pane content as a named block slot
+  This was done to increase the flexibilty of what can be used as the filter pane
   content. The new usage allows for these content to be passed into
   the component's block section:
 
@@ -169,9 +208,9 @@
 # 5.0
 
 ## Breaking Changes
-* **Removed** support for `row-actions` content (actions on records: edit, delete, details)
-* **Added** for `row-actions` content as a named block slot
-  This was done to increase the flexibilty of what can be used as the `row-actions`
+* **Removed** support for the row actions content (actions on records: edit, delete, details)
+* **Added** support for the row actions content as a named block slot
+  This was done to increase the flexibilty of what can be used as the row actions
   content. The new usage allows for these content to be passed into
   the component's block section:
 
