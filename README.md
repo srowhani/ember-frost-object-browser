@@ -43,7 +43,7 @@ ember install ember-frost-object-browser
   values=model.visibleResources
   viewSchema=viewSchema
 as |slot|}}
-  {{#block-slot slot 'app-level-actions' as |onCreate|}}
+  {{#block-slot slot 'app-actions' as |onCreate|}}
     {{frost-button
       icon='frost/infobar-create'
       onClick=(action onCreate)
@@ -56,7 +56,7 @@ as |slot|}}
   {{block-slot slot 'row-actions'}}
     <!-- actions go here -->
   {{/block-slot}}
-  {{#block-slot slot 'filter-pane' as |filters onFilter|}}
+  {{#block-slot slot 'filters' as |filters onFilter|}}
     {{frost-object-browser-filter filters=filters onFilter=onFilter}}
   {{/block-slot}}
   {{#block-slot slot 'info-bar' as |infoBar|}}
