@@ -11,7 +11,17 @@
   viewSchema=viewSchema
   filters=filters
 as |slot|}}
-  {{#block-slot slot 'actions'}}
+  {{#block-slot slot 'app-actions' as |onCreate|}}
+    {{frost-button
+      icon='frost/infobar-create'
+      onClick=(action onCreate)
+      priority='tertiary'
+      size='medium'
+      text='Create'
+      vertical=true
+    }}
+  {{/block-slot}}
+  {{#block-slot slot 'row-actions'}}
     {{#each actionBarItems as |actionBarItem|}}
       {{#frost-button
         disabled=(not actionBarItem.enabled)
