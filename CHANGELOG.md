@@ -4,7 +4,7 @@
 * **Removed** support for the frost-list being built into the object-browser (what is showing the object data in list view)
 * **Added** support for the object data as a named block slot
   This was done to increase the flexibilty of what can be set to handle the object data.
-  The new usage allows for these actions to be passed into the component's block
+  The new usage allows for this object data to be passed into the component's block
   section:
 
   ```handlebars
