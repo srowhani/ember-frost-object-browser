@@ -6,18 +6,13 @@
     {{/yield-slot}}
   </div>
   <div class="top-buttons" background-color='red'>
-    {{frost-button
-      icon='frost/infobar-create'
-      onClick=(action 'onCreate')
-      priority='tertiary'
-      size='medium'
-      text='Create'
-      vertical=true
-    }}
+    {{#yield-slot 'app-level-actions'}}
+      {{yield (block-params (action 'onCreate'))}}
+    {{/yield-slot}}
   </div>
 </div>
 <div class="body">
-  {{#yield-slot 'filters'}}
+  {{#yield-slot 'filter-pane'}}
     {{yield (block-params filters onFilter)}}
   {{/yield-slot}}
   <div class="content">

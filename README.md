@@ -46,7 +46,17 @@ as |slot|}}
   {{block-slot slot 'actions'}}
     <!-- actions go here -->
   {{/block-slot}}
-  {{#block-slot slot 'filters' as |filters onFilter|}}
+  {{#block-slot slot 'app-level-actions' as |onCreate|}}
+    {{frost-button
+      icon='frost/infobar-create'
+      onClick=(action 'onCreate')
+      priority='tertiary'
+      size='medium'
+      text='Create'
+      vertical=true
+    }}
+  {{/block-slot}}
+  {{#block-slot slot 'filter-pane' as |filters onFilter|}}
     {{frost-object-browser-filter filters=filters onFilter=onFilter}}
   {{/block-slot}}
   {{#block-slot slot 'info-bar' as |infoBar|}}
