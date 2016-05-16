@@ -22,11 +22,9 @@
     viewSchema=viewSchema
   as |slot|}}
     {{#block-slot slot 'pagination' as |paginator onPageChanged|}}
-      <div class="pagination">
-        {{paginator.control
-          onPageChanged=(action onPageChanged)
-        }}
-      </div>
+      {{paginator.control
+        onPageChanged=(action onPageChanged)
+      }}
     {{/block-slot}}
   {{/frost-object-browser}}
   ```

@@ -19,16 +19,18 @@
     <div class="tools">
       <div class="sort"/>
         {{#yield-slot 'pagination'}}
-          {{yield (block-params
-            (hash control=(component
-              'frost-object-browser-paginator'
-                itemsPerPage=itemsPerPage
-                page=computedPageNumber
-                total=computedValuesTotal
+          <div class="pagination">
+            {{yield (block-params
+              (hash control=(component
+                'frost-object-browser-paginator'
+                  itemsPerPage=itemsPerPage
+                  page=computedPageNumber
+                  total=computedValuesTotal
+                )
               )
-            )
-            (action 'onPageChanged')
-          )}}
+              (action 'onPageChanged')
+            )}}
+          </div>
         {{/yield-slot}}
       <div class="detail">
         <span class="text">
