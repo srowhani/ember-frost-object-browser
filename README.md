@@ -79,6 +79,14 @@ as |slot|}}
   {{block-slot slot 'object-actions'}}
     <!-- actions go here -->
   {{/block-slot}}
+  {{#block-slot slot 'pagination' as |pagination onPageChanged|}}
+    {{frost-object-browser-paginator
+      itemsPerPage=pagination.itemsPerPage
+      onPageChanged=(action onPageChanged)
+      page=pagination.computedPageNumber
+      total=pagination.computedValuesTotal
+    }}
+  {{/block-slot}}
   {{#block-slot slot 'view-controls' as |viewControl viewLevel onDetailChange|}}
     <div class="button-bar {{ viewControl.detailLevel }}">
     {{#if viewLevel.low}}
