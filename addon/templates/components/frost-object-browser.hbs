@@ -18,11 +18,9 @@
   <div class="content">
     <div class="tools">
       <div class="sort"/>
-      <div class="pagination">
         {{#yield-slot 'pagination'}}
           {{yield (block-params this (action 'onPageChanged'))}}
         {{/yield-slot}}
-      </div>
       <div class="detail">
         <span class="text">
           <!-- TODO: make this a variable to support i18n better -->

@@ -22,12 +22,14 @@
     viewSchema=viewSchema
   as |slot|}}
     {{#block-slot slot 'pagination' as |pagination onPageChanged|}}
-      {{frost-object-browser-paginator
-        itemsPerPage=pagination.itemsPerPage
-        onPageChanged=(action onPageChanged)
-        page=pagination.computedPageNumber
-        total=pagination.computedValuesTotal
-      }}
+      <div class="pagination">
+        {{frost-object-browser-paginator
+          itemsPerPage=pagination.itemsPerPage
+          onPageChanged=(action onPageChanged)
+          page=pagination.computedPageNumber
+          total=pagination.computedValuesTotal
+        }}
+      </div>
     {{/block-slot}}
   {{/frost-object-browser}}
   ```
