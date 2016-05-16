@@ -21,13 +21,10 @@
     values=model.visibleResources
     viewSchema=viewSchema
   as |slot|}}
-    {{#block-slot slot 'pagination' as |pagination onPageChanged|}}
+    {{#block-slot slot 'pagination' as |paginator onPageChanged|}}
       <div class="pagination">
-        {{frost-object-browser-paginator
-          itemsPerPage=pagination.itemsPerPage
+        {{paginator.control
           onPageChanged=(action onPageChanged)
-          page=pagination.computedPageNumber
-          total=pagination.computedValuesTotal
         }}
       </div>
     {{/block-slot}}
