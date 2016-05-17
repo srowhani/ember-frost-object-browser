@@ -1,3 +1,35 @@
+# 11.0
+
+## Breaking Changes
+* **Removed** support for pagination being built into the object-browser
+* **Added** support for pagination as a named block slot
+  This was done to increase the flexibilty of the object browser.
+  The new usage allows for pagination to be passed into the component's block
+  section:
+
+  ```handlebars
+  {#frost-object-browser
+    facets=model.facets
+    filters=filters
+    model=model.model
+    onCreate=(action 'onCreate')
+    onDetailChange=(action 'onDetailChange')
+    onFacetChange=(action 'onOptionSelected')
+    onFilter=onFilter
+    onRowSelect=(action 'onRowSelect')
+    title='Resources'
+    values=model.visibleResources
+    viewSchema=viewSchema
+  as |slot|}}
+    {{#block-slot slot 'pagination' as |paginator onPageChanged|}}
+      {{paginator.control
+        onPageChanged=(action onPageChanged)
+      }}
+    {{/block-slot}}
+  {{/frost-object-browser}}
+  ```
+
+
 # 10.0
 
 ## Breaking Changes
