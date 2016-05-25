@@ -36,10 +36,10 @@ as |slot|}}
     {{#frost-list onSelect=(action onSelect) selections=object.selectedItems records=object.computedValues as |record|}}
       {{#frost-object-browser-list-item model=record as |value|}}
         {{frost-bunsen-detail
-          model=object.model
+          bunsenModel=object.model
+          bunsenView=object.computedViewLevel
           renderers=object.renderers
           value=value
-          view=object.computedViewLevel
         }}
       {{/frost-object-browser-list-item}}
     {{/frost-list}}

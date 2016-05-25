@@ -1,23 +1,15 @@
-[ci-img]: https://img.shields.io/travis/ciena-frost/ember-frost-object-browser.svg "CI Build Status"
-[ci-url]: https://travis-ci.org/ciena-frost/ember-frost-object-browser
-
-[cov-img]: https://img.shields.io/coveralls/ciena-frost/ember-frost-object-browser.svg "Code Coverage"
-[cov-url]: https://coveralls.io/github/ciena-frost/ember-frost-object-browser
-
-[npm-img]: https://img.shields.io/npm/v/ember-frost-object-browser.svg "Version"
-[npm-url]: https://www.npmjs.com/package/ember-frost-object-browser
+# ember-frost-object-browser
 
 [![Travis][ci-img]][ci-url] [![Coveralls][cov-img]][cov-url] [![NPM][npm-img]][npm-url]
 
-# ember-frost-object-browser
-
- * [Installation](#installation)
- * [API](#api)
- * [Examples](#examples)
- * [Contributing](#contributing)
+* [Installation](#installation)
+* [API](#api)
+* [Examples](#examples)
+* [Contributing](#contributing)
 
 ## Installation
-```
+
+```bash
 ember install ember-frost-object-browser
 ```
 
@@ -25,10 +17,12 @@ ember install ember-frost-object-browser
 
 | Attribute | Type | Value | Description |
 | --------- | ---- | ----- | ----------- |
-| ` ` | ` ` | ` ` | Coming soon |
+| ` `       | ` `  | ` `   | Coming soon |
 
 ## Examples
-### Template:
+
+### Template
+
 ```handlebars
 {#frost-object-browser
   facets=model.facets
@@ -68,10 +62,10 @@ as |slot|}}
     {{#frost-list onSelect=(action onSelect) selections=object.selectedItems records=object.computedValues as |record|}}
       {{#frost-object-browser-list-item model=record as |value|}}
         {{frost-bunsen-detail
-          model=object.model
+          bunsenModel=object.model
+          bunsenView=object.computedViewLevel
           renderers=object.renderers
           value=value
-          view=object.computedViewLevel
         }}
       {{/frost-object-browser-list-item}}
     {{/frost-list}}
@@ -118,8 +112,9 @@ as |slot|}}
 {{/frost-object-browser}}
 ```
 
-### Controller:
-```
+### Controller
+
+```js
   viewSchema: {
     low: {
       'version': '1.0',
@@ -160,6 +155,7 @@ Your controller will also need to implement the following callbacks:
 You can also check out the demo app bundled with this addon to see an example of using this addon.
 
 ###Adding filters
+
 An optional `filters` attribute can be passed to the component. `filters` should be an array of objects
 
 ```javascript
@@ -188,18 +184,31 @@ When a filter is changed or cleared, the `onFilter` callback is called with the 
 the value currently reported by the filter.
 
 ## Development
+
 ### Setup
-```
+
+```bash
 git clone git@github.com:ciena-frost/ember-frost-object-browser.git
 cd ember-frost-object-browser
 npm install && bower install
 ```
 
 ### Development Server
+
 A dummy application for development is available under `ember-frost-object-browser/tests/dummy`.
 To run the server run `ember server` (or `npm start`) from the root of the repository and
 visit the app at http://localhost:4200.
 
 ### Testing
+
 Run `npm test` from the root of the project to run linting checks as well as execute the test suite
 and output code coverage.
+
+[ci-img]: https://img.shields.io/travis/ciena-frost/ember-frost-object-browser.svg "CI Build Status"
+[ci-url]: https://travis-ci.org/ciena-frost/ember-frost-object-browser
+
+[cov-img]: https://img.shields.io/coveralls/ciena-frost/ember-frost-object-browser.svg "Code Coverage"
+[cov-url]: https://coveralls.io/github/ciena-frost/ember-frost-object-browser
+
+[npm-img]: https://img.shields.io/npm/v/ember-frost-object-browser.svg "Version"
+[npm-url]: https://www.npmjs.com/package/ember-frost-object-browser
