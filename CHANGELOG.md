@@ -1,3 +1,15 @@
+# 13.0.0
+
+## Breaking
+
+* **Upgraded** `ember-frost-bunsen` to version `6.0.0`.
+
+  > `model` became `bunsenModel` and `view` became `bunsenView`.
+
+* **Upgraded** `ember-prop-types` to version `2.0.0`. 
+
+  > `oneOf` changed to `oneOfType` to better align with the React `propTypes` API.
+
 # 12.0.0
 
 No CHANGELOG section found in Pull Request description.
