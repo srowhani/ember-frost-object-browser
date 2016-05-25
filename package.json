@@ -48,7 +48,7 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.5",
-    "ember-frost-bunsen": "^5.14.1",
+    "ember-frost-bunsen": "^6.0.0",
     "ember-frost-core": ">=0.8.0 <2.0.0",
     "ember-frost-info-bar": "^2.0.0",
     "ember-frost-list": "^0.7.0",
