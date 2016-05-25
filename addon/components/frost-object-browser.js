@@ -2,6 +2,7 @@ import Ember from 'ember'
 import _ from 'lodash'
 import computed, {readOnly} from 'ember-computed-decorators'
 import layout from '../templates/components/frost-object-browser'
+import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 
 /**
  * @type SelectedRecord
@@ -9,7 +10,7 @@ import layout from '../templates/components/frost-object-browser'
  * @property {Object} record - the record itself
  */
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(PropTypeMixin, {
   // ================================================================
   // Dependencies
   // ================================================================
@@ -19,16 +20,34 @@ export default Ember.Component.extend({
   // ================================================================
 
   classNames: ['frost-object-browser'],
-  contentHeight: 505,
-  detailLevel: 'low',
-  itemsPerPage: 20,
   layout,
-  pageNumber: null,
   _pageNumber: 0,
-  selectedItems: Ember.A([]),
-  subtitle: '',
-  title: '',
-  valuesTotal: null,
+
+  propTypes: {
+    contentHeight: PropTypes.number,
+    detailLevel: PropTypes.string,
+    itemsPerPage: PropTypes.number,
+    pageNumber: PropTypes.number,
+    selectedItems: PropTypes.array,
+    subtitle: PropTypes.string,
+    showCountInSummary: PropTypes.bool,
+    title: PropTypes.string,
+    valuesTotal: PropTypes.number
+  },
+
+  getDefaultProps () {
+    return {
+      contentHeight: 505,
+      detailLevel: 'low',
+      itemsPerPage: 20,
+      pageNumber: null,
+      selectedItems: Ember.A([]),
+      subtitle: '',
+      title: '',
+      valuesTotal: null,
+      showCountInSummary: true
+    }
+  },
 
   // ================================================================
   // Computed Properties
@@ -48,6 +67,20 @@ export default Ember.Component.extend({
     } else {
       return {}
     }
+  },
+
+  @readOnly
+  @computed('subtitle', 'showCountInSummary', 'computedValuesTotal')
+  /**
+   * Verifies the state of showCountInSummary variable before showing the subtitle
+   * (in case someone doesn't need the counts)
+   * @param {String} subtitle - subtitle text
+   * @param {Boolean} showCountInSummary - whether or not to show count in subtitle
+   * @param {Number} count - number of items in list
+   * @returns {String} full subtitle to show in UI
+   */
+  summary (subtitle, showCountInSummary, count) {
+    return showCountInSummary ? `${count} – ${subtitle}` : subtitle
   },
 
   /**

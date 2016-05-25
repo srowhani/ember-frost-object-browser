@@ -234,15 +234,24 @@ describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
     expect(sendAction).to.have.been.calledWith('onPageChanged', 0)
   })
 
-  it('sets detailLevel when LOD buttons are clicked', function () {
-    const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    component.set('values', values)
-
-    this.render()
-
-    ;['low', 'medium', 'high'].forEach(function (detailLevel, idx) {
-      this.$('.button-bar .frost-button').eq(idx).click()
-      expect(component.get('detailLevel')).to.equal(detailLevel)
+  it('summary is computed properly when showCountInSummary is false', function () {
+    Ember.run(() => {
+      component.setProperties({
+        showCountInSummary: false,
+        subtitle: 'hello'
+      })
     })
+    expect(component.get('summary')).to.equal('hello')
+  })
+
+  it('summary is computed properly when showCountInSummary is true', function () {
+    Ember.run(() => {
+      component.setProperties({
+        showCountInSummary: true,
+        subtitle: 'hello',
+        valuesTotal: 2
+      })
+    })
+    expect(component.get('summary')).to.equal('2 – hello')
   })
 })

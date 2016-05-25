@@ -4,6 +4,7 @@ import {describeComponent, it} from 'ember-mocha'
 import wait from 'ember-test-helpers/wait'
 import hbs from 'htmlbars-inline-precompile'
 import dummyData from './dummyInput'
+import { initialize } from 'ember-block-slots/initializers/component-block-slots'
 
 const viewSchema = {
   low: {
@@ -102,13 +103,19 @@ describeComponent(
     integration: true
   },
   function () {
+    let container, application
+
     beforeEach(function () {
       Ember.run(() => {
+        application = Ember.Application.create()
+        container = application.__container__
+        application.deferReadiness()
         this.setProperties({
           model,
           viewSchema
         })
       })
+      initialize(container, application)
     })
 
     it('renders', function () {
@@ -120,23 +127,22 @@ describeComponent(
       expect(this.$()).to.have.length(1)
     })
 
-    it('renders 6 items per page', function () {
-      this.timeout(8000)
-      this.render(hbs`{{frost-object-browser
-        itemsPerPage=6
-        values=model.resources
-        model=model.model
-      }}`)
-      expect(this.$().find('.frost-list-item')).to.have.length(6)
-    })
-
     it('it changes page when we click to next change button', function () {
       this.timeout(8000)
-      this.render(hbs`{{frost-object-browser
-        itemsPerPage=6
-        values=model.resources
-        model=model.model
-      }}`)
+
+      this.render(hbs`
+        {{#frost-object-browser
+          itemsPerPage=6
+          values=model.resources
+          model=model.model
+         as |slot|}}
+          {{#block-slot slot 'pagination' as |paginator onPageChanged|}}
+            {{paginator.control
+              onPageChanged=(action onPageChanged)
+            }}
+          {{/block-slot}}
+        {{/frost-object-browser}}
+      `)
 
       this.$().find('.pagination .button-bar.right button').eq(0).click()
 

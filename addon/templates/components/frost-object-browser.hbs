@@ -1,87 +1,55 @@
+{{yield}}
 <div class="frost-info-bar">
   <div class="title">
-    <div class="primary-title">
-      {{title}}
-    </div>
-    {{# if subtitle}}
-     <div class='sub-title'>{{computedValuesTotal}} - {{subtitle}}</div>
-    {{/if}}
+    {{#yield-slot 'info-bar'}}
+      {{yield (block-params this)}}
+    {{/yield-slot}}
   </div>
   <div class="top-buttons" background-color='red'>
-    {{frost-button
-      icon="frost/infobar-create"
-      onClick=(action "onCreate")
-      priority="tertiary"
-      size="medium"
-      text="Create"
-      vertical=true
-    }}
+    {{#yield-slot 'app-actions'}}
+      {{yield (block-params (action 'onCreate'))}}
+    {{/yield-slot}}
   </div>
 </div>
 <div class="body">
-    {{#if filters}}
-    {{frost-object-browser-filter filters=filters onFilter=onFilter}}
-    {{/if}}
+  {{#yield-slot 'filters'}}
+    {{yield (block-params filters onFilter)}}
+  {{/yield-slot}}
   <div class="content">
     <div class="tools">
       <div class="sort"/>
-      <div class="pagination">
-        {{frost-object-browser-paginator
-          itemsPerPage=itemsPerPage
-          onPageChanged=(action 'onPageChanged')
-          page=computedPageNumber
-          total=computedValuesTotal
-        }}
-      </div>
+        {{#yield-slot 'pagination'}}
+          <div class="pagination">
+            {{yield (block-params
+              (hash control=(component
+                'frost-object-browser-paginator'
+                  itemsPerPage=itemsPerPage
+                  page=computedPageNumber
+                  total=computedValuesTotal
+                )
+              )
+              (action 'onPageChanged')
+            )}}
+          </div>
+        {{/yield-slot}}
       <div class="detail">
         <span class="text">
           <!-- TODO: make this a variable to support i18n better -->
           View:
         </span>
-        <div class="button-bar {{ detailLevel }}">
-          {{#if viewSchema.low}}
-            {{frost-button
-              disabled=(eq detailLevel 'low')
-              onClick=(action 'onDetailChange' 'low')
-              priority="tertiary"
-              size="small"
-              icon="frost/list-small"
-            }}
-          {{/if}}
-          {{#if viewSchema.medium}}
-            {{frost-button
-              disabled=(eq detailLevel 'medium')
-              onClick=(action 'onDetailChange' 'medium')
-              priority="tertiary"
-              size="small"
-              icon="frost/list-medium"
-            }}
-          {{/if}}
-          {{#if viewSchema.high}}
-            {{frost-button
-              disabled=(eq detailLevel 'high')
-              onClick=(action 'onDetailChange' 'high')
-              priority="tertiary"
-              size="small"
-              icon="frost/list-large"
-            }}
-          {{/if}}
-        </div>
+        {{#yield-slot 'view-controls'}}
+          {{yield (block-params this viewSchema (action 'onDetailChange'))}}
+        {{/yield-slot}}
       </div>
     </div>
-    {{#frost-list onSelect=(action 'onSelect') selections=selectedItems records=computedValues as |record|}}
-      {{#frost-object-browser-list-item model=record as |value|}}
-        {{frost-bunsen-detail
-          model=model
-          renderers=renderers
-          value=value
-          view=computedViewLevel
-        }}
-      {{/frost-object-browser-list-item}}
-    {{/frost-list}}
-    {{yield}}
+    {{#yield-slot 'objects'}}
+      {{yield (block-params this (action 'onSelect'))}}
+    {{/yield-slot}}
+
+
+
     <div class="actions">
-      {{#yield-slot 'actions'}}
+      {{#yield-slot 'object-actions'}}
         {{yield 'actions'}}
       {{/yield-slot}}
     </div>
