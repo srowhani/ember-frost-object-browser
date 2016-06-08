@@ -42,12 +42,9 @@ ember install ember-frost-object-browser
   title="Resources"
   values=model.visibleResources
   viewSchema=viewSchema
-as |slot|}}
+}}
   {{block-slot slot 'actions'}}
     <!-- actions go here -->
-  {{/block-slot}}
-  {{#block-slot slot 'filters' as |filters onFilter|}}
-    {{frost-object-browser-filter filters=filters onFilter=onFilter}}
   {{/block-slot}}
 {{/frost-object-browser}}
 ```
