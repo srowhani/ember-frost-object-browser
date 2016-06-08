@@ -1,0 +1,42 @@
+{{yield}}
+{{#yield-slot 'info-bar'}}
+  {{yield}}
+{{/yield-slot}}
+
+<div class='frost-object-browser-slots-body'>
+  {{#yield-slot 'facets'}}
+    <div class='frost-object-browser-slots-facets'>
+      {{yield}}
+    </div>
+  {{/yield-slot}}
+  <div class='frost-object-browser-slots-content'>
+    {{#yield-slot 'view'}}
+      {{yield selections (action 'onSelect')}}
+    {{/yield-slot}}
+    {{#yield-slot 'actions'}}
+      <div class='frost-object-browser-slots-actions'>
+        {{yield
+          (hash
+            button=(component 'selection-action-button'
+              selections=selections
+              size='large'
+            )
+          )
+        }}
+
+        {{!yield (block-params
+          (hash
+            button=(component
+            'frost-object-browser-action-bar'
+              multiSelect=multiSelect
+              onActionClick=(action onActionClick)
+              priority='secondary'
+              selectedItems=(get this 'selectedItems')
+              size='large'
+            )
+          )
+        )}}
+      </div>
+    {{/yield-slot}}
+  </div>
+</div>

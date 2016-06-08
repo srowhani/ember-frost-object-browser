@@ -1,0 +1,86 @@
+{{!--#frost-object-browser-slots
+  itemsPerPage=6
+  model=model.model
+  onCreate=(action "onCreate")
+  onDetailChange=(action "onDetailChange")
+  onFacetChange=(action "onOptionSelected")
+  onRowSelect=(action "onRowSelect")
+  title="Resources"
+  subtitle="L3VPN Services"
+  values=model.resources
+  viewSchema=viewSchema
+  filters=filters
+}}
+  {{#block-slot slot 'actions'}}
+    {{#each actionBarItems as |actionBarItem|}}
+      {{#frost-button
+        disabled=(not actionBarItem.enabled)
+        onClick=(action 'onActionClick' actionBarItem.id)
+        priority="secondary"
+        size="large"
+      }}
+        <div class="text">{{actionBarItem.label}}</div>
+      {{/frost-button}}
+    {{/each}}
+  {{/block-slot}}
+{{/frost-object-browser--}}
+
+{{#frost-object-browser-slots as |slot|}}
+  {{#block-slot slot 'info-bar'}}
+    {{!alarms-info-bar}}
+    <div class="frost-info-bar">
+      <div class="title">
+        <div class="primary-title">
+          Resources
+        </div>
+        <div class="sub-title">
+          20 – L3VPN Services
+        </div>
+      </div>
+      <div class="top-buttons" background-color='red'>
+        {{frost-button
+          icon="frost/infobar-create"
+          onClick=(action "onCreate")
+          priority="tertiary"
+          size="medium"
+          text="Create"
+          vertical=true
+        }}
+      </div>
+    </div>
+  {{/block-slot}}
+  {{#block-slot slot 'facets'}}
+    {{!frost-bunsen...}}
+    {{frost-object-browser-filter filters=filters onFilter=onFilter}}
+  {{/block-slot}}
+  {{#block-slot slot 'view' as |selections onSelect|}}
+   {{!alarms-view model=model selections=selections onSelect=(action onSelect)}}
+   {{slots/content-view
+    itemsPerPage=6
+    model=model.model
+    onCreate=(action "onCreate")
+    onDetailChange=(action "onDetailChange")
+    onFacetChange=(action "onOptionSelected")
+    onRowSelect=(action "onRowSelect")
+    values=model.resources
+    viewSchema=viewSchema
+   }}
+  {{/block-slot}}
+  {{#block-slot slot 'actions' as |action|}}
+    {{!action.button
+      onClick=(action 'clickHandler')
+      multiSelect=true
+      text='Delete'
+    }}
+    {{#each actionBarItems as |actionBarItem|}}
+      {{#frost-button
+        disabled=(not actionBarItem.enabled)
+        onClick=(action 'onActionClick' actionBarItem.id)
+        priority="secondary"
+        size="large"
+      }}
+        <div class="text">{{actionBarItem.label}}</div>
+      {{/frost-button}}
+    {{/each}}
+  {{/block-slot}}
+{{/frost-object-browser-slots}}
