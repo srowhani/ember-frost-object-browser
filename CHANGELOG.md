@@ -1,19 +1,15 @@
 # 12.0.0
-
 No CHANGELOG section found in Pull Request description.
 Use a `# CHANGELOG` section in your Pull Request description to auto-populate the `CHANGELOG.md`
 
 # 11.0.0
-
 No CHANGELOG section found in Pull Request description.
 Use a `# CHANGELOG` section in your Pull Request description to auto-populate the `CHANGELOG.md`
 
 # 11.0
 
-## Breaking
-
+## Breaking Changes
 * **Removed** support for pagination being built into the object-browser
-
 * **Added** support for pagination as a named block slot
   This was done to increase the flexibilty of the object browser.
   The new usage allows for pagination to be passed into the component's block
@@ -44,10 +40,8 @@ Use a `# CHANGELOG` section in your Pull Request description to auto-populate th
 
 # 10.0
 
-## Breaking
-
+## Breaking Changes
 * **Removed** support for the frost-list being built into the object-browser (what is showing the object data in list view)
-
 * **Added** support for the object data as a named block slot
   This was done to increase the flexibilty of what can be set to handle the object data.
   The new usage allows for this object data to be passed into the component's block
@@ -82,12 +76,11 @@ Use a `# CHANGELOG` section in your Pull Request description to auto-populate th
   {{/frost-object-browser}}
   ```
 
+
 # 9.0
 
-## Breaking
-
+## Breaking Changes
 * **Removed** support for application level actions (create at the app level)
-
 * **Added** support for application level actions as a named block slot
   This was done to increase the flexibilty of what can be set as the `app-actions`.
   The new usage allows for these actions to be passed into the component's block
@@ -122,10 +115,8 @@ Use a `# CHANGELOG` section in your Pull Request description to auto-populate th
 
 # 8.0
 
-## Breaking
-
+## Breaking Changes
 * **Removed** support for the button bar (level of detail controls)
-
 * **Added** support for the button bar level of detail controls as a named block slot
   This was done to increase the flexibilty of what can be used as the level of detail
   controls. The new usage allows for these controls to be passed into the component's
@@ -181,10 +172,8 @@ Use a `# CHANGELOG` section in your Pull Request description to auto-populate th
 
 # 7.0
 
-## Breaking
-
+## Breaking Changes
 * **Removed** support for the info bar content (title and subtitle information)
-
 * **Added** support for the info bar content as a named block slot
   This was done to increase the flexibilty of what can be used as the info bar
   content. The new usage allows for these content to be passed into
@@ -217,10 +206,8 @@ Use a `# CHANGELOG` section in your Pull Request description to auto-populate th
 
 # 6.0
 
-## Breaking
-
+## Breaking Changes
 * **Removed** support for the filter pane content (filters)
-
 * **Added** support for the filter pane content as a named block slot
   This was done to increase the flexibilty of what can be used as the filter pane
   content. The new usage allows for these content to be passed into
@@ -248,18 +235,20 @@ Use a `# CHANGELOG` section in your Pull Request description to auto-populate th
 
 #5.1.1
 
+## Non-Breaking Changes
+
 * **Fixed** Added `ember-prop-types` to catch a bug where multiple instances were sharing memory
 
 #5.1.0
+
+## Non-Breaking Changes
 
 * **Added** Created a property to allow for showing/not showing the counts in the subtitle of the `info-bar` section.
 
 # 5.0
 
-## Breaking
-
+## Breaking Changes
 * **Removed** support for the row actions content (actions on records: edit, delete, details)
-
 * **Added** support for the row actions content as a named block slot
   This was done to increase the flexibilty of what can be used as the row actions
   content. The new usage allows for these content to be passed into
