@@ -18,20 +18,14 @@
   <div class="content">
     <div class="tools">
       <div class="sort"/>
-        {{#yield-slot 'pagination'}}
-          <div class="pagination">
-            {{yield (block-params
-              (hash control=(component
-                'frost-object-browser-paginator'
-                  itemsPerPage=itemsPerPage
-                  page=computedPageNumber
-                  total=computedValuesTotal
-                )
-              )
-              (action 'onPageChanged')
-            )}}
-          </div>
-        {{/yield-slot}}
+      <div class="pagination">
+        {{frost-object-browser-paginator
+          itemsPerPage=itemsPerPage
+          onPageChanged=(action 'onPageChanged')
+          page=computedPageNumber
+          total=computedValuesTotal
+        }}
+      </div>
       <div class="detail">
         <span class="text">
           <!-- TODO: make this a variable to support i18n better -->

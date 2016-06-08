@@ -79,11 +79,6 @@ as |slot|}}
   {{block-slot slot 'object-actions'}}
     <!-- actions go here -->
   {{/block-slot}}
-  {{#block-slot slot 'pagination' as |paginator onPageChanged|}}
-    {{paginator.control
-      onPageChanged=(action onPageChanged)
-    }}
-  {{/block-slot}}
   {{#block-slot slot 'view-controls' as |viewControl viewLevel onDetailChange|}}
     <div class="button-bar {{ viewControl.detailLevel }}">
     {{#if viewLevel.low}}
