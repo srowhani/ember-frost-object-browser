@@ -4,6 +4,10 @@ import computed, {readOnly} from 'ember-computed-decorators'
 import layout from '../templates/components/frost-object-browser'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 
+const {
+  deprecate
+} = Ember
+
 /**
  * @type SelectedRecord
  * @property {Boolean} isSelected - whether or not it is selected
@@ -152,6 +156,18 @@ export default Ember.Component.extend(PropTypeMixin, {
   // ================================================================
   // Events
   // ================================================================
+
+  deprecation: Ember.on('init', function() {
+    deprecate(
+      'frost-object-browser has been deprecated in favor of frost-object-browser-slots',
+      false,
+      {
+        id: 'frost-debug.deprecate-frost-object-browser',
+        until: '15.0.0',
+        url: 'https://github.com/ciena-frost/ember-frost-object-browser/blob/master/README.md#api'
+      }
+    )
+  }),
 
   /**
    * This gets called whenever anything passed to us changes.

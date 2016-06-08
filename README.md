@@ -39,11 +39,14 @@ The recommended sub-components are:
 * [frost-button](https://github.com/ciena-frost/ember-frost-core/blob/master/frost-button.md)  
 * [frost-link](https://github.com/ciena-frost/ember-frost-core/blob/master/frost-link.md)  
 
+Refer to the documentation available in each of these projects for
+the appropriate usage.
+
 The 'view' slot provides a selection interface that should be 
 implemented in the sub-component chosen to display the object
 browser content.  This interface consists of an `onSelect` action
-to fire an event with the current selections whenever the selection 
-changes.
+that expects an event with the current selections whenever the 
+selection changes.
 
 The 'actions' slot provides controls (button, link) that are coupled
 to the selection state.  The controls are disabled when there are no
