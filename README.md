@@ -24,7 +24,7 @@ ember install ember-frost-object-browser
 ### Template
 
 ```handlebars
-{{#frost-object-browser
+{#frost-object-browser
   facets=model.facets
   filters=filters
   model=model.model
@@ -70,7 +70,7 @@ as |slot|}}
       {{/frost-object-browser-list-item}}
     {{/frost-list}}
   {{/block-slot}}
-  {{#block-slot slot 'object-actions'}}
+  {{block-slot slot 'object-actions'}}
     <!-- actions go here -->
   {{/block-slot}}
   {{#block-slot slot 'pagination' as |paginator onPageChanged|}}
