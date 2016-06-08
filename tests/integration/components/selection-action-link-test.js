@@ -23,7 +23,7 @@ describeComponent(
       //   {{/selection-action-link}}
       // `);
 
-      this.render(hbs`{{selection-action-link}}`)
+      this.render(hbs`{{selection-action-link 'details'}}`)
       expect(this.$()).to.have.length(1)
     })
   }
