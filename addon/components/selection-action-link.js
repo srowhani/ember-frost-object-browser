@@ -1,10 +1,8 @@
-import Ember from 'ember';
+import Ember from 'ember'
 import FrostLink from 'ember-frost-core/components/frost-link'
-import _ from 'lodash'
 
 const {
-  computed,
-  ViewUtils
+  computed
 } = Ember
 
 export default FrostLink.extend({
