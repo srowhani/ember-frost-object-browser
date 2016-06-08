@@ -30,7 +30,7 @@ ember install ember-frost-object-browser
 ## Examples
 ### Template:
 ```handlebars
-{#frost-object-browser
+{f#rost-object-browser
   facets=model.facets
   filters=filters
   model=model.model
@@ -43,17 +43,7 @@ ember install ember-frost-object-browser
   values=model.visibleResources
   viewSchema=viewSchema
 as |slot|}}
-  {{#block-slot slot 'app-actions' as |onCreate|}}
-    {{frost-button
-      icon='frost/infobar-create'
-      onClick=(action onCreate)
-      priority='tertiary'
-      size='medium'
-      text='Create'
-      vertical=true
-    }}
-  {{/block-slot}}
-  {{block-slot slot 'row-actions'}}
+  {{block-slot slot 'actions'}}
     <!-- actions go here -->
   {{/block-slot}}
   {{#block-slot slot 'filters' as |filters onFilter|}}
