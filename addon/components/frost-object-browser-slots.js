@@ -21,12 +21,12 @@ export default Ember.Component.extend({
   },
 
   actions: {
-    onSelect(item) {
+    // TODO Decide on an interface for selection data
+    onSelect(viewSelections) {
       const selections = this.get('selections')
-      if (item.isSelected) {
-        selections.addObject(item.record)
-      } else {
-        selections.removeObject(item.record)
+      selections.clear()
+      if (viewSelections.length > 0) {
+        selections.addObjects(viewSelections)
       }
     }
   }

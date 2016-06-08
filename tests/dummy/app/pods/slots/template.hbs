@@ -1,84 +1,51 @@
-{{!--#frost-object-browser-slots
-  itemsPerPage=6
-  model=model.model
-  onCreate=(action "onCreate")
-  onDetailChange=(action "onDetailChange")
-  onFacetChange=(action "onOptionSelected")
-  onRowSelect=(action "onRowSelect")
-  title="Resources"
-  subtitle="L3VPN Services"
-  values=model.resources
-  viewSchema=viewSchema
-  filters=filters
-}}
-  {{#block-slot slot 'actions'}}
-    {{#each actionBarItems as |actionBarItem|}}
-      {{#frost-button
-        disabled=(not actionBarItem.enabled)
-        onClick=(action 'onActionClick' actionBarItem.id)
-        priority="secondary"
-        size="large"
-      }}
-        <div class="text">{{actionBarItem.label}}</div>
-      {{/frost-button}}
-    {{/each}}
-  {{/block-slot}}
-{{/frost-object-browser--}}
-
 {{#frost-object-browser-slots as |slot|}}
   {{#block-slot slot 'info-bar'}}
-    {{!alarms-info-bar}}
-    <div class="frost-info-bar">
-      <div class="title">
-        <div class="primary-title">
-          Resources
-        </div>
-        <div class="sub-title">
-          20 – L3VPN Services
-        </div>
-      </div>
-      <div class="top-buttons" background-color='red'>
-        {{frost-button
-          icon="frost/infobar-create"
-          onClick=(action "onCreate")
-          priority="tertiary"
-          size="medium"
-          text="Create"
-          vertical=true
+    {{#frost-info-bar as |slot|}}
+      {{#block-slot slot 'title'}}
+        Resources
+      {{/block-slot}}
+      {{#block-slot slot 'summary'}}
+        20 – L3VPN Services
+      {{/block-slot}}
+      {{#block-slot slot 'actions' as |controls|}}
+        {{controls.button
+          icon='frost/infobar-create'
+          onClick=(action 'onCreate')
+          text='Create'
         }}
-      </div>
-    </div>
+      {{/block-slot}}
+    {{/frost-info-bar}}
   {{/block-slot}}
   {{#block-slot slot 'facets'}}
     {{!frost-bunsen...}}
     {{frost-object-browser-filter filters=filters onFilter=onOptionSelected}}
   {{/block-slot}}
-  {{#block-slot slot 'view' as |selections onSelect|}}
-   {{!alarms-view model=model selections=selections onSelect=(action onSelect)}}
+  {{#block-slot slot 'view' as |onSelect selections|}}
    {{slots/content-view
     itemsPerPage=6
     model=model.model
     onDetailChange=(action "onDetailChange")
-    onRowSelect=(action "onRowSelect")
+    onRowSelect=onSelect
     values=model.resources
     viewSchema=viewSchema
    }}
   {{/block-slot}}
-  {{#block-slot slot 'actions' as |action|}}
-    {{!action.button
-      onClick=(action 'clickHandler')
+  {{#block-slot slot 'actions' as |controls selections|}}
+    {{controls.button
+      onClick=(action 'details')
+      priority="secondary"
+      text='Details'
+    }}
+    {{controls.button
+      onClick=(action 'delete')
       multiSelect=true
+      priority="secondary"
       text='Delete'
     }}
-    {{#each actionBarItems as |actionBarItem|}}
-      {{#frost-button
-        disabled=(not actionBarItem.enabled)
-        onClick=(action 'onActionClick' actionBarItem.id)
-        priority="secondary"
-        size="large"
-      }}
-        <div class="text">{{actionBarItem.label}}</div>
-      {{/frost-button}}
-    {{/each}}
+    {{controls.button
+      onClick=(action 'edit')
+      priority="secondary"
+      text='Edit'
+    }}
   {{/block-slot}}
 {{/frost-object-browser-slots}}

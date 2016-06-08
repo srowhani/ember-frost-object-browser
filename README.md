@@ -12,7 +12,8 @@
 # ember-frost-object-browser
 
  * [Installation](#installation)
- * [API](#api)
+ * [Slots API](#slots-api)
+ * [Deprecated API](#deprecated-api)
  * [Examples](#examples)
  * [Contributing](#contributing)
 
@@ -21,7 +22,64 @@
 ember install ember-frost-object-browser
 ```
 
-## API
+## Slots API
+
+The "slots" implementation of the object browser provides named 
+yields for each content area within the object browser pattern.
+
+The implementor provides the content for each slot using recommended
+Frost components.  This allows the full interface/features of each
+sub-component to be used and makes swapping sub-components simple.
+
+The recommended sub-components are:
+
+* [frost-info-bar](https://github.com/ciena-frost/ember-frost-info-bar)  
+* [frost-bunsen](https://github.com/ciena-frost/ember-frost-bunsen)  
+* [frost-list](https://github.com/ciena-frost/ember-frost-list)  
+* [frost-button](https://github.com/ciena-frost/ember-frost-core/blob/master/frost-button.md)  
+* [frost-link](https://github.com/ciena-frost/ember-frost-core/blob/master/frost-link.md)  
+
+The 'view' slot provides a selection interface that should be 
+implemented in the sub-component chosen to display the object
+browser content.  This interface consists of an `onSelect` action
+to fire an event with the current selections whenever the selection 
+changes.
+
+The 'actions' slot provides controls (button, link) that are coupled
+to the selection state.  The controls are disabled when there are no
+selections and are enabled when one (default behavior) or more (if
+multiSelect=true is added to the control) objects are selected.
+
+```handlebars
+{{#frost-object-browser-slots as |slot|}}
+  {{#block-slot slot 'info-bar'}}
+    {{#frost-info-bar as |slot|}}
+      ...
+    {{/frost-info-bar}}
+  {{/block-slot}}
+  {{#block-slot slot 'facets'}}
+    {{frost-bunsen...}}
+  {{/block-slot}}
+  {{#block-slot slot 'view' as |onSelect selections|}}
+   {{frost-list...}}
+  {{/block-slot}}
+  {{#block-slot slot 'actions' as |controls selections|}}
+    {{controls.button
+      onClick=(action 'edit')
+      priority='secondary'
+      text='Edit'
+    }}
+    {{controls.button
+      onClick=(action 'delete')
+      multiSelect=true
+      priority='secondary'
+      text='Delete'
+    }}
+  {{/block-slot}}
+{{/frost-object-browser-slots}}
+```
+
+## Deprecated API
 
 | Attribute | Type | Value | Description |
 | --------- | ---- | ----- | ----------- |
