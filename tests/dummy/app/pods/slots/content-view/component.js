@@ -1,5 +1,5 @@
-import Ember from 'ember';
-import layout from './template';
+import Ember from 'ember'
+import layout from './template'
 import computed, {readOnly} from 'ember-computed-decorators'
 import { PropTypes } from 'ember-prop-types'
 import _ from 'lodash'

@@ -144,18 +144,18 @@ export default Ember.Controller.extend({
       this.set('selected', selected)
     },
 
-    delete(selections) {
+    delete (selections) {
       selections.forEach((item) => {
         item.destroyRecord()
       })
     },
 
-    details(selections) {
+    details (selections) {
       const ids = selections.map((si) => si.get('id')).join(', ')
       window.alert(`Details: ${ids}`)
     },
 
-    edit(selections) {
+    edit (selections) {
       const ids = selections.map((si) => si.get('id')).join(', ')
       window.alert(`Edit: ${ids}`)
     },

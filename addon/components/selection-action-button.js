@@ -8,18 +8,18 @@ const {
 } = Ember
 
 export default FrostButton.extend({
-  getDefaultProps() {
+  getDefaultProps () {
     const defaults = this._super()
     delete defaults.disabled
     return defaults
   },
 
-  disabled: computed('selections.[]', function() {
+  disabled: computed('selections.[]', function () {
     const length = this.get('selections.length')
     if (this.get('multiSelect')) {
-    	return length < 1
+      return length < 1
     } else {
-    	return length !== 1
+      return length !== 1
     }
   }),
 

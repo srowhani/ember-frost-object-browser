@@ -7,7 +7,7 @@ const {
   Component
 } = Ember
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['frost-object-browser-slots'],
   layout,
   propTypes: {
@@ -22,7 +22,7 @@ export default Ember.Component.extend({
 
   actions: {
     // TODO Decide on an interface for selection data
-    onSelect(viewSelections) {
+    onSelect (viewSelections) {
       const selections = this.get('selections')
       selections.clear()
       if (viewSelections.length > 0) {
