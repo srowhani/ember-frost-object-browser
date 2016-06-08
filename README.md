@@ -72,12 +72,12 @@ multiSelect=true is added to the control) objects are selected.
       priority='secondary'
       text='Edit'
     }}
-    {{controls.button
-      onClick=(action 'delete')
+    {{#controls.link 'details'
       multiSelect=true
-      priority='secondary'
-      text='Delete'
+      priority='primary'
     }}
+      Details
+    {{/controls.link}}
   {{/block-slot}}
 {{/frost-object-browser-slots}}
 ```
