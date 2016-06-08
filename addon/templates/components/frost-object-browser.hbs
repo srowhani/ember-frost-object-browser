@@ -36,14 +36,18 @@
         {{/yield-slot}}
       </div>
     </div>
-    {{#yield-slot 'objects'}}
-      {{yield (block-params this (action 'onSelect'))}}
-    {{/yield-slot}}
-
-
-
+    {{#frost-list onSelect=(action 'onSelect') selections=selectedItems records=computedValues as |record|}}
+      {{#frost-object-browser-list-item model=record as |value|}}
+        {{frost-bunsen-detail
+          model=model
+          renderers=renderers
+          value=value
+          view=computedViewLevel
+        }}
+      {{/frost-object-browser-list-item}}
+    {{/frost-list}}
     <div class="actions">
-      {{#yield-slot 'object-actions'}}
+      {{#yield-slot 'row-actions'}}
         {{yield 'actions'}}
       {{/yield-slot}}
     </div>
