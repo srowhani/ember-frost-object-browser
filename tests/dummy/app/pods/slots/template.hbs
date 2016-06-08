@@ -51,16 +51,14 @@
   {{/block-slot}}
   {{#block-slot slot 'facets'}}
     {{!frost-bunsen...}}
-    {{frost-object-browser-filter filters=filters onFilter=onFilter}}
+    {{frost-object-browser-filter filters=filters onFilter=onOptionSelected}}
   {{/block-slot}}
   {{#block-slot slot 'view' as |selections onSelect|}}
    {{!alarms-view model=model selections=selections onSelect=(action onSelect)}}
    {{slots/content-view
     itemsPerPage=6
     model=model.model
-    onCreate=(action "onCreate")
     onDetailChange=(action "onDetailChange")
-    onFacetChange=(action "onOptionSelected")
     onRowSelect=(action "onRowSelect")
     values=model.resources
     viewSchema=viewSchema

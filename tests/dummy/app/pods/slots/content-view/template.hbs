@@ -46,10 +46,10 @@
 {{#frost-list onSelect=(action 'onSelect') selections=selectedItems records=computedValues as |record|}}
   {{#frost-object-browser-list-item model=record as |value|}}
     {{frost-bunsen-detail
-      model=model
+      bunsenModel=model
       renderers=renderers
       value=value
-      view=computedViewLevel
+      bunsenView=computedViewLevel
     }}
   {{/frost-object-browser-list-item}}
 {{/frost-list}}
