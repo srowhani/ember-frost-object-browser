@@ -157,7 +157,7 @@ export default Ember.Component.extend(PropTypeMixin, {
   // Events
   // ================================================================
 
-  deprecation: Ember.on('init', function() {
+  deprecation: Ember.on('init', function () {
     deprecate(
       'frost-object-browser has been deprecated in favor of frost-object-browser-slots',
       false,

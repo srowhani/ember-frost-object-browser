@@ -150,11 +150,6 @@ export default Ember.Controller.extend({
       })
     },
 
-    details (selections) {
-      const ids = selections.map((si) => si.get('id')).join(', ')
-      window.alert(`Details: ${ids}`)
-    },
-
     edit (selections) {
       const ids = selections.map((si) => si.get('id')).join(', ')
       window.alert(`Edit: ${ids}`)

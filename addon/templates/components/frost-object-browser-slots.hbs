@@ -15,8 +15,8 @@
     {{#yield-slot 'view'}}
       {{yield
         (block-params
-          selections
           (action 'onSelect')
+          selections
         )
       }}
     {{/yield-slot}}
@@ -27,6 +27,10 @@
           (block-params
             (hash
               button=(component 'selection-action-button'
+                selections=selections
+                size='large'
+              )
+              link=(component 'selection-action-link'
                 selections=selections
                 size='large'
               )

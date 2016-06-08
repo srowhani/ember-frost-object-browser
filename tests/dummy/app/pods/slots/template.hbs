@@ -32,11 +32,6 @@
   {{/block-slot}}
   {{#block-slot slot 'actions' as |controls selections|}}
     {{controls.button
-      onClick=(action 'details')
-      priority="secondary"
-      text='Details'
-    }}
-    {{controls.button
       onClick=(action 'delete')
       multiSelect=true
       priority="secondary"
@@ -47,5 +42,11 @@
       priority="secondary"
       text='Edit'
     }}
+    {{#controls.link 'details'
+      multiSelect=true
+      priority='primary'
+    }}
+      Details
+    {{/controls.link}}
   {{/block-slot}}
 {{/frost-object-browser-slots}}
