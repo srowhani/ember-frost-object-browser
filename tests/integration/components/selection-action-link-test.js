@@ -7,8 +7,8 @@ import {
 import hbs from 'htmlbars-inline-precompile'
 
 describeComponent(
-  'frost-object-browser',
-  'Integration: FrostObjectBrowserComponent',
+  'selection-action-link',
+  'Integration: SelectionActionLinkComponent',
   {
     integration: true
   },
@@ -18,12 +18,12 @@ describeComponent(
       // Handle any actions with this.on('myAction', function(val) { ... });
       // Template block usage:
       // this.render(hbs`
-      //   {{#frost-object-browser}}
+      //   {{#selection-action-link}}
       //     template content
-      //   {{/frost-object-browser}}
+      //   {{/selection-action-link}}
       // `);
 
-      this.render(hbs`{{frost-object-browser}}`)
+      this.render(hbs`{{selection-action-link 'details'}}`)
       expect(this.$()).to.have.length(1)
     })
   }

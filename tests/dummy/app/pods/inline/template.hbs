@@ -1,0 +1,26 @@
+{{#frost-object-browser-inline
+  itemsPerPage=6
+  model=model.model
+  onCreate=(action "onCreate")
+  onDetailChange=(action "onDetailChange")
+  onFacetChange=(action "onOptionSelected")
+  onRowSelect=(action "onRowSelect")
+  title="Resources"
+  subtitle="L3VPN Services"
+  values=model.resources
+  viewSchema=viewSchema
+  filters=filters
+}}
+  {{#block-slot slot 'actions'}}
+    {{#each actionBarItems as |actionBarItem|}}
+      {{#frost-button
+        disabled=(not actionBarItem.enabled)
+        onClick=(action 'onActionClick' actionBarItem.id)
+        priority="secondary"
+        size="large"
+      }}
+        <div class="text">{{actionBarItem.label}}</div>
+      {{/frost-button}}
+    {{/each}}
+  {{/block-slot}}
+{{/frost-object-browser-inline}}

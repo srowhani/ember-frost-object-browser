@@ -1,95 +1,52 @@
-{{#frost-object-browser
-  itemsPerPage=6
-  model=model.model
-  onCreate=(action 'onCreate')
-  onDetailChange=(action 'onDetailChange')
-  onFacetChange=(action 'onOptionSelected')
-  onRowSelect=(action 'onRowSelect')
-  title='Resources'
-  subtitle='L3VPN Services'
-  values=model.resources
-  viewSchema=viewSchema
-  filters=filters
-as |slot|}}
-  {{#block-slot slot 'app-actions' as |onCreate|}}
-    {{frost-button
-      icon='frost/infobar-create'
-      onClick=(action onCreate)
-      priority='tertiary'
-      size='medium'
-      text='Create'
-      vertical=true
-    }}
-  {{/block-slot}}
-  {{#block-slot slot 'filters' as |filters onFilter|}}
-    {{frost-object-browser-filter filters=filters onFilter=onFilter}}
-  {{/block-slot}}
-  {{#block-slot slot 'info-bar' as |infoBar|}}
-    <div class="primary-title">
-      {{infoBar.title}}
-    </div>
-    <div class="sub-title">
-      {{infoBar.summary}}
-    </div>
-  {{/block-slot}}
-  {{#block-slot slot 'objects' as |object onSelect|}}
-    {{#frost-list onSelect=(action onSelect) selections=object.selectedItems records=object.computedValues as |record|}}
-      {{#frost-object-browser-list-item model=record as |value|}}
-        {{frost-bunsen-detail
-          bunsenModel=object.model
-          bunsenView=object.computedViewLevel
-          renderers=object.renderers
-          value=value
+{{#frost-object-browser as |slot|}}
+  {{#block-slot slot 'info-bar'}}
+    {{#frost-info-bar as |slot|}}
+      {{#block-slot slot 'title'}}
+        Resources
+      {{/block-slot}}
+      {{#block-slot slot 'summary'}}
+        20 – L3VPN Services
+      {{/block-slot}}
+      {{#block-slot slot 'actions' as |controls|}}
+        {{controls.button
+          icon='frost/infobar-create'
+          onClick=(action 'onCreate')
+          text='Create'
         }}
-      {{/frost-object-browser-list-item}}
-    {{/frost-list}}
+      {{/block-slot}}
+    {{/frost-info-bar}}
   {{/block-slot}}
-  {{#block-slot slot 'object-actions'}}
-    {{#each actionBarItems as |actionBarItem|}}
-      {{#frost-button
-        disabled=(not actionBarItem.enabled)
-        onClick=(action 'onActionClick' actionBarItem.id)
-        priority='secondary'
-        size='large'
-      }}
-        <div class="text">{{actionBarItem.label}}</div>
-      {{/frost-button}}
-    {{/each}}
+  {{#block-slot slot 'facets'}}
+    {{!frost-bunsen...}}
+    {{frost-object-browser-filter filters=filters onFilter=onOptionSelected}}
   {{/block-slot}}
-  {{#block-slot slot 'pagination' as |paginator onPageChanged|}}
-    {{paginator.control
-      onPageChanged=(action onPageChanged)
+  {{#block-slot slot 'view' as |onSelect selections|}}
+   {{demo/content-view
+    itemsPerPage=6
+    model=model.model
+    onDetailChange=(action "onDetailChange")
+    onRowSelect=onSelect
+    values=model.resources
+    viewSchema=viewSchema
+   }}
+  {{/block-slot}}
+  {{#block-slot slot 'actions' as |controls selections|}}
+    {{controls.button
+      onClick=(action 'delete')
+      multiSelect=true
+      priority="secondary"
+      text='Delete'
     }}
-  {{/block-slot}}
-  {{#block-slot slot 'view-controls' as |viewControl viewLevel onDetailChange|}}
-    <div class="button-bar {{ viewControl.detailLevel }}">
-    {{#if viewLevel.low}}
-      {{frost-button
-        disabled=(eq viewControl.detailLevel 'low')
-        onClick=(action onDetailChange 'low')
-        priority='tertiary'
-        size='small'
-        icon='frost/list-small'
-      }}
-    {{/if}}
-    {{#if viewLevel.medium}}
-      {{frost-button
-        disabled=(eq viewControl.detailLevel 'medium')
-        onClick=(action onDetailChange 'medium')
-        priority='tertiary'
-        size='small'
-        icon='frost/list-medium'
-      }}
-    {{/if}}
-    {{#if viewLevel.high}}
-      {{frost-button
-        disabled=(eq viewControl.detailLevel 'high')
-        onClick=(action onDetailChange 'high')
-        priority='tertiary'
-        size='small'
-        icon='frost/list-large'
-      }}
-    {{/if}}
-    </div>
+    {{controls.button
+      onClick=(action 'edit')
+      priority="secondary"
+      text='Edit'
+    }}
+    {{#controls.link 'details'
+      multiSelect=true
+      priority='primary'
+    }}
+      Details
+    {{/controls.link}}
   {{/block-slot}}
 {{/frost-object-browser}}
