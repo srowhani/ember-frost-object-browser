@@ -12,8 +12,8 @@
 # ember-frost-object-browser
 
  * [Installation](#installation)
- * [Slots API](#slots-api)
- * [Deprecated API](#deprecated-api)
+ * [API](#api)
+ * [Inline API](#inline-api)
  * [Examples](#examples)
  * [Contributing](#contributing)
 
@@ -22,10 +22,11 @@
 ember install ember-frost-object-browser
 ```
 
-## Slots API
+## API
 
-The "slots" implementation of the object browser provides named 
-yields for each content area within the object browser pattern.
+Frost object browser is a pattern that provides slots for the
+content areas within the pattern and a selection interface to drive
+the behavior of actions based on selection.
 
 The implementor provides the content for each slot using recommended
 Frost components.  This allows the full interface/features of each
@@ -54,7 +55,7 @@ selections and are enabled when one (default behavior) or more (if
 multiSelect=true is added to the control) objects are selected.
 
 ```handlebars
-{{#frost-object-browser-slots as |slot|}}
+{{#frost-object-browser as |slot|}}
   {{#block-slot slot 'info-bar'}}
     {{#frost-info-bar as |slot|}}
       ...
@@ -79,10 +80,10 @@ multiSelect=true is added to the control) objects are selected.
       Details
     {{/controls.link}}
   {{/block-slot}}
-{{/frost-object-browser-slots}}
+{{/frost-object-browser}}
 ```
 
-## Deprecated API
+## Inline API (Deprecated)
 
 | Attribute | Type | Value | Description |
 | --------- | ---- | ----- | ----------- |
@@ -91,7 +92,7 @@ multiSelect=true is added to the control) objects are selected.
 ## Examples
 ### Template:
 ```handlebars
-{f#rost-object-browser
+{#frost-object-browser-inline
   facets=model.facets
   filters=filters
   model=model.model
@@ -107,7 +108,7 @@ multiSelect=true is added to the control) objects are selected.
   {{block-slot slot 'actions'}}
     <!-- actions go here -->
   {{/block-slot}}
-{{/frost-object-browser}}
+{{/frost-object-browser-inline}}
 ```
 
 ### Controller:
