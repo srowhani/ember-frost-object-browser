@@ -2,6 +2,12 @@ import Ember from 'ember'
 
 export default Ember.Controller.extend({
   selected: {},
+  selectedItems: [],
+  actionBarItems: [
+    {label: 'Details', id: 'details', enabled: false},
+    {label: 'Delete', id: 'delete', enabled: false},
+    {label: 'Edit', id: 'edit', enabled: false}
+  ],
 
   viewSchema: {
     low: {
@@ -144,15 +150,46 @@ export default Ember.Controller.extend({
       this.set('selected', selected)
     },
 
-    delete (selections) {
-      selections.forEach((item) => {
-        item.destroyRecord()
+    onRowSelect (allSelected, newSelected, deSelected) {
+      let actionBarItems
+
+      if (allSelected.length === 1) {
+        actionBarItems = [
+          {label: 'Details', id: 'details', enabled: true},
+          {label: 'Delete', id: 'delete', enabled: true},
+          {label: 'Edit', id: 'edit', enabled: true}
+        ]
+      } else if (allSelected.length > 1) {
+        actionBarItems = [
+          {label: 'Details', id: 'details', enabled: false},
+          {label: 'Delete', id: 'delete', enabled: true},
+          {label: 'Edit', id: 'edit', enabled: false}
+        ]
+      } else {
+        actionBarItems = [
+          {label: 'Details', id: 'details', enabled: false},
+          {label: 'Delete', id: 'delete', enabled: false},
+          {label: 'Edit', id: 'edit', enabled: false}
+        ]
+      }
+
+      this.setProperties({
+        actionBarItems,
+        selectedItems: allSelected
       })
     },
 
-    edit (selections) {
-      const ids = selections.map((si) => si.get('id')).join(', ')
-      window.alert(`Edit: ${ids}`)
+    onActionClick (buttonId) {
+      const selectedItems = this.get('selectedItems')
+
+      if (buttonId === 'delete') {
+        selectedItems.forEach((item) => {
+          item.destroyRecord()
+        })
+      } else {
+        const ids = selectedItems.map((si) => si.get('id')).join(', ')
+        window.alert(`clicked ${buttonId} for ${ids}`)
+      }
     },
 
     onDetailChange (level) {

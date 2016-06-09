@@ -1,89 +1,44 @@
-<div class="frost-info-bar">
-  <div class="title">
-    <div class="primary-title">
-      {{title}}
+{{yield}}
+
+{{#yield-slot 'info-bar'}}
+  {{yield}}
+{{/yield-slot}}
+
+<div class='frost-object-browser-body'>
+  {{#yield-slot 'facets'}}
+    <div class='frost-object-browser-facets'>
+      {{yield}}
     </div>
-    <div class="sub-title">
-      {{computedSubtitle}}
-    </div>
-  </div>
-  <div class="top-buttons" background-color='red'>
-    {{frost-button
-      icon="frost/infobar-create"
-      onClick=(action "onCreate")
-      priority="tertiary"
-      size="medium"
-      text="Create"
-      vertical=true
-    }}
-  </div>
-</div>
-<div class="body">
-    {{#if filters}}
-    {{frost-object-browser-filter filters=filters onFilter=onFilter}}
-    {{/if}}
-  <div class="content">
-    <div class="tools">
-      <div class="sort"/>
-      <div class="pagination">
-        {{frost-object-browser-paginator
-          itemsPerPage=itemsPerPage
-          onPageChanged=(action 'onPageChanged')
-          page=computedPageNumber
-          total=computedValuesTotal
+  {{/yield-slot}}
+
+  <div class='frost-object-browser-content'>
+    {{#yield-slot 'view'}}
+      {{yield
+        (block-params
+          (action 'onSelect')
+          selections
+        )
+      }}
+    {{/yield-slot}}
+
+    {{#yield-slot 'actions'}}
+      <div class='frost-object-browser-actions'>
+        {{yield
+          (block-params
+            (hash
+              button=(component 'selection-action-button'
+                selections=selections
+                size='large'
+              )
+              link=(component 'selection-action-link'
+                selections=selections
+                size='large'
+              )
+            )
+            selections
+          )
         }}
       </div>
-      <div class="detail">
-        <span class="text">
-          <!-- TODO: make this a variable to support i18n better -->
-          View:
-        </span>
-        <div class="button-bar {{ detailLevel }}">
-          {{#if viewSchema.low}}
-            {{frost-button
-              disabled=(eq detailLevel 'low')
-              onClick=(action 'onDetailChange' 'low')
-              priority="tertiary"
-              size="small"
-              icon="frost/list-small"
-            }}
-          {{/if}}
-          {{#if viewSchema.medium}}
-            {{frost-button
-              disabled=(eq detailLevel 'medium')
-              onClick=(action 'onDetailChange' 'medium')
-              priority="tertiary"
-              size="small"
-              icon="frost/list-medium"
-            }}
-          {{/if}}
-          {{#if viewSchema.high}}
-            {{frost-button
-              disabled=(eq detailLevel 'high')
-              onClick=(action 'onDetailChange' 'high')
-              priority="tertiary"
-              size="small"
-              icon="frost/list-large"
-            }}
-          {{/if}}
-        </div>
-      </div>
-    </div>
-    {{#frost-list onSelect=(action 'onSelect') selections=selectedItems records=computedValues as |record|}}
-      {{#frost-object-browser-list-item model=record as |value|}}
-        {{frost-bunsen-detail
-          bunsenModel=model
-          renderers=renderers
-          value=value
-          bunsenView=computedViewLevel
-        }}
-      {{/frost-object-browser-list-item}}
-    {{/frost-list}}
-    {{yield}}
-    <div class="actions">
-      {{#yield-slot 'actions'}}
-        {{yield 'actions'}}
-      {{/yield-slot}}
-    </div>
+    {{/yield-slot}}
   </div>
 </div>

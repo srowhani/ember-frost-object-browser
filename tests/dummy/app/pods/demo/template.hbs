@@ -1,26 +1,52 @@
-{{#frost-object-browser
-  itemsPerPage=6
-  model=model.model
-  onCreate=(action "onCreate")
-  onDetailChange=(action "onDetailChange")
-  onFacetChange=(action "onOptionSelected")
-  onRowSelect=(action "onRowSelect")
-  title="Resources"
-  subtitle="L3VPN Services"
-  values=model.resources
-  viewSchema=viewSchema
-  filters=filters
-}}
-  {{#block-slot slot 'actions'}}
-    {{#each actionBarItems as |actionBarItem|}}
-      {{#frost-button
-        disabled=(not actionBarItem.enabled)
-        onClick=(action 'onActionClick' actionBarItem.id)
-        priority="secondary"
-        size="large"
-      }}
-        <div class="text">{{actionBarItem.label}}</div>
-      {{/frost-button}}
-    {{/each}}
+{{#frost-object-browser as |slot|}}
+  {{#block-slot slot 'info-bar'}}
+    {{#frost-info-bar as |slot|}}
+      {{#block-slot slot 'title'}}
+        Resources
+      {{/block-slot}}
+      {{#block-slot slot 'summary'}}
+        20 – L3VPN Services
+      {{/block-slot}}
+      {{#block-slot slot 'actions' as |controls|}}
+        {{controls.button
+          icon='frost/infobar-create'
+          onClick=(action 'onCreate')
+          text='Create'
+        }}
+      {{/block-slot}}
+    {{/frost-info-bar}}
+  {{/block-slot}}
+  {{#block-slot slot 'facets'}}
+    {{!frost-bunsen...}}
+    {{frost-object-browser-filter filters=filters onFilter=onOptionSelected}}
+  {{/block-slot}}
+  {{#block-slot slot 'view' as |onSelect selections|}}
+   {{demo/content-view
+    itemsPerPage=6
+    model=model.model
+    onDetailChange=(action "onDetailChange")
+    onRowSelect=onSelect
+    values=model.resources
+    viewSchema=viewSchema
+   }}
+  {{/block-slot}}
+  {{#block-slot slot 'actions' as |controls selections|}}
+    {{controls.button
+      onClick=(action 'delete')
+      multiSelect=true
+      priority="secondary"
+      text='Delete'
+    }}
+    {{controls.button
+      onClick=(action 'edit')
+      priority="secondary"
+      text='Edit'
+    }}
+    {{#controls.link 'details'
+      multiSelect=true
+      priority='primary'
+    }}
+      Details
+    {{/controls.link}}
   {{/block-slot}}
 {{/frost-object-browser}}

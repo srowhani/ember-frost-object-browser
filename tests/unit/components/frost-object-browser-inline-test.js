@@ -14,7 +14,7 @@ const FrostButtonComponent = Ember.Component.extend({
   }
 })
 
-describeComponent('frost-object-browser', 'Unit | frost-object-browser', {
+describeComponent('frost-object-browser-inline', 'Unit | frost-object-browser-inline', {
   unit: true,
 
   needs: [

@@ -1,11 +1,29 @@
 import Ember from 'ember'
-import layout from './template'
-import computed, {readOnly} from 'ember-computed-decorators'
-import { PropTypes } from 'ember-prop-types'
 import _ from 'lodash'
+import computed, {readOnly} from 'ember-computed-decorators'
+import layout from '../templates/components/frost-object-browser-inline'
+import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 
-export default Ember.Component.extend({
-  classNames: ['dummy-slots-content-view'],
+const {
+  deprecate
+} = Ember
+
+/**
+ * @type SelectedRecord
+ * @property {Boolean} isSelected - whether or not it is selected
+ * @property {Object} record - the record itself
+ */
+
+export default Ember.Component.extend(PropTypeMixin, {
+  // ================================================================
+  // Dependencies
+  // ================================================================
+
+  // ================================================================
+  // Properties
+  // ================================================================
+
+  classNames: ['frost-object-browser-inline'],
   layout,
   _pageNumber: 0,
 
@@ -138,6 +156,18 @@ export default Ember.Component.extend({
   // ================================================================
   // Events
   // ================================================================
+
+  deprecation: Ember.on('init', function () {
+    deprecate(
+      'frost-object-browser has been deprecated in favor of frost-object-browser-slots',
+      false,
+      {
+        id: 'frost-debug.deprecate-frost-object-browser',
+        until: '15.0.0',
+        url: 'https://github.com/ciena-frost/ember-frost-object-browser/blob/master/README.md#api'
+      }
+    )
+  }),
 
   /**
    * This gets called whenever anything passed to us changes.
