@@ -1,3 +1,13 @@
+# 14.0.0
+
+Modified the interface of the object browser to minimize coupling between the presentation and logic layers.
+
+See https://github.com/ciena-frost/ember-frost-object-browser#api for the new interface specification.
+
+A new `frost-object-browser-inline` component has also been introduced that implements the `frost-object-browser` component according to the previously stable 5.x interface and marked the usage of this component as deprecated for removal in the next major release (15.x).  This allows users of the legacy format a smoother transition path to the new slots based implementation.
+
+See https://github.com/ciena-frost/ember-frost-object-browser#inline-api for the legacy inline specification.
+
 # 13.0.1
 No CHANGELOG section found in Pull Request description.
 Use a `# CHANGELOG` section in your Pull Request description to auto-populate the `CHANGELOG.md`
