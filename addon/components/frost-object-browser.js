@@ -47,7 +47,7 @@ export default Component.extend({
      * Handles setting/clearing the user's selections in the view
      *
      * @function actions:onSelect
-     * @param {Object} viewSelections record that was just selected/deselected
+     * @param {ember/Array} viewSelections record that was just selected/deselected
      * @returns {undefined}
      */
     onSelect (viewSelections) {

@@ -134,5 +134,29 @@ describeComponent(
 
       selections.removeObject(itemObject)
     })
+
+    it('test-action closure action not called when disabled set to true', function () {
+      const spy = sinon.spy()
+
+      this.on('test-action', spy)
+
+      this.render(hbs`
+        {{selection-action-button
+          priority='secondary'
+
+          disabled=true
+          size='large'
+          text='Edit'
+          onClick=(action 'test-action')
+        }}
+      `)
+
+      this.$('button').click()
+
+      expect(
+        spy.called,
+        'passed closure action should not be called'
+      ).to.be.false
+    })
   }
 )
