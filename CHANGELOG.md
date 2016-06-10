@@ -1,3 +1,20 @@
+# 14.1.0
+
+## Non-Breaking
+
+* **Added** unit and integration tests for frost-object-browser component
+* **Added** unit and integration tests for selection-action-button component
+* **Added** unit and integration tests for selection-action-link component
+* **Added** docBlock headers for frost-object-browser component
+* **Added** docBlock headers for selection-action-button component
+* **Added** docBlock headers for selection-action-link component
+
+<!-- Reviewable:start -->
+---
+This change is [<img src="https://reviewable.io/review_button.svg" height="35" align="absmiddle" alt="Reviewable"/>](https://reviewable.io/reviews/ciena-frost/ember-frost-object-browser/54)
+<!-- Reviewable:end -->
+
+
 # 14.0.0
 
 Modified the interface of the object browser to minimize coupling between the presentation and logic layers.
