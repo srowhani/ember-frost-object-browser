@@ -127,7 +127,7 @@ describeComponent(
         values=model.resources
         model=model.model
       }}`)
-      expect(this.$().find('.frost-list-item')).to.have.length(6)
+      expect(this.$().find('.vertical-item')).to.have.length(6)
     })
 
     it('it changes page when we click to next change button', function () {
