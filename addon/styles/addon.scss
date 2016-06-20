@@ -3,7 +3,6 @@
 .frost-object-browser {
   display: flex;
   flex-direction: column;
-
   &-body {
     flex: 1;
     display: flex;
@@ -20,6 +19,14 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    .frost-list .container {
+      height: 100%;
+      padding-bottom: 90px;
+    }
+    > div:first-child{
+      height: 100%;
+    }
   }
 
   &-actions {
@@ -29,12 +36,32 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-
+    width: 100%;
+    background: rgba(255,255,255,0.95);
+    bottom: 0px;
+    box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8px #696868;
+    position: absolute;
+    padding-right: 226px;
     .frost-button,
     .frost-link {
       margin-left: 5px;
     }
   }
+}
+
+body {
+	counter-reset: selected;
+}
+.frost-list-item.is-selected {
+	counter-increment: selected;
+}
+
+.frost-object-browser-actions::before{
+  content: counter(selected) " Items selected";
+  width: 70%;
+  padding-left: 20px;
+  font-size: $frost-font-s;
+  color: $frost-color-grey-3;
 }
 
 .frost-object-browser-inline {

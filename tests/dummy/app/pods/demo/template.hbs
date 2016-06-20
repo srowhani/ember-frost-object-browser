@@ -22,7 +22,6 @@
   {{/block-slot}}
   {{#block-slot slot 'view' as |onSelect selections|}}
    {{demo/content-view
-    itemsPerPage=6
     model=model.model
     onDetailChange=(action "onDetailChange")
     onRowSelect=onSelect
