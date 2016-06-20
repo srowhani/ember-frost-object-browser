@@ -3,7 +3,6 @@
 .frost-object-browser {
   display: flex;
   flex-direction: column;
-
   &-body {
     flex: 1;
     display: flex;
@@ -20,6 +19,14 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    .frost-list .container {
+      height: 100%;
+      padding-bottom: 90px;
+    }
+    > div:first-child{
+      height: 100%;
+    }
   }
 
   &-actions {
@@ -29,12 +36,30 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-
+    width: calc(100% - 225px);
+    background: rgba(255,255,255,0.95);
+    bottom: 0px;
+    box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8px #696868;
+    position: absolute;
     .frost-button,
     .frost-link {
       margin-left: 5px;
     }
+    &::before{
+      content: counter(selected) " Items selected";
+      width: 70%;
+      padding-left: 20px;
+      font-size: $frost-font-s;
+      color: $frost-color-grey-3;
+    }
   }
+}
+
+body {
+	counter-reset: selected;
+}
+.frost-list-item.is-selected {
+	counter-increment: selected;
 }
 
 .frost-object-browser-inline {
@@ -48,7 +73,13 @@
       }
     }
   }
-
+  .frost-list  {
+    height: 100%;
+    .container {
+      height: 100%;
+      padding-bottom: 90px;
+    }
+  }
   .frost-list .records {
     padding-left: 1px;
     border-left: none;
@@ -87,7 +118,21 @@
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
+        width: 100%;
+        background: rgba(255,255,255,0.95);
+        bottom: 0px;
+        box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8px #696868;
+        position: absolute;
+        &::before{
+          content: counter(selected) " Items selected";
+          width: 70%;
+          padding-left: 20px;
+          font-size: $frost-font-s;
+          color: $frost-color-grey-3;
+        }
       }
+
+      
 
       > .objects {
         flex: 1;
@@ -113,7 +158,6 @@
           .button-bar, .text {
             display: table-cell;
             vertical-align: middle;
-            padding-right: 26px;
 
             &.left {
               padding-right: 5px;
@@ -149,6 +193,9 @@
                 svg * {
                   fill: $frost-color-blue-1;
                 }
+              }
+              &:last-child{
+                padding-right: 0px;
               }
             }
           }
@@ -186,7 +233,7 @@
 .facets {
   width: 165px;
   p {
-    font-size: $frost-font-s;
+    font-size: $frost-font-m;
     color: $frost-color-grey-5;
     margin-bottom: 10px;
     margin-top: 0px;
@@ -220,5 +267,11 @@
 
   .no-display {
     display: none;
+  }
+}
+
+ .detail {
+  .button-bar > .frost-button.small:last-child {
+      padding-right: 0px;
   }
 }
