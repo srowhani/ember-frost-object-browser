@@ -46,6 +46,13 @@
     .frost-link {
       margin-left: 5px;
     }
+    &::before{
+      content: counter(selected) " Items selected";
+      width: 70%;
+      padding-left: 20px;
+      font-size: $frost-font-s;
+      color: $frost-color-grey-3;
+    }
   }
 }
 
@@ -54,14 +61,6 @@ body {
 }
 .frost-list-item.is-selected {
 	counter-increment: selected;
-}
-
-.frost-object-browser-actions::before{
-  content: counter(selected) " Items selected";
-  width: 70%;
-  padding-left: 20px;
-  font-size: $frost-font-s;
-  color: $frost-color-grey-3;
 }
 
 .frost-object-browser-inline {
@@ -75,7 +74,13 @@ body {
       }
     }
   }
-
+  .frost-list  {
+    height: 100%;
+    .container {
+      height: 100%;
+      padding-bottom: 90px;
+    }
+  }
   .frost-list .records {
     padding-left: 1px;
     border-left: none;
@@ -114,7 +119,21 @@ body {
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
+        width: 100%;
+        background: rgba(255,255,255,0.95);
+        bottom: 0px;
+        box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8px #696868;
+        position: absolute;
+        &::before{
+          content: counter(selected) " Items selected";
+          width: 70%;
+          padding-left: 20px;
+          font-size: $frost-font-s;
+          color: $frost-color-grey-3;
+        }
       }
+
+      
 
       > .objects {
         flex: 1;
@@ -175,6 +194,9 @@ body {
                 svg * {
                   fill: $frost-color-blue-1;
                 }
+              }
+              &:last-child{
+                padding-right: 0px;
               }
             }
           }
