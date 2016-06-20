@@ -1,4 +1,4 @@
-@import 'node_modules/ember-frost-core/addon/styles/frost-theme';
+  @import 'node_modules/ember-frost-core/addon/styles/frost-theme';
 
 .dummy-notification-container {
   position: fixed;
@@ -61,7 +61,6 @@
     .button-bar, .text {
       display: table-cell;
       vertical-align: middle;
-      padding-right: 26px;
 
       &.left {
         padding-right: 5px;
@@ -79,6 +78,9 @@
     }
 
     .button-bar {
+      > .frost-button.small:last-child {
+        padding-right: 0px;
+      }
       .frost-button {
         svg * {
           fill: $frost-color-grey-2;
@@ -100,6 +102,8 @@
         }
       }
     }
+
+    
   }
 
   & .frost-list {
@@ -132,3 +136,4 @@
     padding-top: 5px;
   }
 }
+

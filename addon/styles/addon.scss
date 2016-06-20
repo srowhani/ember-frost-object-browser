@@ -113,7 +113,6 @@
           .button-bar, .text {
             display: table-cell;
             vertical-align: middle;
-            padding-right: 26px;
 
             &.left {
               padding-right: 5px;
@@ -220,5 +219,11 @@
 
   .no-display {
     display: none;
+  }
+}
+
+ .detail {
+  .button-bar > .frost-button.small:last-child {
+      padding-right: 0px;
   }
 }
