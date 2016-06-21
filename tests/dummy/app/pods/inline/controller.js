@@ -133,6 +133,11 @@ export default Ember.Controller.extend({
     }
   ],
 
+  sortData: {
+    sortAttributes: [{label: 'Label', value: 'label'}],
+    sortOrder: []
+  },
+
   actions: {
     onCreate () {
       window.alert('One does not merely create things')
@@ -194,6 +199,18 @@ export default Ember.Controller.extend({
 
     onDetailChange (level) {
       Ember.Logger.log(`Level of detail changed to ${level}`)
+    },
+
+    onSortSelect ([sortData]) {
+      if (sortData) {
+        let sortedList = this.get('model.resources').sortBy(sortData.get('value'))
+
+        if (this.get('direction') === ':desc') {
+          sortedList = sortedList.reverse()
+        }
+
+        this.set('model.resources', sortedList)
+      }
     }
   }
 })

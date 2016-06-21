@@ -24,7 +24,11 @@
     {{/if}}
   <div class="content">
     <div class="tools">
-      <div class="sort"/>
+      <div class="sort">
+        {{#if sortData}}
+          {{frost-sort sortableProperties=sortData.sortAttributes sortParams=sortData.sortOrder onChange=onSortSelect}}
+        {{/if}}
+      </div>
       <div class="pagination">
         {{frost-object-browser-paginator
           itemsPerPage=itemsPerPage
