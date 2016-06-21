@@ -201,7 +201,7 @@ export default Ember.Controller.extend({
       Ember.Logger.log(`Level of detail changed to ${level}`)
     },
 
-    onSortSelect ([sortData]) {
+    onSortChange ([sortData]) {
       if (sortData) {
         let sortedList = this.get('model.resources').sortBy(sortData.get('value'))
 
