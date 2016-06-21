@@ -5,11 +5,13 @@
   onDetailChange=(action "onDetailChange")
   onFacetChange=(action "onOptionSelected")
   onRowSelect=(action "onRowSelect")
+  onSortChange=(action "onSortChange")
   title="Resources"
   subtitle="L3VPN Services"
   values=model.resources
   viewSchema=viewSchema
   filters=filters
+  sortData=sortData
 }}
   {{#block-slot slot 'actions'}}
     {{#each actionBarItems as |actionBarItem|}}
