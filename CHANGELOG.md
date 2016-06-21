@@ -1,3 +1,6 @@
+# 14.2.0
+* Added `onSortChange` and `sortData` attributes to `frost-object-browser-inline`
+
 # 14.1.4
 * Updated action bar positioning
 * Updated margin between each action button
