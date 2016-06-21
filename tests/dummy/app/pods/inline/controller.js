@@ -134,8 +134,8 @@ export default Ember.Controller.extend({
   ],
 
   sortData: {
-    sortAttributes: [{label: 'Label', value: 'label'}],
-    sortOrder: []
+    sortableProperties: [{label: 'Label', value: 'label'}],
+    sortParams: []
   },
 
   actions: {
