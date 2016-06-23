@@ -23,6 +23,7 @@
 
     {{#yield-slot 'actions'}}
       <div class='frost-object-browser-actions'>
+        <div class="items-selected"> {{selections.length}} Items selected</div>
         {{yield
           (block-params
             (hash
