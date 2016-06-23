@@ -17,21 +17,29 @@
   {{/yield-slot}}
   <div class="content">
     <div class="tools">
-      <div class="sort"/>
-        {{#yield-slot 'pagination'}}
-          <div class="pagination">
-            {{yield (block-params
-              (hash control=(component
-                'frost-object-browser-paginator'
-                  itemsPerPage=itemsPerPage
-                  page=computedPageNumber
-                  total=computedValuesTotal
-                )
+      <div class="sort">
+        {{#if sortData}}
+          {{frost-sort
+            onChange=onSortChange
+            sortableProperties=sortData.sortableProperties
+            sortParams=sortData.sortParams
+          }}
+        {{/if}}
+      </div>
+      {{#yield-slot 'pagination'}}
+        <div class="pagination">
+          {{yield (block-params
+            (hash control=(component
+              'frost-object-browser-paginator'
+                itemsPerPage=itemsPerPage
+                page=computedPageNumber
+                total=computedValuesTotal
               )
-              (action 'onPageChanged')
-            )}}
-          </div>
-        {{/yield-slot}}
+            )
+            (action 'onPageChanged')
+          )}}
+        </div>
+      {{/yield-slot}}
       <div class="detail">
         <span class="text">
           <!-- TODO: make this a variable to support i18n better -->
