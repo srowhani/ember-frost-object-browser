@@ -1,3 +1,6 @@
+# 14.2.1
+* Remove css counters. Replace with selections.length
+
 # 14.2.0
 * Added `onSortChange` and `sortData` attributes to `frost-object-browser-inline`
 
