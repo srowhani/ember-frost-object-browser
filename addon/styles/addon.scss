@@ -45,21 +45,13 @@
     .frost-link {
       margin-left: 10px;
     }
-    &::before{
-      content: counter(selected) " Items selected";
-      width: 70%;
+    .items-selected{
+      width: 100%;
       padding-left: 20px;
       font-size: $frost-font-s;
-      color: $frost-color-grey-3;
+			color: $frost-color-grey-3;
     }
   }
-}
-
-body {
-	counter-reset: selected;
-}
-.frost-list-item.is-selected {
-	counter-increment: selected;
 }
 
 .frost-object-browser-inline {
@@ -123,13 +115,6 @@ body {
         bottom: 0px;
         box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8px #696868;
         position: absolute;
-        &::before{
-          content: counter(selected) " Items selected";
-          width: 70%;
-          padding-left: 20px;
-          font-size: $frost-font-s;
-          color: $frost-color-grey-3;
-        }
       }
 
 

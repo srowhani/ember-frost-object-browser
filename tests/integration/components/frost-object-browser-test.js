@@ -90,11 +90,10 @@ describeComponent(
           {{/block-slot}}
         {{/frost-object-browser}}
       `)
-
       expect(
-        this.$().text().trim(),
+        this.$().text().trim().replace(/ +/g, ' '),
         'Text shows in the "actions" yielded slot'
-      ).to.eql('Some yielded text')
+      ).to.eql('Items selected\n Some yielded text')
     })
 
     it('it yields a button contextual component in the "actions" slot', function () {
