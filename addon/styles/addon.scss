@@ -40,7 +40,8 @@
     bottom: 0px;
     box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8px #696868;
     z-index: 2;
-    width: 100%;
+    position: absolute;       
+    width: calc(100% - 226px);
     .frost-button,
     .frost-link {
       margin-left: 10px;
@@ -110,11 +111,11 @@
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
+        position: absolute;       
         width: 100%;
         background: rgba(255,255,255,0.95);
-        bottom: 0px;
+        bottom: -8px;
         box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8px #696868;
-        position: absolute;
       }
 
 
