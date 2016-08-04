@@ -1,7 +1,7 @@
 import Ember from 'ember'
 import layout from '../templates/components/frost-object-browser'
 import { PropTypes } from 'ember-prop-types'
-import BlockSlotMixin from 'ember-block-slots'
+import SlotsMixin from 'ember-block-slots'
 
 const {
   A,
@@ -13,7 +13,7 @@ const {
  * @augments ember/Component
  * @augments module:ember-prop-types
  */
-export default Component.extend(BlockSlotMixin, {
+export default Component.extend(SlotsMixin, {
 
   /** @type {String[]} */
   classNames: ['frost-object-browser'],
