@@ -23,6 +23,14 @@ export default Ember.Component.extend({
       // Create a new filter state object, this helps with observers
       filterState = _.clone(filterState)
       filterState[filterName] = value
+
+      let filterData = this.get('filters')
+      let filterIndex = _.findIndex(filterData, function (item) {
+        return item.name === filterName
+      })
+
+      this.set(`filters.${filterIndex}.selectedValue`, value)
+
       this.updateFilterState(filterState)
     },
     'clear-filter' (filterName) {
