@@ -1,13 +1,13 @@
-{{#frost-object-browser as |slot|}}
-  {{#block-slot slot 'info-bar'}}
-    {{#frost-info-bar as |slot|}}
-      {{#block-slot slot 'title'}}
+{{#frost-object-browser}}
+  {{#block-slot 'info-bar'}}
+    {{#frost-info-bar}}
+      {{#block-slot 'title'}}
         Resources
       {{/block-slot}}
-      {{#block-slot slot 'summary'}}
+      {{#block-slot 'summary'}}
         20 – L3VPN Services
       {{/block-slot}}
-      {{#block-slot slot 'actions' as |controls|}}
+      {{#block-slot 'actions' as |controls|}}
         {{controls.button
           icon='frost/infobar-create'
           onClick=(action 'onCreate')
@@ -16,11 +16,10 @@
       {{/block-slot}}
     {{/frost-info-bar}}
   {{/block-slot}}
-  {{#block-slot slot 'facets'}}
-    {{!frost-bunsen...}}
+  {{#block-slot 'facets'}}
     {{frost-object-browser-filter filters=filters onFilter=onOptionSelected}}
   {{/block-slot}}
-  {{#block-slot slot 'view' as |onSelect selections|}}
+  {{#block-slot 'view' as |onSelect selections|}}
    {{demo/content-view
     itemsPerPage=6
     model=model.model
@@ -30,7 +29,7 @@
     viewSchema=viewSchema
    }}
   {{/block-slot}}
-  {{#block-slot slot 'actions' as |controls selections|}}
+  {{#block-slot 'actions' as |controls selections|}}
     {{controls.button
       onClick=(action 'delete')
       multiSelect=true
