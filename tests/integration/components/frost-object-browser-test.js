@@ -1,12 +1,10 @@
 /* jshint expr:true */
-import Ember from 'ember'
 import { expect } from 'chai'
 import {
   describeComponent,
   it
 } from 'ember-mocha'
 import hbs from 'htmlbars-inline-precompile'
-import { initialize } from 'ember-block-slots/initializers/component-block-slots'
 
 describeComponent(
   'frost-object-browser',
@@ -15,17 +13,6 @@ describeComponent(
     integration: true
   },
   function () {
-    let container, application
-
-    beforeEach(function () {
-      Ember.run(() => {
-        application = Ember.Application.create()
-        container = application.__container__
-        application.deferReadiness()
-      })
-      initialize(container, application)
-    })
-
     it('renders default values', function () {
       this.render(hbs`
         {{frost-object-browser}}
@@ -39,8 +26,8 @@ describeComponent(
 
     it('it yields the "info-bar" slot', function () {
       this.render(hbs`
-        {{#frost-object-browser as |slot|}}
-          {{#block-slot slot 'info-bar'}}
+        {{#frost-object-browser}}
+          {{#block-slot 'info-bar'}}
             Some yielded text
           {{/block-slot}}
         {{/frost-object-browser}}
@@ -54,8 +41,8 @@ describeComponent(
 
     it('it yields the "facets" slot', function () {
       this.render(hbs`
-        {{#frost-object-browser as |slot|}}
-          {{#block-slot slot 'facets'}}
+        {{#frost-object-browser}}
+          {{#block-slot 'facets'}}
             Some yielded text
           {{/block-slot}}
         {{/frost-object-browser}}
@@ -69,8 +56,8 @@ describeComponent(
 
     it('it yields the "view" slot', function () {
       this.render(hbs`
-        {{#frost-object-browser as |slot|}}
-          {{#block-slot slot 'view'}}
+        {{#frost-object-browser}}
+          {{#block-slot 'view'}}
             Some yielded text
           {{/block-slot}}
         {{/frost-object-browser}}
@@ -84,8 +71,8 @@ describeComponent(
 
     it('it yields the "actions" slot', function () {
       this.render(hbs`
-        {{#frost-object-browser as |slot|}}
-          {{#block-slot slot 'actions'}}
+        {{#frost-object-browser}}
+          {{#block-slot 'actions'}}
             Some yielded text
           {{/block-slot}}
         {{/frost-object-browser}}
@@ -100,8 +87,8 @@ describeComponent(
       this.on('test-action', function () {})
 
       this.render(hbs`
-        {{#frost-object-browser as |slot|}}
-          {{#block-slot slot 'actions' as |action|}}
+        {{#frost-object-browser}}
+          {{#block-slot 'actions' as |action|}}
             {{action.button onActionClick=(action 'test-action')}}
           {{/block-slot}}
         {{/frost-object-browser}}
@@ -116,8 +103,8 @@ describeComponent(
       this.on('test-action', function () {})
 
       this.render(hbs`
-        {{#frost-object-browser as |slot|}}
-          {{#block-slot slot 'actions' as |controls|}}
+        {{#frost-object-browser}}
+          {{#block-slot 'actions' as |controls|}}
             {{#controls.link 'details'
               multiSelect=true
               priority='primary'

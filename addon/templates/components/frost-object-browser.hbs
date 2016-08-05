@@ -12,33 +12,29 @@
   {{/yield-slot}}
 
   <div class='frost-object-browser-content'>
-    {{#yield-slot 'view'}}
-      {{yield
-        (block-params
-          (action 'onSelect')
-          selections
-        )
-      }}
+    {{#yield-slot 'view' (block-params
+      (action 'onSelect')
+      selections
+    )}}
+      {{yield}}
     {{/yield-slot}}
 
-    {{#yield-slot 'actions'}}
+    {{#yield-slot 'actions' (block-params
+      (hash
+        button=(component 'selection-action-button'
+          selections=selections
+          size='large'
+        )
+        link=(component 'selection-action-link'
+          selections=selections
+          size='large'
+        )
+      )
+      selections
+    )}}
       <div class='frost-object-browser-actions'>
         <div class="items-selected"> {{selections.length}} items selected</div>
-        {{yield
-          (block-params
-            (hash
-              button=(component 'selection-action-button'
-                selections=selections
-                size='large'
-              )
-              link=(component 'selection-action-link'
-                selections=selections
-                size='large'
-              )
-            )
-            selections
-          )
-        }}
+        {{yield}}
       </div>
     {{/yield-slot}}
   </div>

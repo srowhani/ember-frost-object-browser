@@ -3,6 +3,7 @@ import _ from 'lodash'
 import computed, {readOnly} from 'ember-computed-decorators'
 import layout from '../templates/components/frost-object-browser-inline'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
+import SlotsMixin from 'ember-block-slots'
 
 const {
   deprecate
@@ -14,7 +15,7 @@ const {
  * @property {Object} record - the record itself
  */
 
-export default Ember.Component.extend(PropTypeMixin, {
+export default Ember.Component.extend(SlotsMixin, PropTypeMixin, {
   // ================================================================
   // Dependencies
   // ================================================================
