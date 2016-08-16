@@ -55,19 +55,21 @@ selections and are enabled when one (default behavior) or more (if
 multiSelect=true is added to the control) objects are selected.
 
 ```handlebars
-{{#frost-object-browser as |slot|}}
-  {{#block-slot slot 'info-bar'}}
-    {{#frost-info-bar as |slot|}}
+{{#frost-object-browser
+  selections=selectedItems
+}}
+  {{#block-slot 'info-bar'}}
+    {{#frost-info-bar}}
       ...
     {{/frost-info-bar}}
   {{/block-slot}}
-  {{#block-slot slot 'facets'}}
+  {{#block-slot 'facets'}}
     {{frost-bunsen...}}
   {{/block-slot}}
-  {{#block-slot slot 'view' as |onSelect selections|}}
+  {{#block-slot 'view' as |selections|}}
    {{frost-list...}}
   {{/block-slot}}
-  {{#block-slot slot 'actions' as |controls selections|}}
+  {{#block-slot 'actions' as |controls selections|}}
     {{controls.button
       onClick=(action 'edit')
       priority='secondary'
