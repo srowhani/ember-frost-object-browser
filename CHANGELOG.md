@@ -1,3 +1,10 @@
+# 16.0.1
+
+* **Updated** `ember-frost-info-bar` dependency in blueprint to latest version.
+* **Updated** usage of sinon-chai to include the development environment.
+* **Removed** `ember-hook` devDependency since it is not being used.
+
+
 # 16.0.0
 
 - Removed `onSelect` from the block parameters for the `view` slot
