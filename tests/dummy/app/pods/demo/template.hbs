@@ -1,4 +1,6 @@
-{{#frost-object-browser}}
+{{#frost-object-browser
+  selections=selections
+}}
   {{#block-slot 'info-bar'}}
     {{#frost-info-bar}}
       {{#block-slot 'title'}}
@@ -19,12 +21,12 @@
   {{#block-slot 'facets'}}
     {{frost-object-browser-filter filters=filters onFilter=onOptionSelected}}
   {{/block-slot}}
-  {{#block-slot 'view' as |onSelect selections|}}
+  {{#block-slot 'view' as |selections|}}
    {{demo/content-view
     itemsPerPage=6
     model=model.model
     onDetailChange=(action "onDetailChange")
-    onRowSelect=onSelect
+    onRowSelect=(action 'onSelect')
     values=model.resources
     viewSchema=viewSchema
    }}

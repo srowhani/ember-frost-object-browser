@@ -13,7 +13,6 @@
 
   <div class='frost-object-browser-content'>
     {{#yield-slot 'view' (block-params
-      (action 'onSelect')
       selections
     )}}
       {{yield}}
@@ -32,10 +31,17 @@
       )
       selections
     )}}
-      <div class='frost-object-browser-actions'>
-        <div class="items-selected"> {{selections.length}} items selected</div>
-        {{yield}}
-      </div>
+
+      {{#liquid-if (gt selections.length 0)
+        class='frost-object-browser-actions'
+      }}
+        <div class='frost-object-browser-actions-content'>
+          <div class="items-selected">
+            {{selections.length}} items selected
+          </div>
+          {{yield}}
+        </div>
+      {{/liquid-if}}
     {{/yield-slot}}
   </div>
 </div>

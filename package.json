@@ -39,6 +39,7 @@
     "ember-cli-dependency-checker": "^1.2.0",
     "ember-cli-htmlbars-inline-precompile": "^0.3.1",
     "ember-cli-ic-ajax": "^0.2.4",
+    "ember-cli-import-polyfill": "0.2.0",
     "ember-cli-inject-live-reload": "^1.4.0",
     "ember-cli-mirage": "^0.1.11",
     "ember-cli-mocha": "^0.10.1",

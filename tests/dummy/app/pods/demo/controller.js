@@ -1,6 +1,7 @@
 import Ember from 'ember'
 
 export default Ember.Controller.extend({
+  selections: [],
   selected: {},
 
   viewSchema: {
@@ -157,6 +158,14 @@ export default Ember.Controller.extend({
 
     onDetailChange (level) {
       Ember.Logger.log(`Level of detail changed to ${level}`)
+    },
+
+    onSelect (viewSelections) {
+      const selections = this.get('selections')
+      selections.clear()
+      if (viewSelections.length > 0) {
+        selections.addObjects(viewSelections)
+      }
     }
   }
 })
