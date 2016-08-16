@@ -4,7 +4,6 @@
 * **Updated** usage of sinon-chai to include the development environment.
 * **Removed** `ember-hook` devDependency since it is not being used.
 
-
 # 16.0.0
 
 - Removed `onSelect` from the block parameters for the `view` slot
@@ -35,8 +34,8 @@ No CHANGELOG section found in Pull Request description.
 Use a `# CHANGELOG` section in your Pull Request description to auto-populate the `CHANGELOG.md`
 
 # 14.1.2
-* Floating action bar 
-* Add selected item count 
+* Floating action bar
+* Add selected item count
 * Set facets font size to medium
 
 
@@ -54,12 +53,6 @@ Use a `# CHANGELOG` section in your Pull Request description to auto-populate th
 * **Added** docBlock headers for frost-object-browser component
 * **Added** docBlock headers for selection-action-button component
 * **Added** docBlock headers for selection-action-link component
-
-<!-- Reviewable:start -->
----
-This change is [<img src="https://reviewable.io/review_button.svg" height="35" align="absmiddle" alt="Reviewable"/>](https://reviewable.io/reviews/ciena-frost/ember-frost-object-browser/54)
-<!-- Reviewable:end -->
-
 
 # 14.0.0
 
@@ -83,7 +76,7 @@ Use a `# CHANGELOG` section in your Pull Request description to auto-populate th
 
   > `model` became `bunsenModel` and `view` became `bunsenView`.
 
-* **Upgraded** `ember-prop-types` to version `2.0.0`. 
+* **Upgraded** `ember-prop-types` to version `2.0.0`.
 
   > `oneOf` changed to `oneOfType` to better align with the React `propTypes` API.
 
