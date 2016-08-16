@@ -15,7 +15,7 @@ module.exports = function (defaults) {
     }
   })
 
-  if (app.env === 'test') {
+  if (app.env === 'test' || app.env === 'development') {
     app.import('bower_components/sinon-chai/lib/sinon-chai.js', {type: 'test'})
   }
 
