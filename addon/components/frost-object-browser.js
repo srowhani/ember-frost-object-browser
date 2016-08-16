@@ -1,16 +1,14 @@
 import Ember from 'ember'
 import layout from '../templates/components/frost-object-browser'
-import { PropTypes } from 'ember-prop-types'
 import SlotsMixin from 'ember-block-slots'
 
 const {
-  A,
   Component
 } = Ember
 
 export default Component.extend(SlotsMixin, {
 
-  actionsAnimation() {
+  actionsAnimation () {
     this.transition(
       this.toValue(true),
       this.use('to-up'),
@@ -18,6 +16,6 @@ export default Component.extend(SlotsMixin, {
     )
   },
   classNames: ['frost-object-browser'],
-  layout,
+  layout
 
 })

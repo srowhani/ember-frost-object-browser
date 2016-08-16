@@ -70,8 +70,11 @@ describeComponent(
     })
 
     it('it yields the "actions" slot', function () {
+      this.set('selections', [1])
       this.render(hbs`
-        {{#frost-object-browser}}
+        {{#frost-object-browser
+          selections=selections
+        }}
           {{#block-slot 'actions'}}
             Some yielded text
           {{/block-slot}}
@@ -80,14 +83,18 @@ describeComponent(
       expect(
         this.$().text().trim().replace(/ +/g, ' '),
         'Text shows in the "actions" yielded slot'
-      ).to.eql('items selected\n Some yielded text')
+      ).to.eql('1 items selected\n \n Some yielded text')
     })
 
     it('it yields a button contextual component in the "actions" slot', function () {
       this.on('test-action', function () {})
 
+      this.set('selections', [1])
+
       this.render(hbs`
-        {{#frost-object-browser}}
+        {{#frost-object-browser
+          selections=selections
+        }}
           {{#block-slot 'actions' as |action|}}
             {{action.button onActionClick=(action 'test-action')}}
           {{/block-slot}}
@@ -102,8 +109,12 @@ describeComponent(
     it('it yields a link button contextual component in the "actions" slot', function () {
       this.on('test-action', function () {})
 
+      this.set('selections', [1])
+
       this.render(hbs`
-        {{#frost-object-browser}}
+        {{#frost-object-browser
+          selections=selections
+        }}
           {{#block-slot 'actions' as |controls|}}
             {{#controls.link 'details'
               multiSelect=true
