@@ -1,3 +1,11 @@
+# 16.0.0
+
+- Removed `onSelect` from the block parameters for the `view` slot
+- Added `selections` to the `frost-object-browser` interface
+- Updated the README to reflect block-slots 1.0 syntax
+- The `actions` slot is no longer visible when no items are selected
+- Added a show/hide transition animation for the `actions` slot
+
 # 15.0.0
 - Block-slots upgrade to >1.0.0
 
