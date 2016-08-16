@@ -1,3 +1,14 @@
+# 16.0.2
+
+* **Updated** `ember-data` dependency to float on the minor instead of the major.
+* **Updated** Cleaned up the `CHANGELOG.md`
+
+<!-- Reviewable:start -->
+---
+This change is [<img src="https://reviewable.io/review_button.svg" height="34" align="absmiddle" alt="Reviewable"/>](https://reviewable.io/reviews/ciena-frost/ember-frost-object-browser/81)
+<!-- Reviewable:end -->
+
+
 # 16.0.1
 
 * **Updated** `ember-frost-info-bar` dependency in blueprint to latest version.
