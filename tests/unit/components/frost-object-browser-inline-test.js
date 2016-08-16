@@ -222,16 +222,16 @@ describeComponent('frost-object-browser-inline', 'Unit | frost-object-browser-in
     component.set('sendAction', sendAction)
 
     component.actions.onPageChanged.call(component, 'forward')
-    expect(sendAction.firstCall).to.have.been.calledWith('onPageChanged', 3)
+    expect(sendAction.calledWith('onPageChanged', 3)).to.be.ok
 
     component.actions.onPageChanged.call(component, 'back')
-    expect(sendAction).to.have.been.calledWith('onPageChanged', 1)
+    expect(sendAction.calledWith('onPageChanged', 1)).to.be.ok
 
     component.actions.onPageChanged.call(component, 'end')
-    expect(sendAction).to.have.been.calledWith('onPageChanged', 3)
+    expect(sendAction.calledWith('onPageChanged', 3)).to.be.ok
 
     component.actions.onPageChanged.call(component, 'begin')
-    expect(sendAction).to.have.been.calledWith('onPageChanged', 0)
+    expect(sendAction.calledWith('onPageChanged', 0)).to.be.ok
   })
 
   it('sets detailLevel when LOD buttons are clicked', function () {
