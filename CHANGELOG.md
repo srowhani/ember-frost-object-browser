@@ -1,3 +1,6 @@
+# 16.0.3
+* Updated blueprint
+
 # 16.0.2
 
 * **Updated** `ember-data` dependency to float on the minor instead of the major.
