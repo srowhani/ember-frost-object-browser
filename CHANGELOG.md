@@ -1,3 +1,8 @@
+# 16.0.4
+
+* **Added** configuration option to turn off prototype extensions for Date.
+
+
 # 16.0.3
 * Updated blueprint
 
