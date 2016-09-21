@@ -1,47 +1,22 @@
-{{yield}}
+<div class="frost-object-browser-info-bar">
+  {{component header}}
+</div>
 
-{{#yield-slot 'info-bar'}}
-  {{yield}}
-{{/yield-slot}}
+<div class="frost-object-browser-body">
 
-<div class='frost-object-browser-body'>
-  {{#yield-slot 'facets'}}
-    <div class='frost-object-browser-facets'>
-      {{yield}}
+    <div class="frost-object-browser-facets">
+        <div class="frost-object-browser-facets-header">Refined by</div>
+        {{component facets}}
     </div>
-  {{/yield-slot}}
 
-  <div class='frost-object-browser-content'>
-    {{#yield-slot 'view' (block-params
-      selections
-    )}}
-      {{yield}}
-    {{/yield-slot}}
-
-    {{#yield-slot 'actions' (block-params
-      (hash
-        button=(component 'selection-action-button'
-          selections=selections
-          size='large'
-        )
-        link=(component 'selection-action-link'
-          selections=selections
-          size='large'
-        )
-      )
-      selections
-    )}}
-
-      {{#liquid-if (gt selections.length 0)
-        class='frost-object-browser-actions'
+    <div class="frost-object-browser-content">
+      {{component content
+        items=items
       }}
-        <div class='frost-object-browser-actions-content'>
-          <div class="items-selected">
-            {{selections.length}} items selected
-          </div>
-          {{yield}}
+        <div class="frost-object-browser-actions">
+          {{#each controls as |control|}}
+            {{component control}}
+          {{/each}}
         </div>
-      {{/liquid-if}}
-    {{/yield-slot}}
-  </div>
+    </div>
 </div>
