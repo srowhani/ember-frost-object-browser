@@ -1,22 +1,56 @@
-<div class="frost-object-browser-info-bar">
-  {{component header}}
-</div>
+{{#if config}}
+    <div class="frost-object-browser-body">
+        <div class="frost-object-browser-facets">
+            {{component 'frost-bunsen-form'
+              autofocus=false
+              bunsenModel=config.facetsConfig.bunsenModel
+              bunsenView=config.facetsConfig.bunsenView
+              onChange=onFilterFormChange
+            }}
+        </div>
 
-<div class="frost-object-browser-body">
+        <div class="frost-object-browser-content">
+          {{frost-list
+            config=config.listMixinConfig
+          }}
+            <div class="frost-object-browser-actions">
+              {{#each config.controlsConfig as |control|}}
+                {{#if (eq control.component 'frost-button')}}
+                  {{component control.component
+                    disabled=(disable-helper control.disable config.selectedItemsNumber)
+                    text=control.text
+                    priority=(logic-or control.description.priority 'secondary')
+                    size=(logic-or control.description.size 'medium')
+                  }}
+                {{else if (eq control.component 'frost-link')}}
 
-    <div class="frost-object-browser-facets">
-        <div class="frost-object-browser-facets-header">Refined by</div>
-        {{component facets}}
-    </div>
-
-    <div class="frost-object-browser-content">
-      {{component content
-        items=items
-      }}
-        <div class="frost-object-browser-actions">
-          {{#each controls as |control|}}
-            {{component control}}
-          {{/each}}
+                {{/if}}
+              {{/each}}
+            </div>
         </div>
     </div>
-</div>
+
+{{else}}
+    <div class="frost-object-browser-info-bar">
+      {{component header}}
+    </div>
+
+    <div class="frost-object-browser-body">
+        <div class="frost-object-browser-facets">
+            <div class="frost-object-browser-facets-header">Refined by</div>
+          {{component facets}}
+        </div>
+
+        <div class="frost-object-browser-content">
+          {{component content
+          items=items
+          }}
+            <div class="frost-object-browser-actions">
+              {{#each controls as |control|}}
+                {{component control}}
+              {{/each}}
+            </div>
+        </div>
+    </div>
+
+{{/if}}

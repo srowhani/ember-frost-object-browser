@@ -4,6 +4,7 @@ import ObjectBrowserMixin from 'ember-frost-object-browser/mixins/object-browser
 export default Ember.Controller.extend(ObjectBrowserMixin, {
 
   objectBrowserConfig: {
+
     listConfig: {
       items: 'model.resources',
       component: 'lts/user-list-item',
@@ -86,7 +87,27 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
     ]
   },
 
+
   activeFacets: [],
+
+  filteredItems: Ember.computed('model.resources', 'activeFacets', function () {
+    let data = this.get('model.resources')
+    let activeFacets = this.get('activeFacets')
+
+    if (!Ember.isPresent(activeFacets)) {
+      return data
+    }
+
+    return data.filter((data) => {
+      let key = true
+      activeFacets.forEach((facet) => {
+        if (data.get(facet.id).indexOf(facet.value) === -1) {
+          key = false
+        }
+      })
+      return key
+    })
+  }),
 
   actions: {
     triggerAction () {
@@ -123,6 +144,19 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
         autoClear: true,
         clearDuration: 2000
       })
+    },
+
+    onFilterFormChange(formValue) {
+      let activeFacets = []
+      const keys = Object.keys(formValue)
+      keys.forEach((key) => {
+        activeFacets.pushObject({
+          id: key,
+          value: formValue[key]
+        })
+      })
+      console.log(activeFacets)
+      this.set('activeFacets', activeFacets)
     }
   }
 

@@ -1,9 +1,14 @@
 @import 'node_modules/ember-frost-core/addon/styles/frost-theme';
 @import 'frost-object-browser-lts';
 
+.frost-info-bar + .frost-object-browser {
+  height: calc(100% - 70px)
+}
+
 .frost-object-browser {
   display: flex;
   flex-direction: column;
+  height: 100%;
   &-body {
     flex: 1;
     display: flex;
@@ -63,14 +68,11 @@
     .no-display {
       display: none;
     }
-
-
-
   }
 
   &-content {
     position: relative;
-    // flex: 1;
+    flex: 1;
     height: 100%;
     width: 100%;
 
