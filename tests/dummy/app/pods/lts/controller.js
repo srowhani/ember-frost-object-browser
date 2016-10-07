@@ -1,7 +1,29 @@
 import Ember from 'ember'
 import ObjectBrowserMixin from 'ember-frost-object-browser/mixins/object-browser-mixin'
+import JsonApiObjectBrowserSerializer from 'ember-frost-object-browser/modules/json-api-object-browser-serializer'
+
+function localObjectBrowserDefaultFilter(data, filter) {
+  let activeFacets = filter
+
+  if (!Ember.isPresent(activeFacets)) {
+    return data
+  }
+
+  return data.filter((data) => {
+    let key = true
+    activeFacets.forEach((facet) => {
+      if (data.get(facet.id).indexOf(facet.value) === -1) {
+        key = false
+      }
+    })
+    return key
+  })
+}
 
 export default Ember.Controller.extend(ObjectBrowserMixin, {
+
+  // TODO sort qp
+  queryParams: ['activeFacets'],
 
   objectBrowserConfig: {
     listConfig: {
@@ -52,6 +74,8 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
           }]
           ]
         }]
+      },
+      value: {
       }
     },
 
@@ -83,7 +107,20 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
           size: 'medium'
         }
       }
-    ]
+    ],
+
+    serializerConfig: {
+      model: 'resource',
+      sort: {
+        clientSort: true
+      },
+      filter: {
+        clientFilter: false
+      },
+      options: {
+        serializer: JsonApiObjectBrowserSerializer //default
+      }
+    }
   },
 
   activeFacets: [],

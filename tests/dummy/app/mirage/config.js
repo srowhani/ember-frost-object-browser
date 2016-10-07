@@ -14,9 +14,37 @@ export default function () {
     }
   }
 
-  this.get('resources', function (db) {
+  this.get('resources', function (db, request) {
+    let resultArray = db.resources
+    let keys = Object.keys(request.queryParams)
+
+    let hash = {
+      filter: {}
+    }
+    keys.forEach((key) => {
+      let result = key.split('[')
+
+      if(result[0] === 'filter') {
+        hash['filter'][result[1].slice(0, -1)] = request.queryParams[key]
+      }
+    })
+
+    console.log(hash)
+
+    if (Object.keys(hash.filter).length > 0) {
+      resultArray = db.resources.filter((item) => {
+        let resultKey = true
+        Object.keys(hash.filter).forEach((key) => {
+          if (item[key].indexOf(hash.filter[key]) === -1) {
+            resultKey = false
+          }
+        })
+        return resultKey
+      })
+    }
+
     return {
-      resources: db.resources
+      resources: resultArray
     }
   })
 

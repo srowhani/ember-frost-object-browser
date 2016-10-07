@@ -10,5 +10,22 @@ export default Ember.Route.extend({
           resources
         }
       })
+  },
+
+  setupController: function(controller, model) {
+    this._super(controller, model);
+    //
+    //let activeFacets = controller.get('activeFacets');
+    //
+    //activeFacets.forEach((facet) => {
+    //  if (facet.id === 'id') {
+    //    controller.set('objectBrowserConfig.facetsConfig.value.id', facet.value);
+    //  }
+    //  if (facet.id === 'alias') {
+    //    controller.set('objectBrowserConfig.facetsConfig.value.alias', facet.value);
+    //  }
+    //})
   }
+
+
 })
