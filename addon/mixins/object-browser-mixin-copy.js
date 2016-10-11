@@ -2,7 +2,7 @@ import Ember from 'ember'
 const {
   Mixin,
   on
-} = Ember
+  } = Ember
 import computed from 'ember-computed-decorators'
 import FrostListMixin from 'ember-frost-list/mixins/frost-list-mixin'
 import createActionClosure from 'ember-frost-object-browser/utils/action-closure'
@@ -16,6 +16,17 @@ import {
 export default Mixin.create(FrostListMixin, {
 
   initObjectBrowserMixin: on('init', function () {
+    let userConfig = this.get('objectBrowserConfig')
+    let namespace = typeof userConfig === 'object' ? this.get('objectBrowserConfig.namespace') :
+      userConfig.map((config) => {
+        return Ember.get(config, 'namespace')
+      })
+
+    console.log(namespace)
+
+    let prefixedNamespace  = `${namespace}_`
+
+    Ember.defineProperty(this, namespace, undefined, {})
 
 
     Ember.defineProperty(this, 'listConfig', undefined, Ember.computed.alias('objectBrowserConfig.listConfig'));
@@ -29,16 +40,18 @@ export default Mixin.create(FrostListMixin, {
           controlsConfig: this.get('objectBrowserConfig.controlsConfig'),
           selectedItemsNumber: this.get('selectedItemsNumber'),
           facetsConfig: this.get('objectBrowserConfig.facetsConfig'),
-          onFilterFormChange: this.get('_onFilterFormChange'),
-          sortItems: this.get('_sortItems')
+          onFilterFormChange: this.get('_onFilterFormChange')
         }
-    }))
+      }))
+
+    Ember.defineProperty(this.get(namespace), 'onFilterFormChange', undefined, filterHandler);
+    Ember.defineProperty(this.get(namespace), 'sortItems', undefined, sortHandler)
 
     Ember.defineProperty(this, '_onFilterFormChange', undefined,
-      createActionClosure.call(this, filterHandler)
+      createActionClosure.call(this, getFromNamespace.call(this, namespace, 'onFilterFormChange'))
     )
     Ember.defineProperty(this, '_sortItems', undefined,
-      createActionClosure.call(this, sortHandler)
+      createActionClosure.call(this, getFromNamespace.call(this, namespace, 'sortItems'))
     )
   }),
 
@@ -93,6 +106,37 @@ export default Mixin.create(FrostListMixin, {
     }));
   },
 
+
+  //@computed('_listItems.[]', 'activeFacets')
+  //filteredItems (listItems, activeFacets) {
+  //  const config = this.get('objectBrowserConfig.serializerConfig.filter.clientFilter')
+  //  if (config) {
+  //    if(config && typeof config === 'function') {
+  //      console.log('run custom client filter')
+  //      return config(listItems, activeFacets)
+  //    } else {
+  //      console.log('run default client filter')
+  //      return this.objectBrowserDefaultFilter(listItems, activeFacets)
+  //    }
+  //  }
+  //  return listItems
+  //},
+  //
+  //@computed('filteredItems.[]', 'activeSortingString')
+  //sortedItems (items, sortProperties) {
+  //  const config = this.get('objectBrowserConfig.serializerConfig.sort.clientSort')
+  //  if (config) {
+  //    if(config && typeof config === 'function') {
+  //      console.log('run custom client sort')
+  //      return config(items, sortProperties)
+  //    } else {
+  //      console.log('run default client sort')
+  //      return this.objectBrowserDefaultSort(items, sortProperties)
+  //    }
+  //  }
+  //  return items
+  //},
+
   // hooks
   didReceiveResponse: function (response) {
     return response
@@ -103,10 +147,11 @@ export default Mixin.create(FrostListMixin, {
   },
 
   queryErrorHandler: function (e) {
-   Ember.Logger.error('response error: ' + e)
+    Ember.Logger.error('response error: ' + e)
   },
 
   actions: {
+
     loadNext() {
       const serializer = JsonApiObjectBrowserSerializer.create({
         config: this.get('objectBrowserConfig.serializerConfig'),
