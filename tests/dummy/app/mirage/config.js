@@ -15,6 +15,8 @@ export default function () {
   }
 
   this.get('resources', function (db, request) {
+    debugger;
+
     let resultArray = db.resources
     let keys = Object.keys(request.queryParams)
 
@@ -28,8 +30,6 @@ export default function () {
         hash['filter'][result[1].slice(0, -1)] = request.queryParams[key]
       }
     })
-
-    console.log(hash)
 
     if (Object.keys(hash.filter).length > 0) {
       resultArray = db.resources.filter((item) => {

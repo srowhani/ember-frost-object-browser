@@ -22,11 +22,13 @@ function localObjectBrowserDefaultFilter(data, filter) {
 
 export default Ember.Controller.extend(ObjectBrowserMixin, {
 
-  // TODO sort qp
-  queryParams: ['activeFacets'],
+  // TODO when qp is initialized off a cp, a full path must be provided
+  queryParams: ['activeFacets', 'objectBrowserConfig.listConfig.sorting.active'],
 
+  // TODO pass namespace from ob to list
   objectBrowserConfig: {
     listConfig: {
+      namespace: 'hello',
       items: 'model.resources',
       component: 'lts/user-list-item',
       sorting: {
@@ -58,22 +60,21 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
         }
       },
       bunsenView: {
-        version: '1.0',
-        type: 'form',
-        'rootContainers': [{
-          label: 'Main',
-          container: 'main'
-        }],
-        containers: [{
-          id: 'main',
-          rows: [[{
-            model: 'id',
-            label: 'element Id'
-          }], [{
-            model: 'alias'
-          }]
-          ]
-        }]
+        "cellDefinitions": {
+          "main": {
+            "children": [
+              {"model": "id"},
+              {"model": "alias"}
+            ]
+          }
+        },
+        "cells": [
+          {
+            "extends": "main"
+          }
+        ],
+        "type": "form",
+        "version": "2.0"
       },
       value: {
       }
@@ -160,6 +161,40 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
         autoClear: true,
         clearDuration: 2000
       })
+    },
+
+    sortItems(sortItems) {
+      debugger;
+      const serializer = JsonApiObjectBrowserSerializer.create({
+        config: this.get('objectBrowserConfig.serializerConfig'),
+        context: this
+      })
+
+      // normalize component output
+      const sort = serializer.normalizeSort(sortItems)
+
+      // cache normalized result
+      this.set('cachedNormalizedSort', sort)
+
+      // TODO need to change sortItems to normalized sort
+      // set qp
+      let activeSorting = sortItems.map(function (item) {
+        return {value: item.value, direction: item.direction}
+      })
+      this.set('activeSorting', activeSorting)
+
+      // issue query if necessary
+        console.log('run server sort')
+        let modelPath = this.get('objectBrowserConfig.listConfig.items')
+        serializer.query().then(
+          (response) => {
+            this.clearListState()
+            this.set(modelPath, this.didReceiveResponse(response))
+          },
+          (error) => {
+            this.queryErrorHandler(error)
+          }
+        )
     }
   }
 

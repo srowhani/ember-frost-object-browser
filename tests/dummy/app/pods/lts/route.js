@@ -2,7 +2,8 @@ import Ember from 'ember'
 import dummyData from '../mocks/dummyInput'
 
 export default Ember.Route.extend({
-  model: function () {
+  model: function (params) {
+    debugger;
     return this.get('store').findAll('resource')
       .then((resources) => {
         return {

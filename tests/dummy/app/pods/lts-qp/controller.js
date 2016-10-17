@@ -1,6 +1,6 @@
 import Ember from 'ember'
 import ObjectBrowserMixin from 'ember-frost-object-browser/mixins/object-browser-mixin'
-import JsonApiObjectBrowserSerializer from 'ember-frost-object-browser/modules/json-api-object-browser-serializer'
+import ObjectBrowserSerializer from 'ember-frost-object-browser/modules/object-browser-serializer'
 
 function localObjectBrowserDefaultFilter(data, filter) {
   let activeFacets = filter
@@ -20,15 +20,20 @@ function localObjectBrowserDefaultFilter(data, filter) {
   })
 }
 
-export default Ember.Controller.extend({
+
+export default Ember.Controller.extend(ObjectBrowserMixin, {
+
+  sortQueryParam: [{value: 'alias', direction: ':desc'}],
+
+  filterQueryParam: [],
 
   // TODO when qp is initialized off a cp, a full path must be provided
-  queryParams: ['activeFacets', 'objectBrowserConfig.listConfig.sorting.active'],
+  queryParams: ['filterQueryParam', 'sortQueryParam'],
+
 
   // TODO pass namespace from ob to list
   objectBrowserConfig: {
     listConfig: {
-      namespace: 'hello',
       items: 'model.resources',
       component: 'lts/user-list-item',
       sorting: {
@@ -116,15 +121,13 @@ export default Ember.Controller.extend({
         clientSort: true
       },
       filter: {
-        clientFilter: false
+        clientFilter: true
       },
       options: {
-        serializer: JsonApiObjectBrowserSerializer //default
+        serializer: ObjectBrowserSerializer //default
       }
     }
   },
-
-  activeFacets: [],
 
   actions: {
     triggerAction () {
