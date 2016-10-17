@@ -4,7 +4,7 @@ import ObjectBrowserSerializer from 'ember-frost-object-browser/modules/object-b
 
 export default Ember.Controller.extend(ObjectBrowserMixin, {
 
-  sortQueryParam: [{value: 'alias', direction: ':desc'}],
+  sortQueryParam: ['-alias'],
 
   filterQueryParam: [],
 
@@ -167,5 +167,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       })
     }
   }
-
 })
+
+
+

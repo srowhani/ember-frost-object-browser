@@ -62,7 +62,6 @@ export default Ember.Object.extend({
     console.log(params.sortQueryParam)
     console.log(params && params.page)
 
-
     let queryObject = {
       filter: params && params.filterQueryParam,
       sort: params && params.sortQueryParam,
@@ -77,10 +76,10 @@ export default Ember.Object.extend({
       let dataKey = context.get('objectBrowserConfig.listConfig.items')
       let result = context.get(dataKey)
       if (this.get('config.filter.clientFilter')) {
-        result = this.clientFilter(result, context.get('filterQueryParam'))
+        result = this.clientFilter(result, queryObject.filter)
       }
       if (this.get('config.sort.clientSort')) {
-        result = this.clientSort(result, context.get('sortQueryParam'))
+        result = this.clientSort(result, queryObject.sort)
       }
       this.didQuery()
       return Ember.RSVP.resolve(result)
@@ -93,11 +92,11 @@ export default Ember.Object.extend({
         let processedResponse = this.didReceiveResponse(response)
 
         if (this.get('config.filter.clientFilter')) {
-          processedResponse = this.clientFilter(processedResponse, context.get('filterQueryParam'))
+          processedResponse = this.clientFilter(processedResponse, queryObject.filter)
         }
 
         if (this.get('config.sort.clientSort')) {
-          processedResponse = this.clientSort(processedResponse, context.get('sortQueryParam'))
+          processedResponse = this.clientSort(processedResponse, queryObject.sort)
         }
         return processedResponse
       }

@@ -9,10 +9,8 @@ import createActionClosure from 'ember-frost-object-browser/utils/action-closure
 import JsonApiObjectBrowserSerializer from 'ember-frost-object-browser/modules/json-api-object-browser-serializer'
 import {
   filterHandler,
-  sortHandler,
-  getFromNamespace
+  sortHandler
 } from 'ember-frost-object-browser/utils/object-browser-utils'
-
 
 
 //
@@ -90,26 +88,23 @@ export default Mixin.create(FrostListMixin, {
     })
   },
 
-  //TODO default sort steal from ember. Need rework
   objectBrowserDefaultSort: function (items, sortProperties) {
-    function normalizeToString(activeSorting) {
-      if (!activeSorting) return []
-      return activeSorting.map((sortProperty) => {
-        return `${sortProperty.value}${sortProperty.direction}`
-      })
+    if (!Ember.isPresent(sortProperties)) {
+      return
     }
 
-    function normalizeSortProperties(properties) {
-      return properties.map(p => {
-        let [prop, direction] = p.split(':')
-        direction = direction || 'asc'
+    let normalizedSortProperties = sortProperties.map(sortProperty => {
+      let resultArray = []
+      if (sortProperty.startsWith('-')) {
+        resultArray.pushObject(sortProperty.slice(1))
+        resultArray.pushObject('desc')
+      } else {
+        resultArray.pushObject(sortProperty)
+        resultArray.pushObject('asc')
+      }
+      return resultArray
+    })
 
-        return [prop, direction]
-      })
-    }
-
-    let activeSortingString = normalizeToString(sortProperties)
-    let normalizedSortProperties = normalizeSortProperties(activeSortingString)
     return Ember.A(items.slice().sort((itemA, itemB) => {
       for (let i = 0; i < normalizedSortProperties.length; i++) {
         let [prop, direction] = normalizedSortProperties[i];
@@ -137,14 +132,13 @@ export default Mixin.create(FrostListMixin, {
 
   actions: {
     sortItems (sortItems) {
-
       // create serializer
       const serializer = this.get('objectBrowserConfig.serializerConfig.options.serializer').create({
         config: this.get('objectBrowserConfig.serializerConfig'),
         context: this
       })
 
-      // TODO remove get rid of junks in ember object
+      // TODO remove:  get rid of junks in ember object
       let activeSorting = sortItems.map(function (item) {
         return {value: item.value, direction: item.direction}
       })
@@ -175,24 +169,7 @@ export default Mixin.create(FrostListMixin, {
 
     // TODO need further work
     loadNext() {
-      this.set('page', Number(this.get('lastPage')) + 1)
-      //const serializer = JsonApiObjectBrowserSerializer.create({
-      //  config: this.get('objectBrowserConfig.serializerConfig'),
-      //  context: this
-      //})
-      //
-      //let pageSize = this.get('pageSize')
-      //let offset = this.get('offset')
-      //
-      //let modelKey = this.get('objectBrowserConfig.listConfig.items')
-      //serializer.query().then(
-      //  (response) => {
-      //    this.set(modelKey, this.didReceiveResponse(response))
-      //  },
-      //  (error) => {
-      //    this.queryErrorHandler(error)
-      //  }
-      //)
+
     }
   }
 })

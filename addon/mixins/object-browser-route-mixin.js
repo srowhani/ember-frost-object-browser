@@ -41,5 +41,26 @@ export default Mixin.create({
     this._super(controller, model);
     const filterQueryParam = controller.get('filterQueryParam')
     controller.set('objectBrowserConfig.facetsConfig.value', filterQueryParam)
+
+
+    let sortQueryParam = controller.get('sortQueryParam')
+    if (!Array.isArray(sortQueryParam)) {
+      return
+    }
+
+    let activeSorting = sortQueryParam.map(sortItem => {
+      if (sortItem.indexOf('-') === -1) {
+        return {
+          value: sortItem,
+          direction: ':asc'
+        }
+      } else {
+        return {
+          value: sortItem.slice(1),
+          direction: ':desc'
+        }
+      }
+    })
+    controller.set('objectBrowserConfig.listConfig.sorting.active', activeSorting)
   }
 })
