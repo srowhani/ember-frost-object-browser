@@ -3,39 +3,41 @@ const {on} = Ember
 
 export default Ember.Object.extend({
 
-  //serializerConfig: {
-  //  model: 'resource',
-  //  sort: {
-  //    clientSort: true
-  //  },
-  //  filter: {
-  //    clientFilter: false
-  //  },
-  //  options: {
-  //    serializer: JsonApiObjectBrowserSerializer //default
-  //  }
-  //}
-
-  initSerializer: on('init', function () {
-
-  }),
-
   // normalization methods
-  normalizeFilter: function () {
-
+  normalizeFilter: function (filter) {
+    // normalize processing
+    let keys = Object.keys(filter)
+    if (!Ember.isPresent(keys)) {
+      return []
+    }
+    // get rid of junks prop from component output
+    let processedFilter = {}
+    keys.forEach((key) => {
+      processedFilter[key] = filter[key]
+    })
+    return processedFilter
   },
 
-  normalizeSort: function () {
+  normalizeSort: function (sort) {
+    if (!Ember.isPresent(sort)) {
+      return []
+    }
 
+    return sort.map(function (item) {
+      let key = item.value
+      let direction = item.direction === ':desc' ? '-' : ''
+      return `${direction}${key}`
+    })
   },
 
+  // TODO not support yet
   normalizePage: function () {
 
   },
 
 
-  // hooks
-  willQuery: function (queryObject) {
+  // hooks that can be overwritten
+  serializeQueryParams: function (queryObject) {
     return queryObject
   },
 
@@ -43,37 +45,63 @@ export default Ember.Object.extend({
     return response
   },
 
+  willQuery: function () {
+
+  },
+
   didQuery: function () {
 
   },
 
-  // convenient methods
-  getQueryObjectFromContext: function (context) {
-    return {
-      filter: context.get('cachedNormalizedFilter'),
-      sort: context.get('cachedNormalizedSort'),
-      page: context.get('cachedNormalizedPage')
+
+  // query related
+  query(params) {
+    const context = this.get('context')
+
+    console.log(params.filterQueryParam)
+    console.log(params.sortQueryParam)
+    console.log(params && params.page)
+
+
+    let queryObject = {
+      filter: params && params.filterQueryParam,
+      sort: params && params.sortQueryParam,
+      page: params && params.page
+    }
+
+    const serializedQueryObject = this.serializeQueryParams(queryObject)
+    this.willQuery()
+    if (true) {
+      return this.serverQuery(serializedQueryObject, context)
+    } else {
+      let dataKey = context.get('objectBrowserConfig.listConfig.items')
+      let result = context.get(dataKey)
+      if (this.get('config.filter.clientFilter')) {
+        result = this.clientFilter(result, context.get('filterQueryParam'))
+      }
+      if (this.get('config.sort.clientSort')) {
+        result = this.clientSort(result, context.get('sortQueryParam'))
+      }
+      this.didQuery()
+      return Ember.RSVP.resolve(result)
     }
   },
 
-  // query related
-  query() {
-    const context = this.get('context')
-    let queryObject = this.getQueryObjectFromContext(context)
-
-    const serializedQueryObject = this.willQuery(queryObject)
-
-    let promise = context.get('store').query(this.get('config.model'), serializedQueryObject).then(
+  serverQuery(queryObject, context) {
+    let promise = context.get('store').query(this.get('config.model'), queryObject).then(
       (response) => {
         let processedResponse = this.didReceiveResponse(response)
-        // TODO multiple object browser qp support
-        let filteredResponse = this.clientFilter(processedResponse, context.get('activeFacets'))
-        let sortedResponse = this.clientSort(filteredResponse, context.get('activeSorting'))
 
-        return sortedResponse
+        if (this.get('config.filter.clientFilter')) {
+          processedResponse = this.clientFilter(processedResponse, context.get('filterQueryParam'))
+        }
+
+        if (this.get('config.sort.clientSort')) {
+          processedResponse = this.clientSort(processedResponse, context.get('sortQueryParam'))
+        }
+        return processedResponse
       }
     )
-
     this.didQuery()
     return promise
   },
@@ -95,7 +123,7 @@ export default Ember.Object.extend({
 
   clientSort(items, sortProperties) {
     const context = this.get('context')
-    const config = this.get('objectBrowserConfig.serializerConfig.sort.clientSort')
+    const config = context.get('objectBrowserConfig.serializerConfig.sort.clientSort')
     if (config) {
       if(config && typeof config === 'function') {
         console.log('run custom client sort')
@@ -110,48 +138,7 @@ export default Ember.Object.extend({
 })
 
 
-// TODO remove
-//query() {
-//  const config = this.get('config')
-//  let context = this.get('context')
-//
-//  if (this.get('shouldPerformServerQuery')) {
-//    return this.serverQuery().then((response) => {
-//
-//      if(this.get('config.filter.clientFilter')) {
-//      }
-//      if(this.get('config.sort.clientSort')) {
-//      }
-//
-//      return response
-//    })
-//  } else {
-//    this.clientSort();
-//    this.clientFilter();
-//  }
-//
-//  return this.serverQuery().then((response) => {
-//    return response
-//  })
-//},
 
-
-//clientSort(data) {
-//  if (this.get('config.sort.clientSort')) {
-//
-//    let activeSortingString = function (activeSorting) {
-//      if (!activeSorting) return []
-//      return activeSorting.map((sortProperty) => {
-//        return `record.${sortProperty.value}${sortProperty.direction}`
-//      })
-//    }
-//
-//    let resultString = activeSortingString(this.get('activeSorting'))
-//
-//    return Ember.computed.sort(data, resultString)
-//  }
-//},
-//
-//clientFilter() {
-//
-//},
+//!this.get('config.filter.clientFilter') ||
+// !this.get('config.sort.clientSort') ||
+// context.get('__meta_mixin_object_browser._state') === 'before_query'

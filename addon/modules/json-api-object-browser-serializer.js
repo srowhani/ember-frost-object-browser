@@ -5,16 +5,30 @@ export default ObjectBrowserSerializer.extend({
 
   normalizeFilter: function (filter) {
     // normalize processing
-    return filter
+    let keys = Object.keys(filter)
+    if (!Ember.isPresent(keys)) {
+      return []
+    }
+    // get rid of junks prop from component output
+    let processedFilter = {}
+    keys.forEach((key) => {
+      processedFilter[key] = filter[key]
+    })
+    return processedFilter
   },
 
   normalizeSort: function (sort) {
-    if (!sort) {
-      return
+    if (!Ember.isPresent(sort)) {
+      return []
     }
-    return sort.map(function (item) {
-      return {value: item.value, direction: item.direction}
+
+    let result = sort.map(function (item) {
+      let key = item.value
+      let direction = item.direction === ':desc' ? '-' : ''
+      return `${direction}${key}`
     })
+
+    return result
   },
 
   normalizePage: function (page) {
@@ -22,3 +36,5 @@ export default ObjectBrowserSerializer.extend({
     return page
   }
 })
+
+
