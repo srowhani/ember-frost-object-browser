@@ -7,7 +7,6 @@ export default Ember.Route.extend(RouteMixin, {
   model: function (params) {
     return this._super(params).then((response) => {
       return {
-        model: 'model',
         resources: response
       }
     })

@@ -13,7 +13,6 @@ import {
   getFromNamespace
 } from 'ember-frost-object-browser/utils/object-browser-utils'
 
-debugger;
 
 
 //
@@ -35,7 +34,6 @@ debugger;
 export default Mixin.create(FrostListMixin, {
 
   initObjectBrowserMixin: on('init', function () {
-    debugger;
     Ember.defineProperty(this, '__meta_mixin_object_browser', undefined, {})
     Ember.defineProperty(this.get('__meta_mixin_object_browser'), '_state', undefined, 'before_query')
 

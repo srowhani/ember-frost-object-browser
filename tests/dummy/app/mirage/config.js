@@ -15,8 +15,6 @@ export default function () {
   }
 
   this.get('resources', function (db, request) {
-    debugger;
-
     let resultArray = db.resources
     let keys = Object.keys(request.queryParams)
 
