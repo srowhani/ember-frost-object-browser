@@ -1,6 +1,8 @@
 import Ember from 'ember'
-import ObjectBrowserMixin from 'ember-frost-object-browser/mixins/object-browser-mixin'
-import ObjectBrowserSerializer from 'ember-frost-object-browser/modules/object-browser-serializer'
+import {
+  ObjectBrowserSerializer,
+  ObjectBrowserMixin
+} from 'ember-frost-object-browser'
 
 export default Ember.Controller.extend(ObjectBrowserMixin, {
 
@@ -8,8 +10,10 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
 
   filterQueryParam: [],
 
+  pageQueryParam: [],
+
   // TODO when qp is initialized off a cp, a full path must be provided
-  queryParams: ['filterQueryParam', 'sortQueryParam'],
+  queryParams: ['filterQueryParam', 'sortQueryParam', 'pageQueryParam'],
 
   objectBrowserConfig: {
     listConfig: {
@@ -64,53 +68,37 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       }
     },
 
-    // this is the configuration for buttons and links, the action linking is still under development.
+
     controlsConfig: [
       {
         component: 'frost-button',
+        action: 'actions.triggerDelete',  // method key related to this/context/controller
         text: 'Delete',
         disable: 'type1',
-        description: {
-          priority: 'secondary',
-          size: 'medium'
-        }
+        multiSelect: true,
+        priority: 'secondary',
+        size: 'medium'
       },
       {
         component: 'frost-button',
+        action: 'actions.triggerEdit',  // method key related to this/context/controller
         text: 'Edit',
         disable: 'type2',
-        description: {
-          priority: 'secondary',
-          size: 'medium'
-        }
+        priority: 'secondary',
+        size: 'medium'
       },
       {
         component: 'frost-button',
+        action: 'actions.triggerDetail',  // method key related to this/context/controller
         text: 'Detail',
         disable: 'type2',
-        description: {
-          priority: 'secondary',
-          size: 'medium'
-        }
+        priority: 'secondary',
+        size: 'medium'
       }
     ],
 
     // Config the data layer to tell object-browser how to communicate with server
     serializerConfig: {
-      // the name of the model to retrieve. In this scenario, Ember.store.query('resource') would be called
-      model: 'resource',
-      // configure sort behavior when talking to server,
-      // clientSort: true  ----- run a default sort build in object browser on the client side
-      // clientSort: <custom-function> --- run a custom sort function on the client side
-      // clientSort: false ---- sort will be handled on server
-      sort: {
-        clientSort: true
-      },
-      // See explanation for sort.
-      filter: {
-        clientFilter: true
-      },
-
       // here is the place you can change the data layer. Currently there're two built in options, default(MCP) and json API.
       // data layer contains function
       // 1. serialize the component output to corresponding query params
@@ -120,13 +108,25 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       // actions fired/sort/filter/page--> component output --> serialize output --> set query parmas --> trigger model re-render
       //  --> fire query with qp --> receive response --> update component attrs --> component re-render
       // if you need more customization, you can write your own data layer by simply extend the existing ones and overwrite these hooks.
-      options: {
-        serializer: ObjectBrowserSerializer //default
-      }
-    },
+      serializer: ObjectBrowserSerializer,
 
-    meta: {
-      version: 'beta-1'
+      // the name of the model to retrieve. In this scenario, Ember.store.query('resource') would be called
+      model: 'resource',
+      // configure sort behavior when talking to server,
+      // client: true  ----- run a default sort build in object browser on the client side
+      // client: <custom-function> --- run a custom sort function on the client side
+      // client: false ---- sort will be handled on server
+      sort: {
+        client: true
+      },
+      // See explanation for sort.
+      filter: {
+        client: false
+      }
+
+      //page: {
+      //  strategy: <factory>
+      //}
     }
   },
 
@@ -140,7 +140,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       })
     },
 
-    triggerDelete () {
+    triggerDelete (items) {
       this.notifications.addNotification({
         message: 'Delete Action fired',
         type: 'success',
@@ -149,7 +149,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       })
     },
 
-    triggerEdit () {
+    triggerEdit (items) {
       this.notifications.addNotification({
         message: 'Edit Action fired',
         type: 'success',
@@ -158,7 +158,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       })
     },
 
-    triggerDetail () {
+    triggerDetail (items) {
       this.notifications.addNotification({
         message: 'Detail Action fired',
         type: 'success',

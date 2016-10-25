@@ -17,15 +17,20 @@ export default function () {
   this.get('resources', function (db, request) {
     let resultArray = db.resources
     let keys = Object.keys(request.queryParams)
+    let maxIndex = 45
 
     let hash = {
-      filter: {}
+      filter: {},
+      page: {}
     }
     keys.forEach((key) => {
       let result = key.split('[')
 
       if(result[0] === 'filter') {
         hash['filter'][result[1].slice(0, -1)] = request.queryParams[key]
+      }
+      if(result[0] === 'page') {
+        hash['page'][result[1].slice(0, -1)] = request.queryParams[key]
       }
     })
 
@@ -41,9 +46,26 @@ export default function () {
       })
     }
 
-    return {
-      resources: resultArray
+    let pageSize = 15
+    let nextOffset = hash.page.nextOffset
+    if(!nextOffset) {
+      return {
+        resources: resultArray.slice(0, pageSize),
+        meta: {
+          nextOffset: pageSize,
+          size: pageSize
+        }
+      }
+    } else {
+      return {
+        resources: resultArray.slice(Number(nextOffset), Number(nextOffset) + pageSize),
+        meta: {
+          nextOffset: (Number(nextOffset) + pageSize) <= maxIndex ? Number(nextOffset) + pageSize : maxIndex,
+          size: pageSize
+        }
+      }
     }
+
   })
 
   this.get('resources/:id', function (db, request) {

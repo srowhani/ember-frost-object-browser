@@ -1,8 +1,8 @@
 import Ember from 'ember'
 import dummyData from '../mocks/dummyInput'
-import RouteMixin from 'ember-frost-object-browser/mixins/object-browser-route-mixin'
+import {ObjectBrowserRouteMixin} from 'ember-frost-object-browser'
 
-export default Ember.Route.extend(RouteMixin, {
+export default Ember.Route.extend(ObjectBrowserRouteMixin, {
 
   model: function (params) {
     return this._super(params).then((response) => {

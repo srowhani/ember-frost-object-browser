@@ -113,10 +113,10 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
     serializerConfig: {
       model: 'resource',
       sort: {
-        clientSort: true
+        client: true
       },
       filter: {
-        clientFilter: false
+        client: false
       },
       options: {
         serializer: JsonApiObjectBrowserSerializer //default

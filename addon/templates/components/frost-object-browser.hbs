@@ -18,10 +18,11 @@
               {{#each config.controlsConfig as |control|}}
                 {{#if (eq control.component 'frost-button')}}
                   {{component control.component
-                    disabled=(disable-helper control.disable config.selectedItemsNumber)
+                    disabled=(disable-helper control.multiSelect config.selectedItemsCount)
                     text=control.text
-                    priority=(logic-or control.description.priority 'secondary')
-                    size=(logic-or control.description.size 'medium')
+                    priority=(logic-or control.priority 'secondary')
+                    size=(logic-or control.size 'medium')
+                    onClick=(action control.action _selectedItems)
                   }}
                 {{else if (eq control.component 'frost-link')}}
 

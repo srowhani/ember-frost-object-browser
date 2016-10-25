@@ -8,10 +8,6 @@
     isVisible=isSummaryVisible
     text='&lt;placeholder: summary&gt;'
   )
-  scope=(component 'text-box'
-    isVisible=isScopeVisible
-    text='&lt;placeholder: controls&gt;'
-  )
   controls=(array
     (component 'frost-button'
       isVisible=isControlsVisible
@@ -23,35 +19,7 @@
 }}
 
 {{frost-object-browser
-  config=objectBrowserMixinConfig
-}}
-{{!--
-
-{{frost-object-browser
   items=sortedItems
-  header=(component 'frost-info-bar'
-    icon=(component 'frost-icon'
-      icon='list-medium'
-      pack='frost'
-    )
-    title='info-title'
-    summary=(component 'text-box'
-      isVisible=isSummaryVisible
-      text='&lt;placeholder: summary&gt;'
-    )
-    scope=(component 'text-box'
-      isVisible=isScopeVisible
-      text='&lt;placeholder: controls&gt;'
-    )
-    controls=(array
-      (component 'frost-button'
-        isVisible=isControlsVisible
-        icon='infobar-create'
-        text='Click me!'
-        onClick=(action 'triggerAction')
-      )
-    )
-  )
   facets = (component 'frost-bunsen-form'
     autofocus=false
     bunsenModel=objectBrowserConfig.facetsConfig.bunsenModel
@@ -98,6 +66,3 @@
     )
   )
 }}
-
-
---}}

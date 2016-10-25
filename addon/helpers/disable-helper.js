@@ -1,12 +1,12 @@
 import Ember from 'ember';
 
 export function disableHelper(params/*, hash*/) {
-  const type = params[0]
+  const multiSelect = params[0]
   const counter = params[1]
 
-  if (type === 'type1') {
+  if (multiSelect === true) {
     return counter === 0
-  } else if (type === 'type2'){
+  } else {
     return counter !== 1
   }
 }
