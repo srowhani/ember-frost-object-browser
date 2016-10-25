@@ -1,7 +1,19 @@
 import Ember from 'ember'
 const {on} = Ember
+import offsetPagination from './pagination/offset'
+// import cursorPagination from './pagination/cursor'
 
 export default Ember.Object.extend({
+  initContext: on('init', function () {
+    Ember.defineProperty(this, 'pagination', undefined, (function () {
+      let pagination = this.get('config.page')
+      if (typeof pagination === 'undefined') {
+        return offsetPagination
+      } else {
+        return this.get('pagination.strategy')
+      }
+    }).call(this))
+  }),
 
   // normalization methods
   normalizeFilter: function (filter) {
@@ -22,7 +34,6 @@ export default Ember.Object.extend({
     if (!Ember.isPresent(sort)) {
       return []
     }
-
     return sort.map(function (item) {
       let key = item.value
       let direction = item.direction === ':desc' ? '-' : ''
@@ -30,9 +41,8 @@ export default Ember.Object.extend({
     })
   },
 
-  // TODO not support yet
-  normalizePage: function () {
-
+  normalizePage: function (page) {
+    return page
   },
 
 
@@ -60,25 +70,29 @@ export default Ember.Object.extend({
 
     console.log(params.filterQueryParam)
     console.log(params.sortQueryParam)
-    console.log(params && params.page)
+    console.log(params.pageQueryParam)
 
     let queryObject = {
       filter: params && params.filterQueryParam,
       sort: params && params.sortQueryParam,
-      page: params && params.page
+      page: params && params.pageQueryParam
     }
 
     const serializedQueryObject = this.serializeQueryParams(queryObject)
     this.willQuery()
     if (true) {
-      return this.serverQuery(serializedQueryObject, context)
+      return this.serverQuery(serializedQueryObject, context).then(response => {
+        // get pagination module
+        let paginationHelper = this.get('pagination')
+        return paginationHelper.processPageResponse(response, context)
+      })
     } else {
       let dataKey = context.get('objectBrowserConfig.listConfig.items')
       let result = context.get(dataKey)
-      if (this.get('config.filter.clientFilter')) {
+      if (this.get('config.filter.client')) {
         result = this.clientFilter(result, queryObject.filter)
       }
-      if (this.get('config.sort.clientSort')) {
+      if (this.get('config.sort.client')) {
         result = this.clientSort(result, queryObject.sort)
       }
       this.didQuery()
@@ -89,15 +103,19 @@ export default Ember.Object.extend({
   serverQuery(queryObject, context) {
     let promise = context.get('store').query(this.get('config.model'), queryObject).then(
       (response) => {
+        let meta = response.get('meta')
+
         let processedResponse = this.didReceiveResponse(response)
 
-        if (this.get('config.filter.clientFilter')) {
+        if (this.get('config.filter.client')) {
           processedResponse = this.clientFilter(processedResponse, queryObject.filter)
         }
 
-        if (this.get('config.sort.clientSort')) {
+        if (this.get('config.sort.client')) {
           processedResponse = this.clientSort(processedResponse, queryObject.sort)
         }
+
+        Ember.set(processedResponse, 'meta', meta)
         return processedResponse
       }
     )
@@ -107,7 +125,7 @@ export default Ember.Object.extend({
 
   clientFilter(listItems, activeFacets) {
     const context = this.get('context')
-    const config = context.get('objectBrowserConfig.serializerConfig.filter.clientFilter')
+    const config = context.get('objectBrowserConfig.serializerConfig.filter.client')
     if (config) {
       if(config && typeof config === 'function') {
         console.log('run custom client filter')
@@ -122,7 +140,7 @@ export default Ember.Object.extend({
 
   clientSort(items, sortProperties) {
     const context = this.get('context')
-    const config = context.get('objectBrowserConfig.serializerConfig.sort.clientSort')
+    const config = context.get('objectBrowserConfig.serializerConfig.sort.client')
     if (config) {
       if(config && typeof config === 'function') {
         console.log('run custom client sort')
@@ -135,9 +153,3 @@ export default Ember.Object.extend({
     return items
   }
 })
-
-
-
-//!this.get('config.filter.clientFilter') ||
-// !this.get('config.sort.clientSort') ||
-// context.get('__meta_mixin_object_browser._state') === 'before_query'
