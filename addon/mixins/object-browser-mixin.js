@@ -7,27 +7,6 @@ import computed from 'ember-computed-decorators'
 import FrostListMixin from 'ember-frost-list/mixins/frost-list-mixin'
 import createActionClosure from 'ember-frost-object-browser/utils/action-closure'
 import JsonApiObjectBrowserSerializer from 'ember-frost-object-browser/modules/json-api-object-browser-serializer'
-import {
-  filterHandler,
-  sortHandler
-} from 'ember-frost-object-browser/utils/object-browser-utils'
-
-
-//
-//let filterString ='filter[name]=quincy&filter[severity]=1,2,3'
-//
-//let query = {
-//  filter: filterString1
-//}
-//
-//store.query('model', query)
-
-// result request url
-// endpoint/model?filter=filter[name]=quincy&filter[severity]=1,2,3
-// Json spec
-// endpoint/model?filter[name]=quincy&filter[severity]=1,2,3
-
-
 
 export default Mixin.create(FrostListMixin, {
 
@@ -35,17 +14,23 @@ export default Mixin.create(FrostListMixin, {
     Ember.defineProperty(this, '__meta_mixin_object_browser', undefined, {})
     Ember.defineProperty(this.get('__meta_mixin_object_browser'), '_state', undefined, 'before_query')
 
+    let controlsConfig = this.get('objectBrowserConfig.controlsConfig')
+    controlsConfig.forEach(controlItem => {
+      let action = this.get(controlItem.action)
+      Ember.set(controlItem, 'action', createActionClosure.call(this, action))
+    })
+
     Ember.defineProperty(this, 'listConfig', undefined, Ember.computed.alias('objectBrowserConfig.listConfig'));
     Ember.defineProperty(this, 'objectBrowserMixinConfig', undefined, Ember.computed(
       'listMixinConfig',
       'objectBrowserConfig.controlsConfig.[]',
       'objectBrowserConfig.facetsConfig',
-      'selectedItemsNumber', function () {
+      'selectedItemsCount', function () {
         return {
           listMixinConfig: this.get('listMixinConfig'),
           controlsConfig: this.get('objectBrowserConfig.controlsConfig'),
           facetsConfig: this.get('objectBrowserConfig.facetsConfig'),
-          selectedItemsNumber: this.get('selectedItemsNumber'),
+          selectedItemsCount: this.get('selectedItemsCount'),
           onFilterFormChange: this.get('_onFilterFormChange'),
           sortItems: this.get('_sortItems')
         }
@@ -59,17 +44,19 @@ export default Mixin.create(FrostListMixin, {
     )
   }),
 
-  selectedItemsNumber: Ember.computed('selectedItems', function () {
+  // cp: count for currently selected items
+  selectedItemsCount: Ember.computed('selectedItems', function () {
     return Object.keys(this.get('selectedItems')).length
   }),
 
+  // remove list selection state by setting selectedItems to []
   clearListState: function() {
     if(this.get('selectedItems')) {
       this.set('selectedItems', Ember.A())
     }
   },
 
-  // default filter method
+  // default filter method for object browser
   objectBrowserDefaultFilter: function (data, filter) {
     if (!Ember.isPresent(filter)) {
       return data
@@ -88,6 +75,7 @@ export default Mixin.create(FrostListMixin, {
     })
   },
 
+  // default sort method for object browser
   objectBrowserDefaultSort: function (items, sortProperties) {
     if (!Ember.isPresent(sortProperties)) {
       return
@@ -122,18 +110,15 @@ export default Mixin.create(FrostListMixin, {
     return response
   },
 
-  didReceivePaginationResponse: function (response) {
-    return response
-  },
-
   queryErrorHandler: function (e) {
    Ember.Logger.error('response error: ' + e)
   },
 
+
   actions: {
     sortItems (sortItems) {
       // create serializer
-      const serializer = this.get('objectBrowserConfig.serializerConfig.options.serializer').create({
+      const serializer = this.get('objectBrowserConfig.serializerConfig.serializer').create({
         config: this.get('objectBrowserConfig.serializerConfig'),
         context: this
       })
@@ -149,13 +134,17 @@ export default Mixin.create(FrostListMixin, {
       const normalizedSorting = serializer.normalizeSort(activeSorting)
 
       // set qp
-      this.set('sortQueryParam', normalizedSorting)
+      //this.set('sortQueryParam', normalizedSorting)
+      this.setProperties({
+        sortQueryParam: normalizedSorting,
+        pageQueryParam: []
+      })
     },
 
     filterHandler (formValue) {
       this.set('objectBrowserConfig.facetsConfig.value', formValue)
       // create serializer
-      const serializer = this.get('objectBrowserConfig.serializerConfig.options.serializer').create({
+      const serializer = this.get('objectBrowserConfig.serializerConfig.serializer').create({
         config: this.get('objectBrowserConfig.serializerConfig'),
         context: this
       })
@@ -164,12 +153,24 @@ export default Mixin.create(FrostListMixin, {
       const filter = serializer.normalizeFilter(formValue)
 
       // set qp
-      this.set('filterQueryParam', filter)
+      //this.set('filterQueryParam', filter)
+      this.setProperties({
+        filterQueryParam: filter,
+        pageQueryParam: []
+      })
     },
 
-    // TODO need further work
     loadNext() {
+      const serializer = this.get('objectBrowserConfig.serializerConfig.serializer').create({
+        config: this.get('objectBrowserConfig.serializerConfig'),
+        context: this
+      })
+      let paginationHelper = serializer.get('pagination')
 
+      // TODO better implementation.
+      // serializer will be the set as the context of setPageQueryParam in order to use the normalizePage function inside it.
+      // this will be the first argument passed into the setPageQueryParam so we get access to controller
+      paginationHelper.setPageQueryParam.call(serializer, this)
     }
   }
 })
