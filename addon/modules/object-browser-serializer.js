@@ -84,7 +84,7 @@ export default Ember.Object.extend({
       return this.serverQuery(serializedQueryObject, context).then(response => {
         // get pagination module
         let paginationHelper = this.get('pagination')
-        return paginationHelper.processPageResponse(response, context)
+        return paginationHelper ? paginationHelper.processPageResponse(response, context) : response
       })
     } else {
       let dataKey = context.get('objectBrowserConfig.listConfig.items')
