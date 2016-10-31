@@ -18,14 +18,23 @@
               {{#each config.controlsConfig as |control|}}
                 {{#if (eq control.component 'frost-button')}}
                   {{component control.component
-                    disabled=(disable-helper control.multiSelect config.selectedItemsCount)
-                    text=control.text
+                    design=control.design
+                    disabled=(disable-helper control.multiSelect config.selectedItemsCount control.options.disableControl)
+                    icon=control.icon
                     priority=(logic-or control.priority 'secondary')
                     size=(logic-or control.size 'medium')
+                    text=control.text
                     onClick=(action control.action _selectedItems)
                   }}
                 {{else if (eq control.component 'frost-link')}}
-
+                  {{component control.component 'frost-link'
+                    disabled=(disable-helper control.multiSelect config.selectedItemsCount control.options.disableControl)
+                    icon=control.icon
+                    priority=control.priority
+                    size=control.size
+                    tabindex=control.tabindex
+                    onClick=(action control.action _selectedItems)
+                  }}
                 {{/if}}
               {{/each}}
             </div>
@@ -33,19 +42,14 @@
     </div>
 
 {{else}}
-    <div class="frost-object-browser-info-bar">
-      {{component header}}
-    </div>
-
     <div class="frost-object-browser-body">
         <div class="frost-object-browser-facets">
             <div class="frost-object-browser-facets-header">Refined by</div>
           {{component facets}}
         </div>
-
         <div class="frost-object-browser-content">
           {{component content
-          items=items
+            items=items
           }}
             <div class="frost-object-browser-actions">
               {{#each controls as |control|}}
@@ -54,5 +58,4 @@
             </div>
         </div>
     </div>
-
 {{/if}}
