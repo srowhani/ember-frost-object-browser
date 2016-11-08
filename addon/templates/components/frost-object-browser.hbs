@@ -28,7 +28,7 @@
                   }}
                 {{else if (eq control.component 'frost-link')}}
                   {{component control.component control.text control.link
-                    disabled=(disable-helper control.multiSelect config.selectedItemsCount control.options.disableControl)
+                    disabled=(disable-helper control.multiSelect config.selectedItemsCount control.options.disableControl selectedItems)
                     icon=control.icon
                     priority=control.priority
                     size=control.size
