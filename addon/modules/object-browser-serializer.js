@@ -63,11 +63,9 @@ export default Ember.Object.extend({
 
   },
 
-
   // query related
   query(params) {
     const context = this.get('context')
-
     console.log(params.filterQueryParam)
     console.log(params.sortQueryParam)
     console.log(params.pageQueryParam)
@@ -84,7 +82,7 @@ export default Ember.Object.extend({
       return this.serverQuery(serializedQueryObject, context).then(response => {
         // get pagination module
         let paginationHelper = this.get('pagination')
-        return paginationHelper ? paginationHelper.processPageResponse(response, context) : response
+        return paginationHelper ? paginationHelper.processPageResponse(response, context, queryObject) : response
       })
     } else {
       let dataKey = context.get('objectBrowserConfig.listConfig.items')
@@ -104,14 +102,12 @@ export default Ember.Object.extend({
     let promise = context.get('store').query(this.get('config.model'), queryObject).then(
       (response) => {
         let meta = response.get('meta')
-
         let processedResponse = this.didReceiveResponse(response)
 
         if (this.get('config.filter.client')) {
           processedResponse = this.clientFilter(processedResponse, queryObject.filter)
         }
-
-        if (this.get('config.sort.client')) {
+        if (this.get('config.sort.client') && queryObject.sort.length > 0) {
           processedResponse = this.clientSort(processedResponse, queryObject.sort)
         }
 
@@ -123,19 +119,19 @@ export default Ember.Object.extend({
     return promise
   },
 
-  clientFilter(listItems, activeFacets) {
+  clientFilter(items, filter) {
     const context = this.get('context')
     const config = context.get('objectBrowserConfig.serializerConfig.filter.client')
     if (config) {
       if(config && typeof config === 'function') {
         console.log('run custom client filter')
-        return config(listItems, activeFacets)
+        return config(items, filter)
       } else {
         console.log('run default client filter')
-        return context.objectBrowserDefaultFilter(listItems, activeFacets)
+        return context.objectBrowserDefaultFilter(items, filter)
       }
     }
-    return listItems
+    return items
   },
 
   clientSort(items, sortProperties) {

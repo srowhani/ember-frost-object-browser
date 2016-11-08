@@ -9,16 +9,24 @@ import createActionClosure from 'ember-frost-object-browser/utils/action-closure
 import JsonApiObjectBrowserSerializer from 'ember-frost-object-browser/modules/json-api-object-browser-serializer'
 
 export default Mixin.create(FrostListMixin, {
-
   initObjectBrowserMixin: on('init', function () {
     Ember.defineProperty(this, '__meta_mixin_object_browser', undefined, {})
     Ember.defineProperty(this.get('__meta_mixin_object_browser'), '_state', undefined, 'before_query')
 
     let controlsConfig = this.get('objectBrowserConfig.controlsConfig')
+
+    // closure any function related to controls section
     controlsConfig.forEach(controlItem => {
       let action = this.get(controlItem.action)
       Ember.set(controlItem, 'action', createActionClosure.call(this, action))
+      let disableControl = Ember.get(controlItem, 'options.disableControl')
+      if (disableControl
+        && typeof disableControl === 'function')
+      {
+        Ember.set(controlItem, 'options.disableControl', createActionClosure.call(this, disableControl))
+      }
     })
+
 
     Ember.defineProperty(this, 'listConfig', undefined, Ember.computed.alias('objectBrowserConfig.listConfig'));
     Ember.defineProperty(this, 'objectBrowserMixinConfig', undefined, Ember.computed(
@@ -31,16 +39,12 @@ export default Mixin.create(FrostListMixin, {
           controlsConfig: this.get('objectBrowserConfig.controlsConfig'),
           facetsConfig: this.get('objectBrowserConfig.facetsConfig'),
           selectedItemsCount: this.get('selectedItemsCount'),
-          onFilterFormChange: this.get('_onFilterFormChange'),
-          sortItems: this.get('_sortItems')
+          onFilterFormChange: this.get('_onFilterFormChange')
         }
     }))
 
     Ember.defineProperty(this, '_onFilterFormChange', undefined,
       createActionClosure.call(this, this.actions.filterHandler)
-    )
-    Ember.defineProperty(this, '_sortItems', undefined,
-      createActionClosure.call(this, this.actions.sortHandler)
     )
   }),
 
@@ -49,7 +53,7 @@ export default Mixin.create(FrostListMixin, {
     return Object.keys(this.get('selectedItems')).length
   }),
 
-  // remove list selection state by setting selectedItems to []
+  // remove list selection state by setting selectedItems to Ember.A()
   clearListState: function() {
     if(this.get('selectedItems')) {
       this.set('selectedItems', Ember.A())
@@ -165,12 +169,17 @@ export default Mixin.create(FrostListMixin, {
         config: this.get('objectBrowserConfig.serializerConfig'),
         context: this
       })
-      let paginationHelper = serializer.get('pagination')
+      const paginationHelper = serializer.get('pagination')
+      let queryObject = paginationHelper.prepareQueryObject.call(this)
 
-      // TODO better implementation.
-      // serializer will be the set as the context of setPageQueryParam in order to use the normalizePage function inside it.
-      // this will be the first argument passed into the setPageQueryParam so we get access to controller
-      paginationHelper.setPageQueryParam.call(serializer, this)
-    }
+      // TODO better implementation
+      // serializer will be the set as the context of requestNext in order to use the normalizePage function inside it.
+      // this will be the first argument passed into the requestNext so we get access to controller
+      paginationHelper.requestNext.call(this, queryObject, serializer)
+    },
+
+    // currently not used
+    loadPrevious() {}
+
   }
 })

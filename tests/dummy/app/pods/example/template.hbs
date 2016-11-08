@@ -1,0 +1,27 @@
+{{component 'frost-info-bar'
+  icon=(component 'frost-icon'
+    icon='list-medium'
+    pack='frost'
+  )
+  title='info-title'
+    summary=(component 'text-box'
+    isVisible=isSummaryVisible
+    text='&lt;placeholder: summary&gt;'
+  )
+  scope=(component 'text-box'
+    isVisible=isScopeVisible
+    text='&lt;placeholder: controls&gt;'
+  )
+  controls=(array
+    (component 'frost-button'
+      isVisible=isControlsVisible
+      icon='infobar-create'
+      text='Click me!'
+      onClick=(action 'triggerAction')
+    )
+  )
+}}
+
+{{frost-object-browser
+  config=objectBrowserMixinConfig
+}}

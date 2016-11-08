@@ -19,7 +19,7 @@
                 {{#if (eq control.component 'frost-button')}}
                   {{component control.component
                     design=control.design
-                    disabled=(disable-helper control.multiSelect config.selectedItemsCount control.options.disableControl)
+                    disabled=(disable-helper control.multiSelect config.selectedItemsCount control.options.disableControl _selectedItems)
                     icon=control.icon
                     priority=(logic-or control.priority 'secondary')
                     size=(logic-or control.size 'medium')

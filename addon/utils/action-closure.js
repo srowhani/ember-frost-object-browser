@@ -1,7 +1,7 @@
 export function create (method) {
   let context = this
   return function wrapperFunc () {
-    method.apply(context, arguments)
+    return method.apply(context, arguments)
   }
 }
 
