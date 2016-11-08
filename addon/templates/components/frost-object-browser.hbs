@@ -21,8 +21,8 @@
                     design=control.design
                     disabled=(disable-helper control.multiSelect config.selectedItemsCount control.options.disableControl _selectedItems)
                     icon=control.icon
-                    priority=(logic-or control.priority 'secondary')
-                    size=(logic-or control.size 'medium')
+                    priority=(or control.priority 'secondary')
+                    size=(or control.size 'medium')
                     text=control.text
                     onClick=(action control.action _selectedItems)
                   }}
