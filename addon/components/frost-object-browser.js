@@ -5,9 +5,9 @@ export default Ember.Component.extend({
   layout,
   classNames: ['frost-object-browser'],
 
-  _items: Ember.computed('items', 'config', function () {
+  items: Ember.computed('items', 'config', function () {
     return this.get('config') ? this.get('config.listMixinConfig.items') : this.get('items')
   }),
 
-  _selectedItems: Ember.computed.filterBy('_items', 'isSelected', true)
+  selectedItems: Ember.computed.filterBy('items', 'isSelected', true)
 });
