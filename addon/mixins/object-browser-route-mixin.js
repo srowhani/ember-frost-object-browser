@@ -2,7 +2,6 @@ import Ember from 'ember'
 const {
   Mixin,
   } = Ember
-import ObjectBrowserSerializer from 'ember-frost-object-browser/modules/object-browser-serializer'
 
 export default Mixin.create({
   queryParams: {
@@ -22,7 +21,7 @@ export default Mixin.create({
 
   model: function (params) {
     let controller = this.controllerFor(this.get('routeName'))
-    const serializer = ObjectBrowserSerializer.create({
+    const serializer = controller.get('objectBrowserConfig.serializerConfig.serializer').create({
       config: controller.get('objectBrowserConfig.serializerConfig'),
       context: controller
     })
