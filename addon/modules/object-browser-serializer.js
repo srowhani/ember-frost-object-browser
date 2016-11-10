@@ -102,7 +102,7 @@ export default Ember.Object.extend({
     let promise = context.get('store').query(this.get('config.model'), queryObject).then(
       (response) => {
         let meta = response.get('meta')
-        let processedResponse = this.didReceiveResponse.call(this, response)
+        let processedResponse = this.didReceiveResponse.call(context, response)
 
         if (this.get('config.filter.client')) {
           processedResponse = this.clientFilter(processedResponse, queryObject.filter)
