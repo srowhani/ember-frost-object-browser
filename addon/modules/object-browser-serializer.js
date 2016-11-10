@@ -77,7 +77,7 @@ export default Ember.Object.extend({
     }
 
     const serializedQueryObject = this.serializeQueryParams(queryObject)
-    this.willQuery()
+    this.willQuery.call(context, serializedQueryObject)
     if (true) {
       return this.serverQuery(serializedQueryObject, context).then(response => {
         // get pagination module
@@ -93,7 +93,7 @@ export default Ember.Object.extend({
       if (this.get('config.sort.client')) {
         result = this.clientSort(result, queryObject.sort)
       }
-      this.didQuery()
+      this.didQuery.call(context, serializedQueryObject)
       return Ember.RSVP.resolve(result)
     }
   },
