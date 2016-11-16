@@ -17,15 +17,11 @@ env:
   matrix:
   - EMBER_TRY_SCENARIO=default
   - EMBER_TRY_SCENARIO=ember-release
-  - EMBER_TRY_SCENARIO=ember-beta
-  - EMBER_TRY_SCENARIO=ember-canary
   global:
     - CXX=g++-4.8
     - secure: nT0ALCpUyXHu6VHwulKgyYUBPtwOeJsfXN1D2nEx+Zc7JpnrBR3ZHdo5QTSTGK3/Gjaa61+1uZJAx2CY11VlWPHRKv/C650mDIGEwd929CDplsuicuVlviS6v6R7/wSh1L/Zt2MGRKYR4KmfJee/RVH3O67Q3oaAvkvvHPxuuPzDu72aeOqo3KS/GObadJNbG9ZW2xO9aL61PW/WnP7SLlfGOBEGSpZ1Q0lJb7sqNVQU9+h24qCODWL2J65h8d2PB6By1aGyZuQhisaN3thVtTATJ9rG3VeciqbbAcqgCRgYcPQSZ0HR65dAJ28a9+b6NDScZHTtddMxrIA1YzvIcsP4gImr2FaI5uyEiA+B6AG7/z4pGAyITlhfalQiD+yzXpUagD9CCCyEicwar+dGxId9hxDINglQ2KV1heewOROJuDUxas0nvWFZ+uV/HUwGCor1BG1PT5g2odsaxLZgPY96FGOvOMigfLVkooeRS7gC6eZB7yim8MHnjb1GtWDHzl+LXmjPaWda9I/wkWQwuM1QVITuBrwYPu5ygqfUz3VzWNqlIYilf2G9VJeNH2rScAHEGZFZFKMcE/dB5l0bkpZR+mtnri80wFXZYSq3m0I5ZiTA88Dkel5h+hPyIQe7uA6bQOUsDHej6VO2j1U5ZMfatlVIenCRFYKQNwOq0BQ=
 matrix:
   fast_finish: true
-  allow_failures:
-  - env: EMBER_TRY_SCENARIO=ember-canary
 before_install:
 - npm config set spin false
 - npm install -g coveralls pr-bumper
@@ -55,8 +51,6 @@ deploy:
     condition: "$EMBER_TRY_SCENARIO = 'default'"
     node: 'stable'
     tags: false
-after_deploy:
-- .travis/publish-gh-pages.sh
 notifications:
   slack:
     secure: edyXAIZAlOxsJmtWBPIam5WSL/5lHAjPTLHsLc2vlMLoSSh+mgGHm5O4AKXQBZNoz69eX0otbwgR5k6LKjFjViaMFcqMf/qyMvjH/qpVDLChOk5AAjlpr5aHH7vxUiylhRPSb7h2hYrpjhjEKNHGJUNWjhnLW+Y6vnVpQ0cTKkuPRJd0XWUA6e6DozTqbXsOMeKq2bY4kwwHRhPdV2176sREZ2FMzV7Qq2vnn4czH/f0meW7vSvhi8KLkg+2zQsZxOoGHM8q2/lZ4V94ZhpYrvKP35jbCuKq3ElIGfnjo43FMM8qz80z926AAwttr7DJayNhPS87/uzW5TfI8udZ+h0dyi4ITNIGUxKLmDMQBSlRuRxMzK+Mynloz7QR/hD1JaYogyOU+6HNTHfDn20sdH7bpqcpAsLd/DwAOmC8tZto4eyCnaXa0Sx0RetweN4V8o3rPNyTajR/88fuEqpYjNgk2JlBWxKVm/CBZyqfeptZ5RVNmZ1yT4ahuN6ThyN+Rx8jI4WJpZ9SijIJj49CkCKr6AxufvjXnLSws/PAblx2RKUuZwwRG9TLiUpdqJ3iOtPTw0pai1nWJCquCVRgXac/1c8b+WYN+lgilu2vcd4DuDmRDMWVc3Tp5Ag/Ta+Z4JYq9dIshBpAwCTbsyUT7zMC7nV6vHObw3WEbNhugj8=
