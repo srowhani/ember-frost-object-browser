@@ -1,6 +1,7 @@
 import {expect} from 'chai'
 import {describeComponent, it} from 'ember-mocha'
 import hbs from 'htmlbars-inline-precompile'
+import {beforeEach, describe} from 'mocha'
 import sinon from 'sinon'
 import $ from 'jquery'
 
@@ -59,19 +60,32 @@ describeComponent(
         onFilter: sinon.spy()
       }
       this.setProperties(props)
-      this.render(hbs`{{frost-object-browser-filter filters=filters onFilter=onFilter}}`)
+      this.render(hbs`
+        {{frost-select-outlet}}
+        {{frost-object-browser-filter
+          filters=filters
+          onFilter=onFilter
+        }}
+      `)
     })
 
     it('displays a list of filters', function () {
       expect(this.$('.frost-select')).to.have.length(2)
     })
 
-    it('takes a function that is called when the filter changes', function (done) {
-      this.$('.frost-select li:first-child').click()
+    describe('open select', function () {
+      beforeEach(function () {
+        $('.frost-select').first().click().trigger('focusin')
+      })
 
-      Ember.run.later(() => {
-        expect(props.onFilter.called).to.be.true
-        done()
+      describe('select item', function () {
+        beforeEach(function () {
+          $('.frost-select-dropdown li').first().trigger('mousedown')
+        })
+
+        it('informs consumer of filter', function () {
+          expect(props.onFilter.called).to.equal(true)
+        })
       })
     })
 
@@ -97,14 +111,14 @@ describeComponent(
       this.set('filters.0.selectedValue', 'TestValue3')
 
       Ember.run.later(() => {
-        let firstFilterInput = this.$('.frost-select input')
-        expect(firstFilterInput.val()).to.eql('Test3')
+        const actual = this.$('.frost-select').text().trim()
+        expect(actual).to.eql('Test3')
         done()
       })
     })
 
     it('filters can be cleared', function (done) {
-      this.$('.frost-select li:first-child').click()
+      this.$('.frost-select-dropdown li:first-child').click()
       this.$('.filter-header .frost-button').click()
 
       Ember.run.later(() => {
