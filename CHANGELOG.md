@@ -1,3 +1,7 @@
+# 13.1.1
+
+* **Fixed** build to work with newer versions of Ember and latest `ember-frost-core`.
+
 # 13.0.1
 No CHANGELOG section found in Pull Request description.
 Use a `# CHANGELOG` section in your Pull Request description to auto-populate the `CHANGELOG.md`
