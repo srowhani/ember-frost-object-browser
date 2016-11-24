@@ -8,7 +8,7 @@ export default Ember.Object.extend({
     Ember.defineProperty(this, 'pagination', undefined, (function () {
       let pagination = this.get('config.page')
       if (typeof pagination === 'undefined') {
-        return offsetPagination
+        return  offsetPagination
       } else {
         return this.get('pagination.strategy')
       }
@@ -76,7 +76,7 @@ export default Ember.Object.extend({
       page: params && params.pageQueryParam
     }
 
-    const serializedQueryObject = this.serializeQueryParams(queryObject)
+    const serializedQueryObject = this.serializeQueryParams.call(context, queryObject)
     this.willQuery.call(context, serializedQueryObject)
     if (true) {
       return this.serverQuery(serializedQueryObject, context).then(response => {
@@ -101,8 +101,9 @@ export default Ember.Object.extend({
   serverQuery(queryObject, context) {
     let promise = context.get('store').query(this.get('config.model'), queryObject).then(
       (response) => {
-        let meta = response.get('meta')
         let processedResponse = this.didReceiveResponse.call(context, response)
+
+        let meta = response.get('meta')
 
         if (this.get('config.filter.client')) {
           processedResponse = this.clientFilter(processedResponse, queryObject.filter)
@@ -115,7 +116,7 @@ export default Ember.Object.extend({
         return processedResponse
       }
     )
-    this.didQuery()
+    this.didQuery.call(context, queryObject)
     return promise
   },
 

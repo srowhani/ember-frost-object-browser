@@ -14,7 +14,7 @@ export default Mixin.create({
       as: 'filter'
     },
     pageQueryParam: {
-      refreshModel: true,
+      refreshModel: false,
       as: 'page'
     }
   },
@@ -43,6 +43,7 @@ export default Mixin.create({
     let sortQueryParam = controller.get('sortQueryParam')
 
     // TODO remove when sort improved
+    // set initial sort based on qp
     if (!Array.isArray(sortQueryParam)) {
       return
     }

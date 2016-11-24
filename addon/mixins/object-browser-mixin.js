@@ -1,34 +1,62 @@
 import Ember from 'ember'
 const {
+  assert,
+  get,
+  isPresent,
+  typeOf,
   Mixin,
   on
 } = Ember
-import computed from 'ember-computed-decorators'
 import FrostListMixin from 'ember-frost-list/mixins/frost-list-mixin'
 import createActionClosure from 'ember-frost-object-browser/utils/action-closure'
+import {typeAssert} from 'ember-frost-object-browser/utils/error-handle'
 import JsonApiObjectBrowserSerializer from 'ember-frost-object-browser/modules/json-api-object-browser-serializer'
 
 export default Mixin.create(FrostListMixin, {
-  initObjectBrowserMixin: on('init', function () {
-    Ember.defineProperty(this, '__meta_mixin_object_browser', undefined, {})
-    Ember.defineProperty(this.get('__meta_mixin_object_browser'), '_state', undefined, 'before_query')
+  sortQueryParam: [],
+  filterQueryParam: [],
+  pageQueryParam: [],
+  queryParams: ['filterQueryParam', 'sortQueryParam', 'pageQueryParam'],
 
-    let controlsConfig = this.get('objectBrowserConfig.controlsConfig')
+  initObjectBrowserMixin: on('init', function () {
+    const objectBrowserConfig = this.get('objectBrowserConfig')
+    typeAssert(`Expected 'objectBrowserConfig' to be object or Ember.Object, received ${typeOf(objectBrowserConfig)}`, objectBrowserConfig, ['instance', 'object'])
+
+    const listConfig = get(objectBrowserConfig, 'listConfig')
+    const facetsConfig = get(objectBrowserConfig, 'facetsConfig')
+    const controlsConfig = get(objectBrowserConfig, 'controlsConfig')
+    const serializerConfig = get(objectBrowserConfig, 'serializerConfig')
+
+    typeAssert(`Expected 'listConfig' to be object or Ember.Object, received ${typeOf(listConfig)}`, listConfig, ['instance', 'object'])
+    typeAssert(`Expected 'facetsConfig' to be object or Ember.Object, received ${typeOf(facetsConfig)}`, facetsConfig, ['instance', 'object'])
+    typeAssert(`Expected 'controlsConfig' to be array or Ember.Array, received ${typeOf(controlsConfig)}`, controlsConfig, ['instance', 'array'])
+    typeAssert(`Expected 'serializerConfig' to be object or Ember.Object, received ${typeOf(serializerConfig)}`, serializerConfig, ['instance', 'object'])
 
     // closure any function related to controls section
     controlsConfig.forEach(controlItem => {
-      let action = this.get(controlItem.action)
-      Ember.set(controlItem, 'action', createActionClosure.call(this, action))
+      typeAssert(`Expected each item in 'controlsConfig' to be object or Ember.Object, received ${typeOf(controlItem)}`, controlItem, ['instance', 'object'])
+
+      if (get(controlItem, 'action')) {
+        // get(controlItem, 'action') will return the path of action if exists.
+        // TODO what to do when action is undefined.
+        let action = this.get(get(controlItem, 'action'))
+        Ember.set(controlItem, 'action', createActionClosure.call(this, action))
+      } else {
+        // no-op when action not provided
+        Ember.set(controlItem, 'action', createActionClosure.call(this, function () {}))
+      }
+
       let disableControl = Ember.get(controlItem, 'options.disableControl')
-      if (disableControl
-        && typeof disableControl === 'function')
-      {
+      if (disableControl) {
+        typeAssert(`Expected 'disabledControl' to be function, received ${typeOf(disableControl)}`, disableControl, 'function')
         Ember.set(controlItem, 'options.disableControl', createActionClosure.call(this, disableControl))
       }
     })
 
-
     Ember.defineProperty(this, 'listConfig', undefined, Ember.computed.alias('objectBrowserConfig.listConfig'));
+    Ember.defineProperty(this, '_onFilterFormChange', undefined,
+      createActionClosure.call(this, this.actions.filterItems)
+    )
     Ember.defineProperty(this, 'objectBrowserMixinConfig', undefined, Ember.computed(
       'listMixinConfig',
       'objectBrowserConfig.controlsConfig.[]',
@@ -36,16 +64,12 @@ export default Mixin.create(FrostListMixin, {
       'selectedItemsCount', function () {
         return {
           listMixinConfig: this.get('listMixinConfig'),
-          controlsConfig: this.get('objectBrowserConfig.controlsConfig'),
-          facetsConfig: this.get('objectBrowserConfig.facetsConfig'),
+          controlsConfig: controlsConfig,
+          facetsConfig: facetsConfig,
           selectedItemsCount: this.get('selectedItemsCount'),
           onFilterFormChange: this.get('_onFilterFormChange')
         }
     }))
-
-    Ember.defineProperty(this, '_onFilterFormChange', undefined,
-      createActionClosure.call(this, this.actions.filterHandler)
-    )
   }),
 
   // cp: count for currently selected items
@@ -133,19 +157,17 @@ export default Mixin.create(FrostListMixin, {
       })
 
       // set state prop which will feed back to component
-      this.set('activeSorting', activeSorting)
+      // this.set('activeSorting', activeSorting)
 
       const normalizedSorting = serializer.normalizeSort(activeSorting)
 
-      // set qp
-      //this.set('sortQueryParam', normalizedSorting)
       this.setProperties({
         sortQueryParam: normalizedSorting,
         pageQueryParam: []
       })
     },
 
-    filterHandler (formValue) {
+    filterItems (formValue) {
       this.set('objectBrowserConfig.facetsConfig.value', formValue)
       // create serializer
       const serializer = this.get('objectBrowserConfig.serializerConfig.serializer').create({
@@ -156,8 +178,6 @@ export default Mixin.create(FrostListMixin, {
       // normalize component output to qp
       const filter = serializer.normalizeFilter(formValue)
 
-      // set qp
-      //this.set('filterQueryParam', filter)
       this.setProperties({
         filterQueryParam: filter,
         pageQueryParam: []
