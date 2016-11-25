@@ -1,0 +1,11 @@
+{{!-- facets and controls could stay empty if they are not needed--}}
+{{!-- frost components can be replaced with custom components if necessary--}}
+{{frost-object-browser
+  items=data
+  facets=(component 'frost-bunsen-form')
+  content=(component 'frost-list')
+  controls=(array
+    (component 'frost-button')
+    (component 'frost-link')
+  )
+}}
