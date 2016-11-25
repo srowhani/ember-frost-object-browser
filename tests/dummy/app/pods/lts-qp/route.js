@@ -1,5 +1,4 @@
 import Ember from 'ember'
-import dummyData from '../mocks/dummyInput'
 import {ObjectBrowserRouteMixin} from 'ember-frost-object-browser'
 
 export default Ember.Route.extend(ObjectBrowserRouteMixin, {

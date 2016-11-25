@@ -140,7 +140,6 @@ export default [
     updatedAt: 'Wed Jan 06 2016 12:16:04 GMT-0800 (PST)'
   },
 
-
   {
     alias: 'bp9',
     value: '883737dfasdf0fds35-8672-4a116d2c9d82',

@@ -1,28 +1,3 @@
-<section class="docs">
-    <nav class="side-nav">
-        <header class="side-nav-header">Getting started</header>
-      {{#link-to 'docs' class="side-nav-link"}}Overview{{/link-to}}
+<h1 class="list-doc doc-title">Overview</h1>
 
-      {{#link-to 'docs.getting-started.overview' class="side-nav-link"}}Overview{{/link-to}}
-      {{#link-to 'docs.getting-started.installation' class="side-nav-link"}}installation{{/link-to}}
-
-        <header class="side-nav-header">API details</header>
-      {{#link-to 'docs.api-details.data-drive' class="side-nav-link"}}Data drive{{/link-to}}
-      {{#link-to 'docs.api-details.full-access' class="side-nav-link"}}Full access{{/link-to}}
-
-        <header class="side-nav-header">Mixins</header>
-      {{#link-to 'docs.mixins.index' class="side-nav-link"}}Overview{{/link-to}}
-      {{#link-to 'docs.mixins.how-to-use' class="side-nav-link"}}How to use{{/link-to}}
-      {{#link-to 'docs.mixins.how-to-config' class="side-nav-link"}}How to config{{/link-to}}
-      {{#link-to 'docs.mixins.hooks' class="side-nav-link"}}Hooks{{/link-to}}
-      {{#link-to 'docs.mixins.reserved-property' class="side-nav-link"}}Reserved Property{{/link-to}}
-
-        <header class="side-nav-header">Data Serializers</header>
-      {{#link-to 'docs.data-serializers.overview' class="side-nav-link"}}Overview{{/link-to}}
-      {{#link-to 'docs.data-serializers.how-to-config' class="side-nav-link"}}How to config{{/link-to}}
-
-    </nav>
-    <section class="doc-page">
-      {{outlet}}
-    </section>
-</section>
+{{code-snippet name="case1.hbs"}}

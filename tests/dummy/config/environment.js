@@ -6,7 +6,7 @@ module.exports = function (environment) {
     modulePrefix: 'dummy',
     podModulePrefix: 'dummy/pods',
     environment: environment,
-    baseURL: '/',
+    rootURL: '/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
@@ -14,9 +14,9 @@ module.exports = function (environment) {
         // e.g. 'with-controller': true
       }
       // TODO Do we want to disable prototype extension?
-      //EXTEND_PROTOTYPES: {
-      //  Date: false
-      //}
+      // EXTEND_PROTOTYPES: {
+      //   Date: false
+      // }
     },
 
     APP: {
@@ -34,7 +34,7 @@ module.exports = function (environment) {
   }
 
   if (environment === 'e2e-test') {
-    ENV.baseURL = '/'
+    ENV.rootURL = '/'
     ENV['ember-cli-mirage'] = {
       enabled: true
     }
@@ -43,19 +43,19 @@ module.exports = function (environment) {
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/'
+    ENV.rootURL = '/'
     ENV.locationType = 'none'
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false
     ENV.APP.LOG_VIEW_LOOKUPS = false
-
     ENV.APP.rootElement = '#ember-testing'
   }
 
   if (environment === 'production') {
-    ENV.baseURL = '/frost-object-browser'
+    ENV.rootURL = '/ember-frost-object-browser'
     ENV.isDemo = true
+    ENV.mirageNamespace = 'https://ciena-frost.github.io'
     ENV['ember-cli-mirage'] = {
       enabled: true
     }

@@ -2,24 +2,6 @@ import Ember from 'ember'
 import ObjectBrowserMixin from 'ember-frost-object-browser/mixins/object-browser-mixin'
 import JsonApiObjectBrowserSerializer from 'ember-frost-object-browser/modules/json-api-object-browser-serializer'
 
-function localObjectBrowserDefaultFilter(data, filter) {
-  let activeFacets = filter
-
-  if (!Ember.isPresent(activeFacets)) {
-    return data
-  }
-
-  return data.filter((data) => {
-    let key = true
-    activeFacets.forEach((facet) => {
-      if (data.get(facet.id).indexOf(facet.value) === -1) {
-        key = false
-      }
-    })
-    return key
-  })
-}
-
 export default Ember.Controller.extend(ObjectBrowserMixin, {
 
   // TODO when qp is initialized off a cp, a full path must be provided
@@ -60,24 +42,23 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
         }
       },
       bunsenView: {
-        "cellDefinitions": {
-          "main": {
-            "children": [
-              {"model": "id"},
-              {"model": "alias"}
+        'cellDefinitions': {
+          'main': {
+            'children': [
+              {'model': 'id'},
+              {'model': 'alias'}
             ]
           }
         },
-        "cells": [
+        'cells': [
           {
-            "extends": "main"
+            'extends': 'main'
           }
         ],
-        "type": "form",
-        "version": "2.0"
+        'type': 'form',
+        'version': '2.0'
       },
-      value: {
-      }
+      value: {}
     },
 
     controlsConfig: [
@@ -119,7 +100,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
         client: false
       },
       options: {
-        serializer: JsonApiObjectBrowserSerializer //default
+        serializer: JsonApiObjectBrowserSerializer
       }
     }
   },
@@ -163,8 +144,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       })
     },
 
-    sortItems(sortItems) {
-      debugger;
+    sortItems (sortItems) {
       const serializer = JsonApiObjectBrowserSerializer.create({
         config: this.get('objectBrowserConfig.serializerConfig'),
         context: this
@@ -184,17 +164,17 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       this.set('activeSorting', activeSorting)
 
       // issue query if necessary
-        console.log('run server sort')
-        let modelPath = this.get('objectBrowserConfig.listConfig.items')
-        serializer.query().then(
-          (response) => {
-            this.clearListState()
-            this.set(modelPath, this.didReceiveResponse(response))
-          },
-          (error) => {
-            this.queryErrorHandler(error)
-          }
-        )
+      console.log('run server sort')
+      let modelPath = this.get('objectBrowserConfig.listConfig.items')
+      serializer.query().then(
+        (response) => {
+          this.clearListState()
+          this.set(modelPath, this.didReceiveResponse(response))
+        },
+        (error) => {
+          this.queryErrorHandler(error)
+        }
+      )
     }
   }
 

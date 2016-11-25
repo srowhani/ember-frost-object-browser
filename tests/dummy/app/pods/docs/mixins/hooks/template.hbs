@@ -1,10 +1,42 @@
-<h4>Config list</h4>
+<h1>Hooks</h1>
+
+<p>Hooks are the place where consumer can interact with object browser's work flow, such things like
+    provide logic, update local property, data drive object browser's configuration, customize query request and handle the meta data returned from the server.</p>
+
+<h2>Mixin hooks</h2>
 
 
-<h4>Config bunsen</h4>
+
+<h2>Serializer hooks</h2>
+
+<p>
+    <code>serializeQueryParams</code> is the place where you can mutate the query object that will be sent to the server.
+    You <strong>must</strong> return a hash contains your query object after processing it.
+</p>
+
+{{code-snippet name="mixins-hooks-2.js"}}
+
+<p>
+    <code>willQuery</code> runs right before the store.query request being sent to the server.
+    It's the place you can provide logic, update local property.
+</p>
+
+{{code-snippet name="mixins-hooks-3.js"}}
+
+<p>
+    <code>didQuery</code> runs right after the store.query request being sent to the server.
+    It's the place you can provide logic, update local property.
+</p>
+
+{{code-snippet name="mixins-hooks-4.js"}}
+
+<p>
+    <code>didReceiveResponse</code> runs when the server response is received. This is an opportunity for user to data drive filter/sort and handle meta data.
+    You <strong>must</strong> return the response from the hooks.
+</p>
+
+{{code-snippet name="mixins-hooks-5.js"}}
 
 
-<h4>Config Controls</h4>
 
 
-<h4>Config Serailizer</h4>

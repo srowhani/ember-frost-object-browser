@@ -87,7 +87,6 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
     ]
   },
 
-
   activeFacets: [],
 
   filteredItems: Ember.computed('model.resources', 'activeFacets', function () {
@@ -146,7 +145,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       })
     },
 
-    onFilterFormChange(formValue) {
+    onFilterFormChange (formValue) {
       let activeFacets = []
       const keys = Object.keys(formValue)
       keys.forEach((key) => {

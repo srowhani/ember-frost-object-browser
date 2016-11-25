@@ -48,42 +48,44 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
         }
       },
       bunsenView: {
-        "cellDefinitions": {
-          "main": {
-            "children": [
-              {"model": "id"},
-              {"model": "alias"}
+        'cellDefinitions': {
+          'main': {
+            'children': [
+              {'model': 'id'},
+              {'model': 'alias'}
             ]
           }
         },
-        "cells": [
+        'cells': [
           {
-            "extends": "main"
+            'extends': 'main'
           }
         ],
-        "type": "form",
-        "version": "2.0"
+        'type': 'form',
+        'version': '2.0'
       },
       value: {
       }
     },
-
 
     controlsConfig: [
       {
         component: 'frost-button',
         action: 'actions.triggerDelete',  // method key related to this/context/controller
         text: 'Delete',
-        disable: 'type1',
-        multiSelect: true,
         priority: 'secondary',
-        size: 'medium'
+        size: 'medium',
+        options: {
+          multiSelect: true,
+          disableControl: function (params) {
+            return false
+          }
+        }
       },
       {
         component: 'frost-button',
         action: 'actions.triggerEdit',  // method key related to this/context/controller
         text: 'Edit',
-        disable: 'type2',
         priority: 'secondary',
         size: 'medium'
       },
@@ -91,7 +93,6 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
         component: 'frost-button',
         action: 'actions.triggerDetail',  // method key related to this/context/controller
         text: 'Detail',
-        disable: 'type2',
         priority: 'secondary',
         size: 'medium'
       }
@@ -122,11 +123,11 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       // See explanation for sort.
       filter: {
         client: false
+      },
+      page: {
+        strategy: 'default',
+        size: 15
       }
-
-      //page: {
-      //  strategy: <factory>
-      //}
     }
   },
 
@@ -168,6 +169,3 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
     }
   }
 })
-
-
-

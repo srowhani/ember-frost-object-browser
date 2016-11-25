@@ -4,6 +4,7 @@ import offsetPagination from './pagination/offset'
 
 export default Ember.Object.extend({
   initContext: on('init', function () {
+    /* eslint-disable */
     Ember.defineProperty(this, 'pagination', undefined, (function () {
       let pagination = this.get('config.page')
       if (typeof pagination === 'undefined') {
@@ -12,6 +13,7 @@ export default Ember.Object.extend({
         return this.get('pagination.strategy')
       }
     }).call(this))
+    /* eslint-enable */
   }),
 
   // normalization methods
