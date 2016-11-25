@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 export default {
   prepareQueryObject: function () {
     return {
@@ -66,7 +68,7 @@ export default {
       controller.set('__lastOffset', nextOffset)
       //controller.set('__firstPage', 1)
       //controller.set('__lastPage', nextOffset)
-      return controller.didReceiveResponse(response)
+      return response
     }
     else if (typeof page === 'object' && typeof controller.get('__firstOffset') === 'undefined' && typeof controller.get('__lastOffset') === 'undefined') {
       console.log(controller)
@@ -134,3 +136,6 @@ export default {
 //}
 
 //return controller.didReceiveResponse(response)
+
+
+/* eslint-enable */

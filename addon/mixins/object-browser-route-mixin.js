@@ -1,8 +1,5 @@
 import Ember from 'ember'
-const {
-  Mixin,
-  } = Ember
-
+const {Mixin} = Ember
 export default Mixin.create({
   queryParams: {
     sortQueryParam: {
@@ -25,41 +22,19 @@ export default Mixin.create({
       config: controller.get('objectBrowserConfig.serializerConfig'),
       context: controller
     })
-    return serializer.query(params).then(
-      (response) => {
-        controller.clearListState()
-        return controller.didReceiveResponse(response)
-      },
-      (error) => {
-        controller.queryErrorHandler(error)
-      }
-    )
+    return serializer.query(params)
   },
 
-  setupController: function(controller, model) {
-    this._super(controller, model);
-    const filterQueryParam = controller.get('filterQueryParam')
-    controller.set('objectBrowserConfig.facetsConfig.value', filterQueryParam)
-    let sortQueryParam = controller.get('sortQueryParam')
+  setupController: function (controller, model) {
+    this._super(controller, model)
 
-    // TODO remove when sort improved
-    // set initial sort based on qp
-    if (!Array.isArray(sortQueryParam)) {
-      return
-    }
-    let activeSorting = sortQueryParam.map(sortItem => {
-      if (sortItem.indexOf('-') === -1) {
-        return {
-          value: sortItem,
-          direction: ':asc'
-        }
-      } else {
-        return {
-          value: sortItem.slice(1),
-          direction: ':desc'
-        }
-      }
+    const serializer = controller.get('objectBrowserConfig.serializerConfig.serializer').create({
+      config: controller.get('objectBrowserConfig.serializerConfig'),
+      context: controller
     })
-    controller.set('objectBrowserConfig.listConfig.sorting.active', activeSorting)
+    // set filter based on qp
+    serializer.setFilterPropertyFromQueryParam(controller)
+    // set filter based on qp
+    serializer.setSortPropertyFromQueryParam(controller)
   }
 })

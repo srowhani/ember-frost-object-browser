@@ -11,6 +11,3 @@ export {
   JsonApiObjectBrowserSerializer,
   OffsetPagination
 }
-
-
-

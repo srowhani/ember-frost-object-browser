@@ -19,7 +19,7 @@
                 {{#if (eq control.component 'frost-button')}}
                   {{component control.component
                     design=control.design
-                    disabled=(disable-helper control.multiSelect config.selectedItemsCount control.options.disableControl selectedItems)
+                    disabled=(disable-helper control.options.multiSelect config.selectedItemsCount control.options.disableControl selectedItems)
                     icon=control.icon
                     priority=(or control.priority 'secondary')
                     size=(or control.size 'medium')
@@ -27,14 +27,25 @@
                     onClick=(action control.action selectedItems)
                   }}
                 {{else if (eq control.component 'frost-link')}}
-                  {{component control.component control.text control.link
-                    disabled=(disable-helper control.multiSelect config.selectedItemsCount control.options.disableControl selectedItems)
-                    icon=control.icon
-                    priority=control.priority
-                    size=control.size
-                    tabindex=control.tabindex
-                    onClick=(action control.action selectedItems)
-                  }}
+                  {{#if (eq control.model)}}
+                    {{component control.component control.text control.link linkModel
+                      disabled=(disable-helper control.options.multiSelect config.selectedItemsCount control.options.disableControl selectedItems)
+                      icon=control.icon
+                      priority=control.priority
+                      size=control.size
+                      tabindex=control.tabindex
+                      onClick=(action control.action selectedItems)
+                    }}
+                  {{else}}
+                    {{component control.component control.text control.link
+                      disabled=(disable-helper control.options.multiSelect config.selectedItemsCount control.options.disableControl selectedItems)
+                      icon=control.icon
+                      priority=control.priority
+                      size=control.size
+                      tabindex=control.tabindex
+                      onClick=(action control.action selectedItems)
+                    }}
+                  {{/if}}
                 {{/if}}
               {{/each}}
             </div>
@@ -49,7 +60,7 @@
         </div>
         <div class="frost-object-browser-content">
           {{component content
-            items=items
+            items=_items
           }}
             <div class="frost-object-browser-actions">
               {{#each controls as |control|}}

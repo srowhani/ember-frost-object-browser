@@ -17,6 +17,7 @@ export default {
     })
   },
 
+  /* eslint-disable */
   processPageResponse: function (response, controller, {page}) {
     let meta = response.get('meta')
     let size = meta.size
@@ -29,25 +30,25 @@ export default {
       controller.set('__firstOffset', 0)
       controller.set('__lastOffset', nextOffset)
       return response
-    }
-    else if (typeof page === 'object' && typeof controller.get('__firstOffset') === 'undefined' && typeof controller.get('__lastOffset') === 'undefined') {
+    } else if (typeof page === 'object' && typeof controller.get('__firstOffset') === 'undefined' && typeof controller.get('__lastOffset') === 'undefined') {
       controller.setProperties({
         __firstOffset: 0,
         __lastOffset: nextOffset
       })
       return response
-    }
-    else if (controller.get('__lastOffset') < nextOffset){
+    } else if (controller.get('__lastOffset') < nextOffset){
       let dataKey = controller.get('objectBrowserConfig.listConfig.items')
       let result = controller.get(dataKey)
       controller.setProperties({
         __lastOffset: nextOffset
       })
-      return result.content ? result.content.concat(response.content ? response.content : response) : result.concat( response.content ? response.content : response )
-    }
-    else if (controller.get('__lastOffset') === nextOffset) {
+      return result.content
+        ? result.content.concat(response.content ? response.content : response)
+        : result.concat( response.content ? response.content : response )
+    } else if (controller.get('__lastOffset') === nextOffset) {
       let dataKey = controller.get('objectBrowserConfig.listConfig.items')
       return controller.get(dataKey)
     }
   }
+  /* eslint-enable */
 }

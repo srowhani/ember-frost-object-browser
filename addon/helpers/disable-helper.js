@@ -1,16 +1,18 @@
-import Ember from 'ember';
-const {assert} = Ember
+import Ember from 'ember'
+import {typeAssert} from 'ember-frost-object-browser/utils/error-handle'
+const {isPresent, typeOf} = Ember
 
-export function disableHelper(params/*, hash*/) {
+export function disableHelper (params/*, hash*/) {
   const multiSelect = params[0]
   const counter = params[1]
   const method = params[2]
   const items = params[3]
-
   const result = method && method(items)
-  //if (typeof result !== 'boolean') {
-  //  assert('The return value from func:disableControl should be type (boolean)')
-  //}
+
+  if (isPresent(method)) {
+    typeAssert(`Expected return value from 'disabledControl' to be boolean, received ${typeOf(result)}`,
+      result, 'boolean')
+  }
 
   if (multiSelect === true) {
     return counter === 0 || result
@@ -19,4 +21,4 @@ export function disableHelper(params/*, hash*/) {
   }
 }
 
-export default Ember.Helper.helper(disableHelper);
+export default Ember.Helper.helper(disableHelper)

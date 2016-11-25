@@ -2,7 +2,6 @@ import Ember from 'ember'
 import ObjectBrowserSerializer from './object-browser-serializer'
 
 export default ObjectBrowserSerializer.extend({
-
   normalizeFilter: function (filter) {
     // normalize processing
     let keys = Object.keys(filter)
@@ -27,7 +26,6 @@ export default ObjectBrowserSerializer.extend({
       let direction = item.direction === ':desc' ? '-' : ''
       return `${direction}${key}`
     })
-
     return result
   },
 
@@ -36,5 +34,3 @@ export default ObjectBrowserSerializer.extend({
     return page
   }
 })
-
-
