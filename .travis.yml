@@ -1,8 +1,9 @@
+sudo: required
+dist: trusty
 language: node_js
 node_js:
-- '5.0'
+- '6.9'
 - 'stable'
-sudo: false
 branches:
   except:
   - "/^v[0-9\\.]+/"
@@ -17,8 +18,6 @@ env:
   matrix:
   - EMBER_TRY_SCENARIO=default
   - EMBER_TRY_SCENARIO=ember-release
-  - EMBER_TRY_SCENARIO=ember-beta
-  - EMBER_TRY_SCENARIO=ember-canary
   global:
     - CXX=g++-4.8
     - secure: nT0ALCpUyXHu6VHwulKgyYUBPtwOeJsfXN1D2nEx+Zc7JpnrBR3ZHdo5QTSTGK3/Gjaa61+1uZJAx2CY11VlWPHRKv/C650mDIGEwd929CDplsuicuVlviS6v6R7/wSh1L/Zt2MGRKYR4KmfJee/RVH3O67Q3oaAvkvvHPxuuPzDu72aeOqo3KS/GObadJNbG9ZW2xO9aL61PW/WnP7SLlfGOBEGSpZ1Q0lJb7sqNVQU9+h24qCODWL2J65h8d2PB6By1aGyZuQhisaN3thVtTATJ9rG3VeciqbbAcqgCRgYcPQSZ0HR65dAJ28a9+b6NDScZHTtddMxrIA1YzvIcsP4gImr2FaI5uyEiA+B6AG7/z4pGAyITlhfalQiD+yzXpUagD9CCCyEicwar+dGxId9hxDINglQ2KV1heewOROJuDUxas0nvWFZ+uV/HUwGCor1BG1PT5g2odsaxLZgPY96FGOvOMigfLVkooeRS7gC6eZB7yim8MHnjb1GtWDHzl+LXmjPaWda9I/wkWQwuM1QVITuBrwYPu5ygqfUz3VzWNqlIYilf2G9VJeNH2rScAHEGZFZFKMcE/dB5l0bkpZR+mtnri80wFXZYSq3m0I5ZiTA88Dkel5h+hPyIQe7uA6bQOUsDHej6VO2j1U5ZMfatlVIenCRFYKQNwOq0BQ=
@@ -31,9 +30,14 @@ before_install:
 - npm install -g coveralls pr-bumper
 - pr-bumper check
 before_script:
+- export CHROME_BIN=/usr/bin/google-chrome
 - "export DISPLAY=:99.0"
 - "sh -e /etc/init.d/xvfb start"
 - sleep 3 # give xvfb some time to start
+- sudo apt-get update
+- sudo apt-get install -y libappindicator1 fonts-liberation
+- wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+- sudo dpkg -i google-chrome*.deb
 install:
 - npm install
 - bower install
