@@ -1,8 +1,8 @@
 import Ember from 'ember'
 import layout from '../templates/components/frost-object-browser'
-import {PropTypes} from 'ember-prop-types'
+import PropTypeMixin, {PropTypes} from 'ember-prop-types'
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(PropTypeMixin, {
   layout,
   classNames: ['frost-object-browser'],
 

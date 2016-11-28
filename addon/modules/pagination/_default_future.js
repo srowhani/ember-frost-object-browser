@@ -1,5 +1,7 @@
 /* eslint-disable */
 
+/* This page based pagination is under developing and this file is NOT currently used by o&b*/
+
 export default {
   prepareQueryObject: function () {
     return {
@@ -32,7 +34,6 @@ export default {
   },
 
   setPageQueryParamForLoadPrevious: function (controller) {
-    debugger;
     let nextOffset = controller.get('__firstOffset')
     let size = controller.get('__size')
     let pageObject = {

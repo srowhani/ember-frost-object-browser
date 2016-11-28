@@ -146,7 +146,7 @@ export default Mixin.create(FrostListMixin, {
         context: this
       })
 
-      // TODO remove:  get rid of junks in ember object
+      // TODO This is used to get rid of extra properties coming from ember object. Remove this when sort component improved.
       let activeSorting = sortItems.map(function (item) {
         return {value: item.value, direction: item.direction}
       })

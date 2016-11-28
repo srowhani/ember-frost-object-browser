@@ -15,7 +15,8 @@
     "sinon-chai": "^2.8.0",
     "z-schema": "3.16.1",
     "perfect-scrollbar": ">=0.6.7 <2.0.0",
-    "animation-frame": "~0.2.4"
+    "animation-frame": "~0.2.4",
+    "node-uuid": "1.4.7"
   },
   "resolutions": {
     "ember": "~2.8.1"
