@@ -139,11 +139,11 @@ export default Ember.Object.extend({
 
         let meta = response.get('meta')
 
-        if (this.get('config.filter.client')) {
-          processedResponse = this.clientFilter(processedResponse, queryObject.filter)
+        if (this.get('config.filter.client') && queryObject.filter.length > 0) {
+          processedResponse = this.clientFilter(processedResponse, Ember.get(queryObject, 'filter'))
         }
         if (this.get('config.sort.client') && queryObject.sort.length > 0) {
-          processedResponse = this.clientSort(processedResponse, queryObject.sort)
+          processedResponse = this.clientSort(processedResponse, Ember.get(queryObject, 'sort'))
         }
 
         Ember.set(processedResponse, 'meta', meta)
@@ -164,7 +164,7 @@ export default Ember.Object.extend({
     const context = this.get('context')
     const config = context.get('objectBrowserConfig.serializerConfig.filter.client')
     if (config) {
-      if (config && typeof config === 'function') {
+      if (typeof config === 'function') {
         console.log('run custom client filter')
         return config(items, filter)
       } else {
@@ -185,7 +185,7 @@ export default Ember.Object.extend({
     const context = this.get('context')
     const config = context.get('objectBrowserConfig.serializerConfig.sort.client')
     if (config) {
-      if (config && typeof config === 'function') {
+      if (typeof config === 'function') {
         console.log('run custom client sort')
         return config(items, sortProperties)
       } else {
