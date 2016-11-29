@@ -34,7 +34,7 @@ export default Mixin.create({
     })
     // set filter based on qp
     serializer.setFilterPropertyFromQueryParam(controller)
-    // set filter based on qp
+    // set sort based on qp
     serializer.setSortPropertyFromQueryParam(controller)
   }
 })

@@ -123,7 +123,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       filter: {
         client: false
       }
-      //page: false
+      // page: false
 
       //  page: {
       //    strategy: <factory>

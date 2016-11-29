@@ -15,7 +15,7 @@ export default Ember.Object.extend({
     defineProperty(this, 'pagination', undefined, pageStrategy)
   }),
 
-  validateConfig(config) {
+  validateConfig (config) {
     typeAssert(`Expected 'config' to be object or Ember object instance, received ${typeOf(config)}`,
       config, ['object', 'instance'])
     const modelConfig = get(config, 'model')
@@ -32,7 +32,7 @@ export default Ember.Object.extend({
       filterConfig, ['object', 'instance'])
   },
 
-  getPageStrategy() {
+  getPageStrategy () {
     const pagination = this.get('config.page')
     if (typeof pagination === 'undefined' || pagination === true) {
       return offsetPagination
@@ -138,7 +138,7 @@ export default Ember.Object.extend({
 
     const serializedQueryObject = this.serializeQueryParams.call(context, queryObject)
     this.willQuery.call(context, serializedQueryObject)
-    //TODO when both sort/filter are on client and pagination is disabled, there's no need for serverQuery() call.
+    // TODO when both sort/filter are on client and pagination is disabled, there's no need for serverQuery() call.
     if (true) {
       return this.serverQuery(serializedQueryObject, context).then(
         response => {
