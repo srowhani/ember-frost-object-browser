@@ -121,9 +121,9 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       },
       // See explanation for sort.
       filter: {
-        client: true
+        client: false
       }
-      //  page: false
+      //page: false
 
       //  page: {
       //    strategy: <factory>

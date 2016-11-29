@@ -1,29 +1,59 @@
 import Ember from 'ember'
-const {on} = Ember
+const {
+  defineProperty,
+  get,
+  on,
+  typeOf
+} = Ember
 import offsetPagination from './pagination/offset'
+import {typeAssert} from 'ember-frost-object-browser/utils/error-handle'
 
 export default Ember.Object.extend({
   initContext: on('init', function () {
-    /* eslint-disable */
-    Ember.defineProperty(this, 'pagination', undefined, (function () {
-      let pagination = this.get('config.page')
-      if (typeof pagination === 'undefined') {
-        return offsetPagination
-      } else {
-        return this.get('pagination.strategy')
-      }
-    }).call(this))
-    /* eslint-enable */
+    this.validateConfig(this.get('config'))
+    const pageStrategy = this.getPageStrategy()
+    defineProperty(this, 'pagination', undefined, pageStrategy)
   }),
 
-  // normalization methods
-  normalizeFilter: function (filter) {
-    // normalize processing
-    let keys = Object.keys(filter)
+  validateConfig(config) {
+    typeAssert(`Expected 'config' to be object or Ember object instance, received ${typeOf(config)}`,
+      config, ['object', 'instance'])
+    const modelConfig = get(config, 'model')
+    typeAssert(`Expected 'config.model' to be string, received ${typeOf(modelConfig)}`,
+      modelConfig, ['string'])
+    const serializerConfig = get(config, 'serializer')
+    typeAssert(`Expected 'config.serializer' to be Ember class, received ${typeOf(serializerConfig)}`,
+      serializerConfig, ['object', 'class'])
+    const sortConfig = get(config, 'sort')
+    typeAssert(`Expected 'config.sort' to be object or Ember object instance, received ${typeOf(sortConfig)}`,
+      sortConfig, ['object', 'instance'])
+    const filterConfig = get(config, 'filter')
+    typeAssert(`Expected 'config.filter' to be object or Ember object instance, received ${typeOf(filterConfig)}`,
+      filterConfig, ['object', 'instance'])
+  },
+
+  getPageStrategy() {
+    const pagination = this.get('config.page')
+    if (typeof pagination === 'undefined' || pagination === true) {
+      return offsetPagination
+    } else {
+      if (pagination === false) {
+        return false
+      } else {
+        const pageStrategy = this.get('pagination.strategy')
+        typeAssert(`Expected 'page.strategy' to be Ember class, received ${typeOf(pageStrategy)}`,
+          pageStrategy, 'class')
+        return pageStrategy
+      }
+    }
+  },
+
+  normalizeFilter (filter) {
+    const keys = Object.keys(filter)
     if (!Ember.isPresent(keys)) {
       return []
     }
-    // get rid of junks prop from component output
+    // get rid of extra props from bunsen component output
     let processedFilter = {}
     keys.forEach((key) => {
       processedFilter[key] = filter[key]
@@ -31,39 +61,39 @@ export default Ember.Object.extend({
     return processedFilter
   },
 
-  normalizeSort: function (sort) {
+  normalizeSort (sort) {
     if (!Ember.isPresent(sort)) {
       return []
     }
     return sort.map(function (item) {
-      let key = item.value
-      let direction = item.direction === ':desc' ? '-' : ''
+      const key = item.value
+      const direction = item.direction === ':desc' ? '-' : ''
       return `${direction}${key}`
     })
   },
 
-  normalizePage: function (page) {
+  normalizePage (page) {
     return page
   },
 
   // hooks that can be overwritten
-  serializeQueryParams: function (queryObject) {
+  serializeQueryParams (queryObject) {
     return queryObject
   },
 
-  didReceiveResponse: function (response) {
+  didReceiveResponse (response) {
     return response
   },
 
-  willQuery: function () {
+  willQuery () {
 
   },
 
-  didQuery: function () {
+  didQuery () {
 
   },
 
-  queryErrorHandler: function (e) {
+  queryErrorHandler (e) {
     Ember.Logger.error('response error: ' + e)
   },
 
@@ -74,9 +104,10 @@ export default Ember.Object.extend({
 
   setFilterPropertyFromQueryParam (controller) {
     let sortQueryParam = controller.get('sortQueryParam')
-    if (!Array.isArray(sortQueryParam)) {
-      return
-    }
+
+    typeAssert(`Expected 'sortQueryParam' to be array, received ${typeOf(sortQueryParam)}`,
+      sortQueryParam, 'array')
+
     let activeSorting = sortQueryParam.map(sortItem => {
       if (sortItem.indexOf('-') === -1) {
         return {
@@ -107,25 +138,26 @@ export default Ember.Object.extend({
 
     const serializedQueryObject = this.serializeQueryParams.call(context, queryObject)
     this.willQuery.call(context, serializedQueryObject)
+    //TODO when both sort/filter are on client and pagination is disabled, there's no need for serverQuery() call.
     if (true) {
       return this.serverQuery(serializedQueryObject, context).then(
         response => {
           // get pagination module
           this.get('context').clearListState()
-          let paginationHelper = this.get('pagination')
+          const paginationHelper = this.get('pagination')
           return paginationHelper ? paginationHelper.processPageResponse(response, context, queryObject) : response
         },
         error => {
           this.queryErrorHandler(error)
         })
     } else {
-      let dataKey = context.get('objectBrowserConfig.listConfig.items')
+      const dataKey = context.get('objectBrowserConfig.listConfig.items')
       let result = context.get(dataKey)
       if (this.get('config.filter.client')) {
-        result = this.clientFilter(result, queryObject.filter)
+        result = this.clientFilter(result, get(queryObject, 'filter'))
       }
       if (this.get('config.sort.client')) {
-        result = this.clientSort(result, queryObject.sort)
+        result = this.clientSort(result, get(queryObject, 'sort'))
       }
       this.didQuery.call(context, serializedQueryObject)
       return Ember.RSVP.resolve(result)
@@ -136,16 +168,14 @@ export default Ember.Object.extend({
     let promise = context.get('store').query(this.get('config.model'), queryObject).then(
       (response) => {
         let processedResponse = this.didReceiveResponse.call(context, response)
-
         let meta = response.get('meta')
 
-        if (this.get('config.filter.client') && queryObject.filter.length > 0) {
+        if (this.get('config.filter.client')) {
           processedResponse = this.clientFilter(processedResponse, Ember.get(queryObject, 'filter'))
         }
         if (this.get('config.sort.client') && queryObject.sort.length > 0) {
           processedResponse = this.clientSort(processedResponse, Ember.get(queryObject, 'sort'))
         }
-
         Ember.set(processedResponse, 'meta', meta)
         return processedResponse
       }
@@ -158,41 +188,43 @@ export default Ember.Object.extend({
    Function runs when
    filter: {
      client: true / client: <function>
-   },
+   }
    */
   clientFilter (items, filter) {
     const context = this.get('context')
     const config = context.get('objectBrowserConfig.serializerConfig.filter.client')
-    if (config) {
-      if (typeof config === 'function') {
-        console.log('run custom client filter')
-        return config(items, filter)
-      } else {
-        console.log('run default client filter')
-        return context.objectBrowserDefaultFilter(items, filter)
-      }
+
+    typeAssert(`Expected 'serializerConfig.filter.client' to be function or boolean, received ${typeOf(config)}`,
+      config, ['function', 'boolean'])
+
+    if (typeof config === 'function') {
+      console.log('run custom client filter')
+      return config(items, filter)
+    } else {
+      console.log('run default client filter')
+      return context.objectBrowserDefaultFilter(items, filter)
     }
-    return items
   },
 
   /*
    Function runs when
    sort: {
-     client: true / client: <function>
+   client: true / client: <function>
    }
    */
   clientSort (items, sortProperties) {
     const context = this.get('context')
     const config = context.get('objectBrowserConfig.serializerConfig.sort.client')
-    if (config) {
-      if (typeof config === 'function') {
-        console.log('run custom client sort')
-        return config(items, sortProperties)
-      } else {
-        console.log('run default client sort')
-        return context.objectBrowserDefaultSort(items, sortProperties)
-      }
+
+    typeAssert(`Expected 'serializerConfig.sort.client' to be function or boolean, received ${typeOf(config)}`,
+      config, ['function', 'boolean'])
+
+    if (typeof config === 'function') {
+      console.log('run custom client sort')
+      return config(items, sortProperties)
+    } else {
+      console.log('run default client sort')
+      return context.objectBrowserDefaultSort(items, sortProperties)
     }
-    return items
   }
 })

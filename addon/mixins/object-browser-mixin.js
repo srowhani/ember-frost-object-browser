@@ -191,11 +191,6 @@ export default Mixin.create(FrostListMixin, {
       // serializer will be the set as the context of requestNext in order to use the normalizePage function inside it.
       // this will be the first argument passed into the requestNext so we get access to controller
       paginationHelper.requestNext.call(this, queryObject, serializer)
-    },
-
-    // currently not used
-    loadPrevious () {
     }
-
   }
 })
