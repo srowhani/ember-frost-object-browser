@@ -1,5 +1,5 @@
 export default {
-  prepareQueryObject: function () {
+  prepareQueryObject () {
     return {
       filterQueryParam: this.get('filterQueryParam'),
       sortQueryParam: this.get('sortQueryParam'),
@@ -10,7 +10,7 @@ export default {
     }
   },
 
-  requestNext: function (queryObject, serializer) {
+  requestNext (queryObject, serializer) {
     let dataKey = this.get('objectBrowserConfig.listConfig.items')
     serializer.query(queryObject).then((response) => {
       this.set(dataKey, response)
@@ -18,7 +18,7 @@ export default {
   },
 
   /* eslint-disable */
-  processPageResponse: function (response, controller, {page}) {
+  processPageResponse (response, controller, {page}) {
     let meta = response.get('meta')
     let size = meta.size
     let nextOffset = meta.nextOffset
