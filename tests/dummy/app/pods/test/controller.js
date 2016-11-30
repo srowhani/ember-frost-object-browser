@@ -22,8 +22,8 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
         active: [{value: 'id', direction: ':desc'}],
         properties: [
           {
-            value: 'employeeNumber',
-            label: 'Employee Number'
+            value: 'email',
+            label: 'email'
           },
           {
             value: 'id',
@@ -85,7 +85,6 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
         action: 'actions.triggerEdit',  // method key related to this/context/controller
         text: 'Edit',
         link: 'lts-qp',
-        model: 'linkModel',
         priority: 'primary',
         size: 'medium'
       },
@@ -130,11 +129,6 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       //  }
     }
   },
-
-  // specify if you want to provide a model to link
-  //  linkModel: Ember.computed('', function () {
-  //    return {}
-  //  }),
 
   actions: {
     triggerDelete (items) {
