@@ -109,7 +109,7 @@ export default Ember.Object.extend({
       sortQueryParam, 'array')
 
     let activeSorting = sortQueryParam.map(sortItem => {
-      if (sortItem.indexOf('-') === -1) {
+      if (sortItem.startsWith('-')) {
         return {
           value: sortItem,
           direction: ':asc'
