@@ -20,6 +20,7 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
     .frost-bunsen-form {
       min-height: 0;
       flex: 1;
+      overflow-y: scroll;
     }
 
     &-header {
