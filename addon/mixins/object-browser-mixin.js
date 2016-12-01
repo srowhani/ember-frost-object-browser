@@ -24,7 +24,8 @@ export default Mixin.create(FrostListMixin, {
     const listConfig = get(objectBrowserConfig, 'list')
     const facetsConfig = get(objectBrowserConfig, 'facets')
     const controlsConfig = get(objectBrowserConfig, 'controls')
-    const serializerConfig = get(objectBrowserConfig, 'serializerConfig')
+
+    //const serializerConfig = get(objectBrowserConfig, 'serializerConfig')
 
     typeAssert(`Expected 'objectBrowserConfig.list' to be object or Ember.Object, received ${typeOf(listConfig)}`,
       listConfig, ['instance', 'object'])
@@ -32,8 +33,9 @@ export default Mixin.create(FrostListMixin, {
       facetsConfig, ['instance', 'object'])
     typeAssert(`Expected 'objectBrowserConfig.controls' to be array or Ember.Array, received ${typeOf(controlsConfig)}`,
       controlsConfig, ['instance', 'array'])
-    typeAssert(`Expected 'serializerConfig' to be object or Ember.Object, received ${typeOf(serializerConfig)}`,
-      serializerConfig, ['instance', 'object'])
+
+    //typeAssert(`Expected 'serializerConfig' to be object or Ember.Object, received ${typeOf(serializerConfig)}`,
+    //  serializerConfig, ['instance', 'object'])
 
     // closure any function related to controls section
     controlsConfig.forEach(controlItem => {
@@ -195,14 +197,22 @@ export default Mixin.create(FrostListMixin, {
     },
 
     loadNext () {
-      const serializer = this.get('objectBrowserConfig.serializerConfig.serializer').create({
-        config: this.get('objectBrowserConfig.serializerConfig'),
-        context: this
-      })
+      //const serializer = this.get('objectBrowserConfig.serializerConfig.serializer').create({
+      //  config: this.get('objectBrowserConfig.serializerConfig'),
+      //  context: this
+      //})
+
+      //paginationHelper.requestNext.call(this, queryObject, serializer)
+
+
+      const serializer = this.get('objectBrowserConfig.serializer')
       const paginationHelper = serializer.get('pagination')
       let queryObject = paginationHelper.prepareQueryObject.call(this)
 
-      paginationHelper.requestNext.call(this, queryObject, serializer)
+      let dataKey = this.get('objectBrowserConfig.list.items')
+      serializer.query(queryObject, this).then((response) => {
+        this.set(dataKey, response)
+      })
     }
   }
 })

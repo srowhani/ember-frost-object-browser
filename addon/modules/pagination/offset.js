@@ -10,13 +10,6 @@ export default {
     }
   },
 
-  requestNext (queryObject, serializer) {
-    let dataKey = this.get('objectBrowserConfig.list.items')
-    serializer.query(queryObject).then((response) => {
-      this.set(dataKey, response)
-    })
-  },
-
   /* eslint-disable */
   processPageResponse (response, controller, {page}) {
     let meta = response.get('meta')
