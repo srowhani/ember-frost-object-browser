@@ -99,7 +99,7 @@ export default Ember.Object.extend({
 
   setSortPropertyFromQueryParam (controller) {
     const filterQueryParam = controller.get('filterQueryParam')
-    controller.set('objectBrowserConfig.facetsConfig.value', filterQueryParam)
+    controller.set('objectBrowserConfig.facets.value', filterQueryParam)
   },
 
   setFilterPropertyFromQueryParam (controller) {
@@ -109,7 +109,7 @@ export default Ember.Object.extend({
       sortQueryParam, 'array')
 
     let activeSorting = sortQueryParam.map(sortItem => {
-      if (sortItem.startsWith('-')) {
+      if (!sortItem.startsWith('-')) {
         return {
           value: sortItem,
           direction: ':asc'
@@ -121,7 +121,7 @@ export default Ember.Object.extend({
         }
       }
     })
-    controller.set('objectBrowserConfig.listConfig.sorting.active', activeSorting)
+    controller.set('objectBrowserConfig.list.sorting.active', activeSorting)
   },
 
   query (params) {
@@ -151,7 +151,7 @@ export default Ember.Object.extend({
           this.queryErrorHandler(error)
         })
     } else {
-      const dataKey = context.get('objectBrowserConfig.listConfig.items')
+      const dataKey = context.get('objectBrowserConfig.list.items')
       let result = context.get(dataKey)
       if (this.get('config.filter.client')) {
         result = this.clientFilter(result, get(queryObject, 'filter'))
