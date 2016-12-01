@@ -48,34 +48,6 @@ export default Ember.Object.extend({
     }
   },
 
-  normalizeFilter (filter) {
-    const keys = Object.keys(filter)
-    if (!Ember.isPresent(keys)) {
-      return []
-    }
-    // get rid of extra props from bunsen component output
-    let processedFilter = {}
-    keys.forEach((key) => {
-      processedFilter[key] = filter[key]
-    })
-    return processedFilter
-  },
-
-  normalizeSort (sort) {
-    if (!Ember.isPresent(sort)) {
-      return []
-    }
-    return sort.map(function (item) {
-      const key = item.value
-      const direction = item.direction === ':desc' ? '-' : ''
-      return `${direction}${key}`
-    })
-  },
-
-  normalizePage (page) {
-    return page
-  },
-
   // hooks that can be overwritten
   serializeQueryParams (queryObject) {
     return queryObject

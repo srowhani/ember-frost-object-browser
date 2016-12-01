@@ -138,6 +138,34 @@ export default Mixin.create(FrostListMixin, {
     }))
   },
 
+  normalizeFilter (filter) {
+    const keys = Object.keys(filter)
+    if (!Ember.isPresent(keys)) {
+      return []
+    }
+    // get rid of extra props from bunsen component output
+    let processedFilter = {}
+    keys.forEach((key) => {
+      processedFilter[key] = filter[key]
+    })
+    return processedFilter
+  },
+
+  normalizeSort (sort) {
+    if (!Ember.isPresent(sort)) {
+      return []
+    }
+    return sort.map(function (item) {
+      const key = item.value
+      const direction = item.direction === ':desc' ? '-' : ''
+      return `${direction}${key}`
+    })
+  },
+
+  normalizePage (page) {
+    return page
+  },
+
   actions: {
     sortItems (sortItems) {
       // create serializer
@@ -154,7 +182,7 @@ export default Mixin.create(FrostListMixin, {
       // set state prop which will feed back to component
       // this.set('activeSorting', activeSorting)
 
-      const normalizedSorting = serializer.normalizeSort(activeSorting)
+      const normalizedSorting = this.normalizeSort(activeSorting)
 
       this.setProperties({
         sortQueryParam: normalizedSorting,
@@ -171,7 +199,7 @@ export default Mixin.create(FrostListMixin, {
       })
 
       // normalize component output to qp
-      const filter = serializer.normalizeFilter(formValue)
+      const filter = this.normalizeFilter(formValue)
 
       this.setProperties({
         filterQueryParam: filter,
