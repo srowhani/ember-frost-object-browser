@@ -11,7 +11,7 @@ export default {
   },
 
   requestNext (queryObject, serializer) {
-    let dataKey = this.get('objectBrowserConfig.listConfig.items')
+    let dataKey = this.get('objectBrowserConfig.list.items')
     serializer.query(queryObject).then((response) => {
       this.set(dataKey, response)
     })
@@ -37,7 +37,7 @@ export default {
       })
       return response
     } else if (controller.get('__lastOffset') < nextOffset){
-      let dataKey = controller.get('objectBrowserConfig.listConfig.items')
+      let dataKey = controller.get('objectBrowserConfig.list.items')
       let result = controller.get(dataKey)
       controller.setProperties({
         __lastOffset: nextOffset
@@ -46,7 +46,7 @@ export default {
         ? result.content.concat(response.content ? response.content : response)
         : result.concat( response.content ? response.content : response )
     } else if (controller.get('__lastOffset') === nextOffset) {
-      let dataKey = controller.get('objectBrowserConfig.listConfig.items')
+      let dataKey = controller.get('objectBrowserConfig.list.items')
       return controller.get(dataKey)
     }
   }

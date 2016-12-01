@@ -5,7 +5,7 @@ import JsonApiObjectBrowserSerializer from 'ember-frost-object-browser/modules/j
 export default Ember.Controller.extend(ObjectBrowserMixin, {
 
   // TODO when qp is initialized off a cp, a full path must be provided
-  queryParams: ['activeFacets', 'objectBrowserConfig.listConfig.sorting.active'],
+  queryParams: ['activeFacets', 'objectBrowserConfig.list.sorting.active'],
 
   // TODO pass namespace from ob to list
   objectBrowserConfig: {
@@ -165,7 +165,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
 
       // issue query if necessary
       console.log('run server sort')
-      let modelPath = this.get('objectBrowserConfig.listConfig.items')
+      let modelPath = this.get('objectBrowserConfig.list.items')
       serializer.query().then(
         (response) => {
           this.clearListState()

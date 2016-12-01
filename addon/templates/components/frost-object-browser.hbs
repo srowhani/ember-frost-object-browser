@@ -1,12 +1,18 @@
 {{#if config}}
     <div class="frost-object-browser-facets">
-      {{component 'frost-bunsen-form'
-      autofocus=false
-      bunsenModel=config.facetsConfig.bunsenModel
-      bunsenView=config.facetsConfig.bunsenView
-      onChange=config.onFilterFormChange
-      value=config.facetsConfig.value
-      }}
+      {{#if config.facets.component}}
+        {{component config.facets.component
+          options=options
+        }}
+      {{else}}
+        {{component 'frost-bunsen-form'
+          autofocus=false
+          bunsenModel=config.facets.bunsenModel
+          bunsenView=config.facets.bunsenView
+          onChange=config.onFilterFormChange
+          value=config.facets.value
+        }}
+      {{/if}}
     </div>
 
     <div class="frost-object-browser-content">
@@ -14,7 +20,7 @@
       config=config.listMixinConfig
       }}
         <div class="frost-object-browser-actions">
-          {{#each config.controlsConfig as |control|}}
+          {{#each config.controls as |control|}}
             {{#if (eq control.component 'frost-button')}}
               {{component control.component
               design=control.design

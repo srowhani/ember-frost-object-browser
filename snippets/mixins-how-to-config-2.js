@@ -1,6 +1,6 @@
 // frost-button and frost-link are the two supported frost components currently.
 // Any valid API for each component can be specified on the root of each config object.
-controlsConfig: [
+controls: [
   {
     component: 'frost-button',
     action: 'actions.triggerDelete',  // method path related to control layer//controller

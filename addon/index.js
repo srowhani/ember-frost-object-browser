@@ -1,11 +1,11 @@
+import JSONAPISerializer from './modules/json-api-serializer'
 import ObjectBrowserMixin from './mixins/object-browser-mixin'
 import ObjectBrowserRouteMixin from './mixins/object-browser-route-mixin'
-import ObjectBrowserSerializer from './modules/object-browser-serializer'
 import OffsetPagination from './modules/pagination/offset'
 
 export {
+  JSONAPISerializer,
   ObjectBrowserMixin,
   ObjectBrowserRouteMixin,
-  ObjectBrowserSerializer,
   OffsetPagination
 }

@@ -1,11 +1,11 @@
 import Ember from 'ember'
 import {
-  ObjectBrowserSerializer,
+  JSONAPISerializer,
   ObjectBrowserMixin
 } from 'ember-frost-object-browser'
 
 export default Ember.Controller.extend(ObjectBrowserMixin, {
-  sortQueryParam: ['-id'],
+  sortQueryParam: ['id'],
   filterQueryParam: [],
 
   // don't provide if you don't need page
@@ -14,12 +14,11 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
   queryParams: ['filterQueryParam', 'sortQueryParam', 'pageQueryParam'],
 
   objectBrowserConfig: {
-    listConfig: {
+    list: {
       items: 'model',  // the data model which will pass to list. In this scenario, actual data set is located in model: {resources: data}
       component: 'test/user-list-item', // the custom component you want to render for each single list item.
       // sort setup based on ember frost-sort API
       sorting: {
-        active: [{value: 'id', direction: ':desc'}],
         properties: [
           {
             value: 'email',
@@ -33,7 +32,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       }
     },
     // facets setup based on ember-frost-bunsen API
-    facetsConfig: {
+    facets: {
       bunsenModel: {
         type: 'object',
         properties: {
@@ -66,7 +65,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       }
     },
 
-    controlsConfig: [
+    controls: [
       {
         component: 'frost-button',
         action: 'actions.triggerDelete',  // method key related to this/context/controller
@@ -107,7 +106,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       // actions fired/sort/filter/page--> component output --> serialize output --> set query parmas --> trigger model re-render
       //  --> fire query with qp --> receive response --> update component attrs --> component re-render
       // if you need more customization, you can write your own data layer by simply extend the existing ones and overwrite these hooks.
-      serializer: ObjectBrowserSerializer,
+      serializer: JSONAPISerializer,
 
       // the name of the model to retrieve. In this scenario, Ember.store.query('resource') would be called
       model: 'user',
