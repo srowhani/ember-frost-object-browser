@@ -5,6 +5,6 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
     list: {},
     facets: {},
     controls: [],
-    serializerConfig: {}
+    serializer: {}
   }
 })

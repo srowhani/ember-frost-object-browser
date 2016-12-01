@@ -96,6 +96,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
     ],
 
     // Config the data layer to tell object-browser how to communicate with server
+    /*
     serializerConfig: {
       // here is the place you can change the data layer. Currently there're two built in options, default(MCP) and json API.
       // data layer contains function
@@ -126,7 +127,20 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       //  page: {
       //    strategy: <factory>
       //  }
-    }
+    },
+    */
+
+
+    serializer: JSONAPISerializer.create({
+      model: 'user',
+      client: {
+        sort: true,
+        filer: true
+      },
+
+
+    })
+
   },
 
   actions: {
