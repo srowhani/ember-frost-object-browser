@@ -1,14 +1,5 @@
 import Ember from 'ember'
-import dummyData from '../mocks/dummyInput'
+import {ObjectBrowserRouteMixin} from 'ember-frost-object-browser'
 
-export default Ember.Route.extend({
-  model: function () {
-    return this.get('store').findAll('resource')
-      .then((resources) => {
-        return {
-          model: dummyData.model,
-          resources
-        }
-      })
-  }
+export default Ember.Route.extend(ObjectBrowserRouteMixin, {
 })

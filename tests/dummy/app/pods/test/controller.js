@@ -1,7 +1,9 @@
 import Ember from 'ember'
 import {
   JSONAPISerializer,
-  ObjectBrowserMixin
+  ObjectBrowserMixin,
+  DefaultSort,
+  DefaultFilter
 } from 'ember-frost-object-browser'
 
 export default Ember.Controller.extend(ObjectBrowserMixin, {
@@ -15,7 +17,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
 
   objectBrowserConfig: {
     list: {
-      items: 'model',  // the data model which will pass to list. In this scenario, actual data set is located in model: {resources: data}
+      items: 'model.resources',  // the data model which will pass to list. In this scenario, actual data set is located in model: {resources: data}
       component: 'test/user-list-item', // the custom component you want to render for each single list item.
       // sort setup based on ember frost-sort API
       sorting: {
@@ -95,49 +97,12 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       }
     ],
 
-    // Config the data layer to tell object-browser how to communicate with server
-    /*
-    serializerConfig: {
-      // here is the place you can change the data layer. Currently there're two built in options, default(MCP) and json API.
-      // data layer contains function
-      // 1. serialize the component output to corresponding query params
-      // 2. improved query() who's responsible for talking to server
-      // 3. hooks that you can interact with the data layer
-      // general object browser work flow
-      // actions fired/sort/filter/page--> component output --> serialize output --> set query parmas --> trigger model re-render
-      //  --> fire query with qp --> receive response --> update component attrs --> component re-render
-      // if you need more customization, you can write your own data layer by simply extend the existing ones and overwrite these hooks.
-      serializer: JSONAPISerializer,
-
-      // the name of the model to retrieve. In this scenario, Ember.store.query('resource') would be called
-      model: 'user',
-      // configure sort behavior when talking to server,
-      // client: true  ----- run a default sort build in object browser on the client side
-      // client: <custom-function> --- run a custom sort function on the client side
-      // client: false ---- sort will be handled on server
-      sort: {
-        client: true
-      },
-      // See explanation for sort.
-      filter: {
-        client: false
-      }
-      // page: false
-
-      //  page: {
-      //    strategy: <factory>
-      //  }
-    },
-    */
-
-
     serializer: JSONAPISerializer.create({
       model: 'user',
       client: {
-        sort: true,
-        filer: true
-      },
-
+        sort: DefaultSort,
+        filer: DefaultFilter
+      }
 
     })
 

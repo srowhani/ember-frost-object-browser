@@ -6,5 +6,4 @@ export default FrostListItem.extend({
   classNames: ['user-list-item'],
   record: Ember.computed.alias('model.record'),
   layout
-
 })
