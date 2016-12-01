@@ -37,7 +37,8 @@ export default Mixin.create(FrostListMixin, {
 
     // closure any function related to controls section
     controlsConfig.forEach(controlItem => {
-      typeAssert(`Expected each item in 'objectBrowserConfig.controls' to be object or Ember.Object, received ${typeOf(controlItem)}`,
+      typeAssert(`Expected each item in 'objectBrowserConfig.controls'
+      to be object or Ember.Object, received ${typeOf(controlItem)}`,
         controlItem, ['instance', 'object'])
 
       if (get(controlItem, 'action')) {
@@ -168,12 +169,6 @@ export default Mixin.create(FrostListMixin, {
 
   actions: {
     sortItems (sortItems) {
-      // create serializer
-      const serializer = this.get('objectBrowserConfig.serializerConfig.serializer').create({
-        config: this.get('objectBrowserConfig.serializerConfig'),
-        context: this
-      })
-
       // TODO This is used to get rid of extra properties coming from ember object. Remove this when sort component improved.
       let activeSorting = sortItems.map(function (item) {
         return {value: item.value, direction: item.direction}
@@ -192,15 +187,7 @@ export default Mixin.create(FrostListMixin, {
 
     filterItems (formValue) {
       this.set('objectBrowserConfig.facets.value', formValue)
-      // create serializer
-      const serializer = this.get('objectBrowserConfig.serializerConfig.serializer').create({
-        config: this.get('objectBrowserConfig.serializerConfig'),
-        context: this
-      })
-
-      // normalize component output to qp
       const filter = this.normalizeFilter(formValue)
-
       this.setProperties({
         filterQueryParam: filter,
         pageQueryParam: []
