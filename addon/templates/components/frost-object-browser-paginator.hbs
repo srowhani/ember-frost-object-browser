@@ -1,16 +1,18 @@
 <div class="button-bar left">
   {{frost-button
     disabled=leftButtonsDisabled
-    icon="frost/double-chevron-left"
+    icon="double-chevron-left"
     onClick=(action onPageChanged 'begin')
+    pack="frost-object-browser"
     priority="tertiary"
     size="small"
   }}
 
   {{frost-button
     disabled=leftButtonsDisabled
-    icon="frost/chevron-left"
+    icon="chevron-left"
     onClick=(action onPageChanged 'back')
+    pack="frost-object-browser"
     priority="tertiary"
     size="small"
   }}
@@ -19,15 +21,17 @@
 <div class="button-bar right">
   {{frost-button
     disabled=rightButtonsDisabled
-    icon="frost/chevron-left"
+    icon="chevron-left"
     onClick=(action onPageChanged 'forward')
+    pack="frost-object-browser"
     priority="tertiary"
     size="small"
   }}
   {{frost-button
     disabled=rightButtonsDisabled
-    icon="frost/double-chevron-left"
+    icon="double-chevron-left"
     onClick=(action onPageChanged 'end')
+    pack="frost-object-browser"
     priority="tertiary"
     size="small"
   }}

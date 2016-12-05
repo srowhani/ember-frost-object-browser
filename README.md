@@ -39,8 +39,9 @@ ember install ember-frost-object-browser
 as |slot|}}
   {{#block-slot slot 'app-actions' as |onCreate|}}
     {{frost-button
-      icon='frost/infobar-create'
+      icon='infobar-create'
       onClick=(action onCreate)
+      pack='frost-object-browser'
       priority='tertiary'
       size='medium'
       text='Create'
@@ -84,27 +85,30 @@ as |slot|}}
       {{frost-button
         disabled=(eq viewControl.detailLevel 'low')
         onClick=(action onDetailChange 'low')
+        pack='frost-object-browser'
         priority='tertiary'
         size='small'
-        icon='frost/list-small'
+        icon='list-small'
       }}
     {{/if}}
     {{#if viewLevel.medium}}
       {{frost-button
         disabled=(eq viewControl.detailLevel 'medium')
         onClick=(action onDetailChange 'medium')
+        pack='frost-object-browser'
         priority='tertiary'
         size='small'
-        icon='frost/list-medium'
+        icon='list-medium'
       }}
     {{/if}}
     {{#if viewLevel.high}}
       {{frost-button
         disabled=(eq viewControl.detailLevel 'high')
         onClick=(action onDetailChange 'high')
+        pack='frost-object-browser'
         priority='tertiary'
         size='small'
-        icon='frost/list-large'
+        icon='list-large'
       }}
     {{/if}}
     </div>
