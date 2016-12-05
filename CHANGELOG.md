@@ -1,3 +1,7 @@
+# 13.1.2
+
+* **Fixed** icons to work with `ember-frost-core` version `1.x` by providing icons directly in this addon. This also keeps it backwards compatible with older versions of `ember-frost-core`.
+
 # 13.1.1
 
 * **Fixed** build to work with newer versions of Ember and latest `ember-frost-core`.
