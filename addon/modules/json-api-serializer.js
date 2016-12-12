@@ -69,7 +69,7 @@ export default Ember.Object.extend({
 
   setSortPropertyFromQueryParam (controller) {
     const filterQueryParam = controller.get('filterQueryParam')
-    controller.set('objectBrowserConfig.facets.value', filterQueryParam)
+    controller.set('facetsConfig.value', filterQueryParam)
   },
 
   setFilterPropertyFromQueryParam (controller) {
@@ -91,7 +91,7 @@ export default Ember.Object.extend({
         }
       }
     })
-    controller.set('objectBrowserConfig.list.sorting.active', activeSorting)
+    controller.set('contentConfig.sorting.active', activeSorting)
   },
 
   query (params, context) {
@@ -121,7 +121,7 @@ export default Ember.Object.extend({
         }
       )
     } else {
-      const dataKey = context.get('objectBrowserConfig.list.items')
+      const dataKey = context.get('contentConfig.items')
       let result = context.get(dataKey)
       if (this.get('config.filter.client')) {
         result = this.clientFilter(result, get(queryObject, 'filter'))
@@ -155,14 +155,14 @@ export default Ember.Object.extend({
   },
 
   clientFilter (items, filter, context) {
-    const config = context.get('objectBrowserConfig.serializer.client.filter')
+    const config = context.get('serializer.client.filter')
     typeAssert(`Expected 'serializer.client.filter' to be function, received ${typeOf(config)}`,
       config, 'function')
       return config(items, filter)
   },
 
   clientSort (items, sortProperties, context) {
-    const config = context.get('objectBrowserConfig.serializer.client.sort')
+    const config = context.get('serializer.client.sort')
     typeAssert(`Expected 'serializer.client.sort' to be function, received ${typeOf(config)}`,
       config, 'function')
     return config(items, sortProperties)

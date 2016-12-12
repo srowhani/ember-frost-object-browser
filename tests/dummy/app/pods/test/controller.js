@@ -21,7 +21,7 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
 
   queryParams: ['filterQueryParam', 'sortQueryParam', 'pageQueryParam'],
 
-  bunsenConfig: {
+  facetsConfig: {
     bunsenModel: {
       type: 'object',
       properties: {
@@ -37,77 +37,68 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
     value: {}
   },
 
-  objectBrowserConfig: Ember.computed('buttonText', 'selectedItems', function () {
-    return {
-      list: {
-        items: 'model.resources',  // the data model which will pass to list. In this scenario, actual data set is located in model: {resources: data}
-        component: 'users/user-list-item', // the custom component you want to render for each single list item.
-        // sort setup based on ember frost-sort API
-        sorting: {
-          properties: [
-            {
-              value: 'email',
-              label: 'email'
-            },
-            {
-              value: 'id',
-              label: 'Id'
-            }
-          ]
+  contentConfig: {
+    items: 'model.resources',  // the data model which will pass to list. In this scenario, actual data set is located in model: {resources: data}
+    component: 'users/user-list-item', // the custom component you want to render for each single list item.
+    // sort setup based on ember frost-sort API
+    sorting: {
+      properties: [
+        {
+          value: 'email',
+          label: 'email'
+        },
+        {
+          value: 'id',
+          label: 'Id'
+        }
+      ]
+    }
+  },
+
+  controlsConfig: Ember.computed('selectedItems', function () {
+    return [
+      {
+        component: 'frost-button',
+        multiSelect: true,
+        options: {
+          text: 'Delete',
+          priority: 'secondary',
+          size: 'medium',
+          onClick: this.get('actions.triggerDelete')
         }
       },
-      // facets setup based on ember-frost-bunsen API
-      facets: this.get('bunsenConfig'),
-
-      controls: [
-        {
-          component: 'frost-button',
-          multiSelect: true,
-          options: {
-            text: this.get('buttonText'),
-            priority: 'secondary',
-            size: 'medium',
-            onClick: this.get('actions.triggerDelete')
-          }
-        },
-        {
-          component: 'frost-button',
-          options: {
-            disabled: true,
-            text: 'Edit',
-            priority: 'secondary',
-            size: 'medium',
-            onClick: this.get('actions.triggerEdit')
-          }
-        },
-        {
-          component: 'frost-link',
-          options: {
-            text: 'Detail',
-            route: 'user',
-            routeModels: this.get('dynamicModel'),
-            priority: 'secondary',
-            size: 'medium'
-          }
+      {
+        component: 'frost-button',
+        options: {
+          disabled: true,
+          text: 'Edit',
+          priority: 'secondary',
+          size: 'medium',
+          onClick: this.get('actions.triggerEdit')
         }
-      ],
-
-      serializer: JSONAPISerializer.create({
-        model: 'user',
-        client: {
-          sort: DefaultSort,
-          filer: DefaultFilter
+      },
+      {
+        component: 'frost-link',
+        options: {
+          text: 'Detail',
+          route: 'user',
+          routeModels: this.get('dynamicModel'),
+          priority: 'secondary',
+          size: 'medium'
         }
-      })
+      }
+    ]
+  }),
+
+  serializer: JSONAPISerializer.create({
+    model: 'user',
+    client: {
+      sort: DefaultSort,
+      filer: DefaultFilter
     }
   }),
 
-  buttonText: 'hello button',
-
-  //selectedItems: Ember.computed.filterBy('objectBrowserMixinConfig.listMixinConfig.items', 'isSelected', true),
-
   selectedItems: Ember.computed.filterBy('statefulListItems', 'isSelected', true),
-
 
   dynamicModel: Ember.computed('selectedItems', function () {
     let selectedItems = this.get('selectedItems')

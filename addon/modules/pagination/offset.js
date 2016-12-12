@@ -30,7 +30,7 @@ export default {
       })
       return response
     } else if (controller.get('__lastOffset') < nextOffset){
-      let dataKey = controller.get('objectBrowserConfig.list.items')
+      let dataKey = controller.get('contentConfig.items')
       let result = controller.get(dataKey)
       controller.setProperties({
         __lastOffset: nextOffset
@@ -39,7 +39,7 @@ export default {
         ? result.content.concat(response.content ? response.content : response)
         : result.concat( response.content ? response.content : response )
     } else if (controller.get('__lastOffset') === nextOffset) {
-      let dataKey = controller.get('objectBrowserConfig.list.items')
+      let dataKey = controller.get('contentConfig.items')
       return controller.get(dataKey)
     }
   }

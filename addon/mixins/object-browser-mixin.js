@@ -18,40 +18,37 @@ export default Mixin.create(FrostListMixin, {
   queryParams: ['filterQueryParam', 'sortQueryParam', 'pageQueryParam'],
 
   initObjectBrowserMixin: on('init', function () {
-    const objectBrowserConfig = this.get('objectBrowserConfig')
-    typeAssert(`Expected 'objectBrowserConfig' to be object or Ember.Object, received ${typeOf(objectBrowserConfig)}`,
-      objectBrowserConfig, ['instance', 'object'])
+    const facetsConfig = this.get('facetsConfig')
+    const contentConfig = this.get('contentConfig')
+    const controlsConfig = this.get('controlsConfig')
+    const serializer = this.get('serializer')
 
-    const listConfig = get(objectBrowserConfig, 'list')
-    const facetsConfig = get(objectBrowserConfig, 'facets')
-    const controlsConfig = get(objectBrowserConfig, 'controls')
-
-    //const serializerConfig = get(objectBrowserConfig, 'serializerConfig')
-
-    typeAssert(`Expected 'objectBrowserConfig.list' to be object or Ember.Object, received ${typeOf(listConfig)}`,
-      listConfig, ['instance', 'object'])
-    typeAssert(`Expected 'objectBrowserConfig.facets' to be object or Ember.Object, received ${typeOf(facetsConfig)}`,
+    typeAssert(`Expected 'facetsConfig' to be object or Ember.Object, received ${typeOf(facetsConfig)}`,
       facetsConfig, ['instance', 'object'])
-    typeAssert(`Expected 'objectBrowserConfig.controls' to be array or Ember.Array, received ${typeOf(controlsConfig)}`,
-      controlsConfig, ['instance', 'array'])
+    typeAssert(`Expected 'contentConfig' to be object or Ember.Object, received ${typeOf(contentConfig)}`,
+      contentConfig, ['instance', 'object'])
+    typeAssert(`Expected 'controlsConfig' to be Array, received ${typeOf(controlsConfig)}`,
+      controlsConfig, 'array')
+    typeAssert(`Expected 'serializer' to be an Ember instance, received ${typeOf(serializer)}`,
+      serializer, 'instance')
 
-    Ember.defineProperty(this, 'listConfig', undefined, Ember.computed.alias('objectBrowserConfig.list'))
+    Ember.defineProperty(this, 'listConfig', undefined, Ember.computed.alias('contentConfig'))
     Ember.defineProperty(this, '_onFilterFormChange', undefined,
       createActionClosure.call(this, this.actions.filterItems)
     )
     Ember.defineProperty(this, 'objectBrowserMixinConfig', undefined, Ember.computed(
       'listMixinConfig',
-      'objectBrowserConfig.controls.[]',
-      'objectBrowserConfig.facets',
+      'controlsConfig.[]',
+      'facetsConfig',
       'selectedItemsCount', function () {
-        const objectBrowserConfig = this.get('objectBrowserConfig')
-        typeAssert(`Expected 'objectBrowserConfig' to be object or Ember.Object, received ${typeOf(objectBrowserConfig)}`,
-          objectBrowserConfig, ['instance', 'object'])
+        //const objectBrowserConfig = this.get('objectBrowserConfig')
+        //typeAssert(`Expected 'objectBrowserConfig' to be object or Ember.Object, received ${typeOf(objectBrowserConfig)}`,
+        //  objectBrowserConfig, ['instance', 'object'])
 
-        const controlsConfig = get(objectBrowserConfig, 'controls')
+        const controlsConfig = this.get('controlsConfig')
 
         controlsConfig.forEach(controlItem => {
-          typeAssert(`Expected each item in 'objectBrowserConfig.controls'
+          typeAssert(`Expected each item in 'controlsConfig'
           to be object or Ember.Object, received ${typeOf(controlItem)}`,
             controlItem, ['instance', 'object'])
 
@@ -84,8 +81,8 @@ export default Mixin.create(FrostListMixin, {
 
         return {
           listMixinConfig: this.get('listMixinConfig'),
-          controls: this.get('objectBrowserConfig.controls'),
-          facets: this.get('objectBrowserConfig.facets'),
+          controls: this.get('controlsConfig'),
+          facets: this.get('facetsConfig'),
           selectedItemsCount: this.get('selectedItemsCount'),
           onFilterFormChange: this.get('_onFilterFormChange')
         }
@@ -151,7 +148,7 @@ export default Mixin.create(FrostListMixin, {
     },
 
     filterItems (formValue) {
-      this.set('objectBrowserConfig.facets.value', formValue)
+      this.set('facetsConfig.value', formValue)
       const filter = this.normalizeFilter(formValue)
       this.setProperties({
         filterQueryParam: filter,
@@ -160,11 +157,11 @@ export default Mixin.create(FrostListMixin, {
     },
 
     loadNext () {
-      const serializer = this.get('objectBrowserConfig.serializer')
+      const serializer = this.get('serializer')
       const paginationHelper = serializer.get('pagination')
       let queryObject = paginationHelper.prepareQueryObject.call(this)
 
-      let dataKey = this.get('objectBrowserConfig.list.items')
+      let dataKey = this.get('contentConfig.items')
       serializer.query(queryObject, this).then((response) => {
         this.set(dataKey, response)
       })

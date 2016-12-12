@@ -18,14 +18,14 @@ export default Mixin.create({
 
   model: function (params) {
     const controller = this.controllerFor(this.get('routeName'))
-    const serializer = controller.get('objectBrowserConfig.serializer')
+    const serializer = controller.get('serializer')
     return serializer.query(params, controller)
   },
 
   setupController: function (controller, model) {
     this._super(controller, model)
 
-    const serializer = controller.get('objectBrowserConfig.serializer')
+    const serializer = controller.get('serializer')
 
     // set filter based on qp
     serializer.setFilterPropertyFromQueryParam(controller)
