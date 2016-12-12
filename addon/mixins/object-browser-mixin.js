@@ -1,7 +1,6 @@
 import Ember from 'ember'
 const {
   get,
-  isPresent,
   typeOf,
   Mixin,
   on
@@ -34,33 +33,6 @@ export default Mixin.create(FrostListMixin, {
     typeAssert(`Expected 'objectBrowserConfig.controls' to be array or Ember.Array, received ${typeOf(controlsConfig)}`,
       controlsConfig, ['instance', 'array'])
 
-    //typeAssert(`Expected 'serializerConfig' to be object or Ember.Object, received ${typeOf(serializerConfig)}`,
-    //  serializerConfig, ['instance', 'object'])
-
-    // closure any function related to controls section
-    controlsConfig.forEach(controlItem => {
-      typeAssert(`Expected each item in 'objectBrowserConfig.controls'
-      to be object or Ember.Object, received ${typeOf(controlItem)}`,
-        controlItem, ['instance', 'object'])
-
-      if (get(controlItem, 'action')) {
-        // get(controlItem, 'action') will return the path of action if exists.
-        let action = this.get(get(controlItem, 'action'))
-        Ember.set(controlItem, 'action', createActionClosure.call(this, action))
-      } else {
-        // no-op when action not provided
-        Ember.set(controlItem, 'action', createActionClosure.call(this, function () {
-        }))
-      }
-
-      const disableControl = Ember.get(controlItem, 'options.disableControl')
-      if (disableControl) {
-        typeAssert(`Expected 'disabledControl' to be function, received ${typeOf(disableControl)}`,
-          disableControl, 'function')
-        Ember.set(controlItem, 'options.disableControl', createActionClosure.call(this, disableControl))
-      }
-    })
-
     Ember.defineProperty(this, 'listConfig', undefined, Ember.computed.alias('objectBrowserConfig.list'))
     Ember.defineProperty(this, '_onFilterFormChange', undefined,
       createActionClosure.call(this, this.actions.filterItems)
@@ -70,10 +42,43 @@ export default Mixin.create(FrostListMixin, {
       'objectBrowserConfig.controls.[]',
       'objectBrowserConfig.facets',
       'selectedItemsCount', function () {
+        const objectBrowserConfig = this.get('objectBrowserConfig')
+        typeAssert(`Expected 'objectBrowserConfig' to be object or Ember.Object, received ${typeOf(objectBrowserConfig)}`,
+          objectBrowserConfig, ['instance', 'object'])
+
+        const controlsConfig = get(objectBrowserConfig, 'controls')
+
+        controlsConfig.forEach(controlItem => {
+          typeAssert(`Expected each item in 'objectBrowserConfig.controls'
+          to be object or Ember.Object, received ${typeOf(controlItem)}`,
+            controlItem, ['instance', 'object'])
+
+          // create closure actions when necessary
+          const options = get(controlItem, 'options')
+
+          typeAssert(`Expected 'control.options'
+          to be object or Ember.Object, received ${typeOf(options)}`,
+            options, ['instance', 'object'])
+
+          Object.keys(options).forEach((key) => {
+            let value = options[key]
+            if (typeOf(value) === 'function' && key.startsWith('on')) {
+              Ember.set(options, key, createActionClosure.call(this, value, (method, args = []) => {
+                method.call(this)
+              }))
+            }
+            // type check for disable property
+            if (key === 'disabled') {
+              typeAssert(`Expected 'disabled' to be boolean, received ${typeOf(options[key])}`,
+                options[key], 'boolean')
+            }
+          })
+        })
+
         return {
           listMixinConfig: this.get('listMixinConfig'),
-          controls: controlsConfig,
-          facets: facetsConfig,
+          controls: this.get('objectBrowserConfig.controls'),
+          facets: this.get('objectBrowserConfig.facets'),
           selectedItemsCount: this.get('selectedItemsCount'),
           onFilterFormChange: this.get('_onFilterFormChange')
         }
@@ -81,64 +86,15 @@ export default Mixin.create(FrostListMixin, {
   }),
 
   // cp: count for currently selected items
-  selectedItemsCount: Ember.computed('selectedItems', function () {
-    return Object.keys(this.get('selectedItems')).length
+  selectedItemsCount: Ember.computed('selectedItemDictionary', function () {
+    return Object.keys(this.get('selectedItemDictionary')).length
   }),
 
   // remove list selection state by setting selectedItems to Ember.A()
   clearListState: function () {
-    if (this.get('selectedItems')) {
-      this.set('selectedItems', Ember.A())
+    if (this.get('selectedItemDictionary')) {
+      this.set('selectedItemDictionary', Ember.A())
     }
-  },
-
-  // default filter method for object browser
-  objectBrowserDefaultFilter: function (data, filter) {
-    if (!isPresent(filter)) {
-      return data
-    }
-    return data.filter((data) => {
-      let qualified = true
-      let keys = Object.keys(filter)
-
-      keys.forEach(key => {
-        if (data.get(key).indexOf(filter[key]) === -1) {
-          qualified = false
-        }
-      })
-
-      return qualified
-    })
-  },
-
-  // default sort method for object browser
-  objectBrowserDefaultSort: function (items, sortProperties) {
-    if (!isPresent(sortProperties)) {
-      return
-    }
-
-    let normalizedSortProperties = sortProperties.map(sortProperty => {
-      let resultArray = []
-      if (sortProperty.startsWith('-')) {
-        resultArray.pushObject(sortProperty.slice(1))
-        resultArray.pushObject('desc')
-      } else {
-        resultArray.pushObject(sortProperty)
-        resultArray.pushObject('asc')
-      }
-      return resultArray
-    })
-
-    return Ember.A(items.slice().sort((itemA, itemB) => {
-      for (let i = 0; i < normalizedSortProperties.length; i++) {
-        let [prop, direction] = normalizedSortProperties[i]
-        let result = Ember.compare(Ember.get(itemA, prop), Ember.get(itemB, prop))
-        if (result !== 0) {
-          return (direction === 'desc') ? (-1 * result) : result
-        }
-      }
-      return 0
-    }))
   },
 
   normalizeFilter (filter) {
