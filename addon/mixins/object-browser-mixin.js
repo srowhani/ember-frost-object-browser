@@ -41,9 +41,6 @@ export default Mixin.create(FrostListMixin, {
       'controlsConfig.[]',
       'facetsConfig',
       'selectedItemsCount', function () {
-        //const objectBrowserConfig = this.get('objectBrowserConfig')
-        //typeAssert(`Expected 'objectBrowserConfig' to be object or Ember.Object, received ${typeOf(objectBrowserConfig)}`,
-        //  objectBrowserConfig, ['instance', 'object'])
 
         const controlsConfig = this.get('controlsConfig')
 
@@ -64,8 +61,20 @@ export default Mixin.create(FrostListMixin, {
           Object.keys(options).forEach((key) => {
             let value = options[key]
             if (typeOf(value) === 'function' && key.startsWith('on')) {
-              Ember.set(options, key, createActionClosure.call(this, value, (method, args = []) => {
-                method.call(this)
+              Ember.set(options, key, createActionClosure.call(this, value, (method, actionArgs = []) => {
+                const actionArgsLength = actionArgs.length
+                const passedArguments = [this.get('selectedItems')]
+
+                let argsArray = new Array(actionArgsLength + passedArguments.length)
+
+                for (let i = 0; i < actionArgsLength; i++) {
+                  argsArray[i] = actionArgs[i]
+                }
+
+                for (let i = 0; i < passedArguments.length; i++) {
+                  argsArray[i + actionArgsLength] = passedArguments[i]
+                }
+                method.apply(this, argsArray)
               }))
             }
             // type check for disable property
