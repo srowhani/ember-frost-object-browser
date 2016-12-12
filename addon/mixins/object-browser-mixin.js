@@ -41,7 +41,6 @@ export default Mixin.create(FrostListMixin, {
       'controlsConfig.[]',
       'facetsConfig',
       'selectedItemsCount', function () {
-
         const controlsConfig = this.get('controlsConfig')
 
         controlsConfig.forEach(controlItem => {
@@ -79,7 +78,7 @@ export default Mixin.create(FrostListMixin, {
             }
             // type check for disable property
             if (key === 'disabled') {
-              if(isPresent(multiSelect)) {
+              if (isPresent(multiSelect)) {
                 assert('Both multiSelect and disabled are presented, only one is allowed.')
               }
               typeAssert(`Expected 'disabled' to be boolean, received ${typeOf(options[key])}`,

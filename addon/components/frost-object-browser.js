@@ -32,16 +32,17 @@ export default Ember.Component.extend(PropTypeMixin, {
 
   selectedItems: Ember.computed.filterBy('_items', 'isSelected', true),
 
+  /* eslint-disable complexity */
   isActionShow: Ember.computed('selectedItems.[]', function () {
     let selectedItems = this.get('selectedItems')
     let selectedItemsCount = selectedItems.length || 0
     let controls = this.get('config.controls')
     let isShow = false
 
-    for (let i=0; i<controls.length; i++) {
+    for (let i = 0; i < controls.length; i++) {
       const control = controls[i]
       const disabled = get(control, 'disabled')
-      const multiSelect = get(control,'multiSelect') || false
+      const multiSelect = get(control, 'multiSelect') || false
 
       if (isPresent(disabled)) {
         isShow = disabled
@@ -58,4 +59,5 @@ export default Ember.Component.extend(PropTypeMixin, {
       }
     }
   })
+  /* eslint-enable complexity */
 })

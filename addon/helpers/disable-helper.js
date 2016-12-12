@@ -1,5 +1,4 @@
 import Ember from 'ember'
-import {typeAssert} from 'ember-frost-object-browser/utils/error-handle'
 const {isPresent} = Ember
 
 export function disableHelper (params/*, hash*/) {

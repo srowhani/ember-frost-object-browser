@@ -1,12 +1,11 @@
 import Ember from 'ember'
 import {
   JSONAPISerializer,
-  ObjectBrowserMixin,
   DefaultSort,
   DefaultFilter
 } from 'ember-frost-object-browser'
 
-export default Ember.Controller.extend(ObjectBrowserMixin, {
+export default Ember.Controller.extend({
   sortQueryParam: ['id'],
   filterQueryParam: [],
 
@@ -131,7 +130,6 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
       //  }
     },
     */
-
 
     serializer: JSONAPISerializer.create({
       model: 'user',

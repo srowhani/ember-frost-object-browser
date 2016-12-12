@@ -1,9 +1,8 @@
 import Ember from 'ember'
 import layout from './template'
-import FrostListItem from 'ember-frost-list/components/frost-list-item'
+// BEGIN-SNIPPET mixin
+import SpreadMixin from 'ember-spread'
 
-export default FrostListItem.extend({
-  classNames: ['user-list-item'],
-  record: Ember.computed.alias('model.record'),
+export default Ember.Component.extend(SpreadMixin, {
   layout
 })

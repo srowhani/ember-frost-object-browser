@@ -28,7 +28,8 @@ Router.map(function () {
       this.route('how-to-config')
     })
   })
-  this.route('lts-qp')
+  this.route('users')
+  this.route('user', { path: '/user/:id' })
   this.route('test')
 })
 

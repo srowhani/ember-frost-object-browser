@@ -4,7 +4,7 @@ const {
   get,
   on,
   typeOf
-} = Ember
+  } = Ember
 import offsetPagination from './pagination/offset'
 import {typeAssert} from 'ember-frost-object-browser/utils/error-handle'
 
@@ -52,12 +52,9 @@ export default Ember.Object.extend({
     return queryObject
   },
 
-
-
   didReceiveResponse (response) {
     return response
   },
-
 
   didQuery () {
 
@@ -158,7 +155,7 @@ export default Ember.Object.extend({
     const config = context.get('serializer.client.filter')
     typeAssert(`Expected 'serializer.client.filter' to be function, received ${typeOf(config)}`,
       config, 'function')
-      return config(items, filter)
+    return config(items, filter)
   },
 
   clientSort (items, sortProperties, context) {

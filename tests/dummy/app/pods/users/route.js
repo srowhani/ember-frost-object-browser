@@ -10,7 +10,4 @@ export default Ember.Route.extend(ObjectBrowserRouteMixin, {
       }
     })
   }
-
 })
-
-

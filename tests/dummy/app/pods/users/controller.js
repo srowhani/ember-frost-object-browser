@@ -5,6 +5,12 @@ import {
   DefaultSort,
   DefaultFilter
 } from 'ember-frost-object-browser'
+import {generateFacetView} from 'ember-frost-bunsen/utils'
+
+const facetsDefinition = [
+  {model: 'id', label: 'Id'},
+  {model: 'email', label: 'Email'}
+]
 
 export default Ember.Controller.extend(ObjectBrowserMixin, {
   sortQueryParam: ['id'],
@@ -15,80 +21,61 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
 
   queryParams: ['filterQueryParam', 'sortQueryParam', 'pageQueryParam'],
 
-  objectBrowserConfig: {
-    list: {
-      items: 'model.resources',  // the data model which will pass to list. In this scenario, actual data set is located in model: {resources: data}
-      component: 'test/user-list-item', // the custom component you want to render for each single list item.
-      // sort setup based on ember frost-sort API
-      sorting: {
-        properties: [
-          {
-            value: 'email',
-            label: 'email'
-          },
-          {
-            value: 'id',
-            label: 'Id'
-          }
-        ]
-      }
-    },
-    // facets setup based on ember-frost-bunsen API
-    facets: {
-      bunsenModel: {
-        type: 'object',
-        properties: {
-          id: {
-            type: 'string'
-          },
-          email: {
-            type: 'string'
-          }
-        }
-      },
-      bunsenView: {
-        'cellDefinitions': {
-          'main': {
-            'children': [
-              {'model': 'id'},
-              {'model': 'email'}
-            ]
-          }
+  contentConfig: {
+    items: 'model.resources',  // the data model which will pass to list. In this scenario, actual data set is located in model: {resources: data}
+    component: 'users/user-list-item', // the custom component you want to render for each single list item.
+    // sort setup based on ember frost-sort API
+    sorting: {
+      properties: [
+        {
+          value: 'email',
+          label: 'email'
         },
-        'cells': [
-          {
-            'extends': 'main'
-          }
-        ],
-        'type': 'form',
-        'version': '2.0'
-      },
-      value: {
+        {
+          value: 'id',
+          label: 'Id'
+        }
+      ]
+    }
+  },
+
+  facetsConfig: {
+    bunsenModel: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'string'
+        },
+        email: {
+          type: 'string'
+        }
       }
     },
+    bunsenView: generateFacetView(facetsDefinition),
+    value: {}
+  },
 
-    controls: [
+  controlsConfig: Ember.computed('selectedItems', function () {
+    return [
       {
         component: 'frost-button',
-        disable: function (items) {
-          return false
-        },
         multiSelect: true,
         options: {
-          id: '1234',
+          id: 'deleteButton',
           text: 'Delete',
           priority: 'secondary',
           size: 'medium',
-          onClick: 'actions.triggerDelete'
+          onClick: this.get('actions.triggerDelete')
         }
       },
       {
         component: 'frost-button',
         options: {
-          text: 'edit',
+          disabled: true, // expect boolean, this value should usually come from cp.
+          text: 'Edit',
           priority: 'secondary',
           size: 'medium',
-          onClick: 'actions.triggerEdit'
+          onClick: this.get('actions.triggerEdit')
         }
       },
       {
@@ -96,24 +83,23 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
         options: {
           text: 'Detail',
           route: 'user',
-          models: 'cp.dynamicModel',
-          priority: 'secondary'
+          routeModels: this.get('dynamicModel'),
+          priority: 'secondary',
+          size: 'medium'
         }
       }
-    ],
+    ]
+  }),
 
-    serializer: JSONAPISerializer.create({
-      model: 'user',
-      client: {
-        sort: DefaultSort,
-        filer: DefaultFilter
-      }
+  serializer: JSONAPISerializer.create({
+    model: 'user',
+    client: {
+      sort: DefaultSort,
+      filer: DefaultFilter
+    }
+  }),
 
-    })
-
-  },
-
-  selectedItems: Ember.computed.filterBy('objectBrowserMixinConfig.listMixinConfig.items', 'isSelected', true),
+  selectedItems: Ember.computed.filterBy('statefulListItems', 'isSelected', true),
 
   dynamicModel: Ember.computed('selectedItems', function () {
     let selectedItems = this.get('selectedItems')
@@ -126,7 +112,6 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
 
   actions: {
     triggerDelete (items) {
-      debugger;
       this.notifications.addNotification({
         message: 'Delete Action fired',
         type: 'success',
@@ -138,15 +123,6 @@ export default Ember.Controller.extend(ObjectBrowserMixin, {
     triggerEdit (items) {
       this.notifications.addNotification({
         message: 'Edit Action fired',
-        type: 'success',
-        autoClear: true,
-        clearDuration: 2000
-      })
-    },
-
-    triggerDetail (items) {
-      this.notifications.addNotification({
-        message: 'Detail Action fired',
         type: 'success',
         autoClear: true,
         clearDuration: 2000

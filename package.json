@@ -60,10 +60,10 @@
     "ember-elsewhere": "~0.4.1",
     "ember-export-application-global": "^1.0.5",
     "ember-frost-bunsen": "12.2.6",
-    "ember-frost-core": "^1.1.1",
+    "ember-frost-core": "git+https://github.com/sglanzer/ember-frost-core.git#master",
     "ember-frost-fields": "^3.0.0",
-    "ember-frost-info-bar": "^5.0.0",
-    "ember-frost-list": "^3.2.0",
+    "ember-frost-info-bar": "^8.0.0",
+    "ember-frost-list": "git+https://github.com/quincyle/ember-frost-list.git#refect-name",
     "ember-frost-sort": "^3.1.1",
     "ember-frost-tabs": "2.1.0",
     "ember-getowner-polyfill": "1.0.1",
@@ -106,8 +106,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.6",
     "ember-cli-htmlbars": "^1.0.8",
-    "ember-cli-sass": "^5.1.0",
-    "ember-frost-list": "^3.0.0"
+    "ember-cli-sass": "^5.1.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
