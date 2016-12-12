@@ -17,43 +17,30 @@
 
     <div class="frost-object-browser-content">
       {{frost-list
-      config=config.listMixinConfig
+        config=config.listMixinConfig
       }}
+      {{#if isActionShow}}
         <div class="frost-object-browser-actions">
           {{#each config.controls as |control|}}
-            {{#if (eq control.component 'frost-button')}}
+          {{!-- TODO options=control.options doesn't work for frost-link somehow --}}
+            {{#if (eq control.component 'frost-link')}}
+              {{component control.component options=(hash
+                priority=control.options.priority
+                size=control.options.size
+                text=control.options.text
+                route=control.options.route
+                linkModel=control.options.routeModels
+                disabled=(disable-helper control.options.disabled control.multiSelect config.selectedItemsCount)
+              )}}
+            {{else}}
               {{component control.component
-              design=control.design
-              disabled=(disable-helper control.options.multiSelect config.selectedItemsCount control.options.disableControl selectedItems)
-              icon=control.icon
-              priority=(or control.priority 'secondary')
-              size=(or control.size 'medium')
-              text=control.text
-              onClick=(action control.action selectedItems)
+                options=control.options
+                disabled=(disable-helper control.options.disabled control.multiSelect config.selectedItemsCount)
               }}
-            {{else if (eq control.component 'frost-link')}}
-              {{#if (eq control.model)}}
-                {{component control.component control.text control.link control.linkModel
-                disabled=(disable-helper control.options.multiSelect config.selectedItemsCount control.options.disableControl selectedItems)
-                icon=control.icon
-                priority=control.priority
-                size=control.size
-                tabindex=control.tabindex
-                onClick=(action control.action selectedItems)
-                }}
-              {{else}}
-                {{component control.component control.text control.link
-                disabled=(disable-helper control.options.multiSelect config.selectedItemsCount control.options.disableControl selectedItems)
-                icon=control.icon
-                priority=control.priority
-                size=control.size
-                tabindex=control.tabindex
-                onClick=(action control.action selectedItems)
-                }}
-              {{/if}}
             {{/if}}
           {{/each}}
         </div>
+      {{/if}}
     </div>
 
 {{else}}
@@ -63,12 +50,14 @@
     </div>
     <div class="frost-object-browser-content">
       {{component content
-      items=_items
+        items=_items
       }}
+      {{#if isActionShow}}
         <div class="frost-object-browser-actions">
           {{#each controls as |control|}}
             {{component control}}
           {{/each}}
         </div>
+      {{/if}}
     </div>
 {{/if}}

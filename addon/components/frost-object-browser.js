@@ -1,6 +1,7 @@
 import Ember from 'ember'
 import layout from '../templates/components/frost-object-browser'
 import PropTypeMixin, {PropTypes} from 'ember-prop-types'
+const {get, isPresent} = Ember
 
 export default Ember.Component.extend(PropTypeMixin, {
   layout,
@@ -29,5 +30,32 @@ export default Ember.Component.extend(PropTypeMixin, {
     ])
   },
 
-  selectedItems: Ember.computed.filterBy('_items', 'isSelected', true)
+  selectedItems: Ember.computed.filterBy('_items', 'isSelected', true),
+
+  isActionShow: Ember.computed('selectedItems.[]', function () {
+    let selectedItems = this.get('selectedItems')
+    let selectedItemsCount = selectedItems.length || 0
+    let controls = this.get('config.controls')
+    let isShow = false
+
+    for (let i=0; i<controls.length; i++) {
+      const control = controls[i]
+      const disabled = get(control, 'disabled')
+      const multiSelect = get(control,'multiSelect') || false
+
+      if (isPresent(disabled)) {
+        isShow = disabled
+        if (isShow === true) {
+          return true
+        }
+      }
+
+      if (multiSelect === true) {
+        isShow = selectedItemsCount !== 0
+        if (isShow === true) {
+          return true
+        }
+      }
+    }
+  })
 })

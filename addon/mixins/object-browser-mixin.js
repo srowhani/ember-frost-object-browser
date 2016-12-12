@@ -1,10 +1,12 @@
 import Ember from 'ember'
 const {
+  assert,
   get,
   typeOf,
   Mixin,
-  on
-  } = Ember
+  on,
+  isPresent
+} = Ember
 import FrostListMixin from 'ember-frost-list/mixins/frost-list-mixin'
 import createActionClosure from 'ember-frost-object-browser/utils/action-closure'
 import {typeAssert} from 'ember-frost-object-browser/utils/error-handle'
@@ -53,6 +55,8 @@ export default Mixin.create(FrostListMixin, {
           to be object or Ember.Object, received ${typeOf(controlItem)}`,
             controlItem, ['instance', 'object'])
 
+          const multiSelect = get(controlItem, 'multiSelect')
+
           // create closure actions when necessary
           const options = get(controlItem, 'options')
 
@@ -69,6 +73,9 @@ export default Mixin.create(FrostListMixin, {
             }
             // type check for disable property
             if (key === 'disabled') {
+              if(isPresent(multiSelect)) {
+                assert('Both multiSelect and disabled are presented, only one is allowed.')
+              }
               typeAssert(`Expected 'disabled' to be boolean, received ${typeOf(options[key])}`,
                 options[key], 'boolean')
             }
@@ -153,14 +160,6 @@ export default Mixin.create(FrostListMixin, {
     },
 
     loadNext () {
-      //const serializer = this.get('objectBrowserConfig.serializerConfig.serializer').create({
-      //  config: this.get('objectBrowserConfig.serializerConfig'),
-      //  context: this
-      //})
-
-      //paginationHelper.requestNext.call(this, queryObject, serializer)
-
-
       const serializer = this.get('objectBrowserConfig.serializer')
       const paginationHelper = serializer.get('pagination')
       let queryObject = paginationHelper.prepareQueryObject.call(this)

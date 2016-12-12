@@ -16,7 +16,7 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
     min-width: 0;
     margin: 20px 10px 10px;
 
-    .frost-bunsen-form {
+    > * {
       flex: 1;
       min-height: 0;
       overflow-y: scroll;
@@ -91,14 +91,6 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
     flex: 1;
     min-width: 0;
     height: 100%;
-
-    .frost-list-header + .frost-list-content {
-      height: calc(100% - 120px);
-    }
-
-    .frost-list-content {
-      height: calc(100% - 60px);
-    }
   }
 
   &-actions {
