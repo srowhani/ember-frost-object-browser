@@ -1,0 +1,24 @@
+<div class="block start frost-flex-1">
+    <div class="row">
+        <div class='select-checkbox'>
+          {{frost-list-selection-indicator isSelected=isSelected}}
+          Id: {{record.id}}
+        </div>
+        <div class="block column"></div>
+    </div>
+</div>
+<div class='block frost-flex-1'>
+    <div class='tertiary'>
+        Name: {{record.firstName}} {{record.lastName}}
+    </div>
+</div>
+<div class='block frost-flex-1'>
+    <div class='tertiary'>
+        <span class='label'>Email:</span> {{record.email}}
+    </div>
+</div>
+<div class='block end frost-flex-1'>
+    <div class='secondary'>
+        <span class='label'>Last raised:</span> <b>{{record.lastUpdate}}</b>
+    </div>
+</div>
