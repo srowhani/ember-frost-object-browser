@@ -1,3 +1,7 @@
+# 17.0.0
+
+* Coming soon...unblocking upgrades
+
 # 16.0.4
 
 * **Added** configuration option to turn off prototype extensions for Date.
