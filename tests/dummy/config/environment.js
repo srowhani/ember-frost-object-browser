@@ -7,7 +7,7 @@ module.exports = function (environment) {
     podModulePrefix: 'dummy/pods',
     environment: environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'hash',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -26,19 +26,12 @@ module.exports = function (environment) {
   }
 
   if (environment === 'development') {
-    // ENV.APP.LOG_RESOLVER = true
-    // ENV.APP.LOG_ACTIVE_GENERATION = true
-    // ENV.APP.LOG_TRANSITIONS = true
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true
-    // ENV.APP.LOG_VIEW_LOOKUPS = true
-  }
-
-  if (environment === 'e2e-test') {
-    ENV.rootURL = '/'
-    ENV['ember-cli-mirage'] = {
-      enabled: true
-    }
-    ENV.mirageUrlPrefix = 'origin'
+    // ENV.APP.LOG_RESOLVER = true;
+    // ENV.APP.LOG_ACTIVE_GENERATION = true;
+    // ENV.APP.LOG_TRANSITIONS = true;
+    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.factoryGuy = true
   }
 
   if (environment === 'test') {
@@ -49,16 +42,21 @@ module.exports = function (environment) {
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false
     ENV.APP.LOG_VIEW_LOOKUPS = false
+
     ENV.APP.rootElement = '#ember-testing'
+  }
+
+  if (environment === 'e2e-test') {
+    ENV.rootURL = '/'
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    }
+    ENV.mirageUrlPrefix = 'origin'
   }
 
   if (environment === 'production') {
     ENV.rootURL = '/ember-frost-object-browser'
-    ENV.isDemo = true
-    ENV.mirageNamespace = 'https://ciena-frost.github.io'
-    ENV['ember-cli-mirage'] = {
-      enabled: true
-    }
+    ENV.factoryGuy = true
   }
 
   return ENV

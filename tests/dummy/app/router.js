@@ -7,30 +7,14 @@ var Router = Ember.Router.extend({
 })
 
 Router.map(function () {
-  this.route('docs', function () {
-    this.route('getting-started', function () {
-      this.route('overview')
-      this.route('installation')
-    })
+  this.route('client')
+  this.route('server', { path: '/' })
 
-    this.route('api-details', function () {
-      this.route('data-drive')
-      this.route('full-access')
-    })
-    this.route('mixins', function () {
-      this.route('how-to-use')
-      this.route('how-to-config')
-      this.route('hooks')
-      this.route('reserved-property')
-    })
-    this.route('data-serializers', function () {
-      this.route('overview')
-      this.route('how-to-config')
-    })
+  this.route('demo', function () {
+    this.route('client')
+    this.route('server')
   })
-  this.route('users')
   this.route('user', { path: '/user/:id' })
-  this.route('test')
 })
 
 export default Router

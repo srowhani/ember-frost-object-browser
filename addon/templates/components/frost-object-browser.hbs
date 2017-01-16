@@ -1,63 +1,12 @@
-{{#if config}}
-    <div class="frost-object-browser-facets">
-      {{#if config.facets.component}}
-        {{component config.facets.component
-          options=options
-        }}
-      {{else}}
-        {{component 'frost-bunsen-form'
-          autofocus=false
-          bunsenModel=config.facets.bunsenModel
-          bunsenView=config.facets.bunsenView
-          onChange=config.onFilterFormChange
-          value=config.facets.value
-        }}
-      {{/if}}
-    </div>
-
-    <div class="frost-object-browser-content">
-      {{frost-list
-        config=config.listMixinConfig
-      }}
-      {{#if isActionShow}}
-        <div class="frost-object-browser-actions">
-          {{#each config.controls as |control|}}
-          {{!-- TODO options=control.options doesn't work for frost-link somehow --}}
-            {{#if (eq control.component 'frost-link')}}
-              {{component control.component options=(hash
-                priority=control.options.priority
-                size=control.options.size
-                text=control.options.text
-                route=control.options.route
-                linkModel=control.options.routeModels
-                disabled=(disable-helper control.options.disabled control.multiSelect config.selectedItemsCount)
-              )}}
-            {{else}}
-              {{component control.component
-                options=control.options
-                disabled=(disable-helper control.options.disabled control.multiSelect config.selectedItemsCount)
-              }}
-            {{/if}}
-          {{/each}}
-        </div>
-      {{/if}}
-    </div>
-
-{{else}}
-    <div class="frost-object-browser-facets">
-        <div class="frost-object-browser-facets-header">Refined by</div>
-      {{component facets}}
-    </div>
-    <div class="frost-object-browser-content">
-      {{component content
-        items=_items
-      }}
-      {{#if isActionShow}}
-        <div class="frost-object-browser-actions">
-          {{#each controls as |control|}}
-            {{component control}}
-          {{/each}}
-        </div>
-      {{/if}}
-    </div>
-{{/if}}
+<div class='{{css}}-facets'>
+  <div class='{{css}}-facets-header'>
+    Refine by
+  </div>
+  {{#frost-scroll class=(concat css '-facets-body')}}
+    {{component filters}}
+  {{/frost-scroll}}
+</div>
+<div class='{{css}}-content'>
+  {{component content}}
+  {{component controls}}
+</div>

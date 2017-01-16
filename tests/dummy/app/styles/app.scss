@@ -1,5 +1,8 @@
 @import 'node_modules/ember-frost-core/addon/styles/frost-theme';
-@import 'user-list-item';
+@import 'tests/dummy/app/pods/components/list-item/styles';
+@import 'tests/dummy/app/pods/components/list-item-expansion/styles';
+
+// TODO Cleanup
 
 .frost-doc-inline-link {
   text-decoration: none;
@@ -170,7 +173,7 @@ $brand-color: #E61A1A;
 }
 
 .dummy-body {
-  height: calc(100% - 57px);
+  height: 100%;
 
   .dummy-content {
       height: 100%;
