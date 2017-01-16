@@ -6,16 +6,17 @@ module.exports = function (environment) {
     modulePrefix: 'dummy',
     podModulePrefix: 'dummy/pods',
     environment: environment,
-    baseURL: '/',
-    locationType: 'auto',
+    rootURL: '/',
+    locationType: 'hash',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
-      },
-      EXTEND_PROTOTYPES: {
-        Date: false
       }
+      // TODO Do we want to disable prototype extension?
+      // EXTEND_PROTOTYPES: {
+      //   Date: false
+      // }
     },
 
     APP: {
@@ -25,24 +26,17 @@ module.exports = function (environment) {
   }
 
   if (environment === 'development') {
-    // ENV.APP.LOG_RESOLVER = true
-    // ENV.APP.LOG_ACTIVE_GENERATION = true
-    // ENV.APP.LOG_TRANSITIONS = true
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true
-    // ENV.APP.LOG_VIEW_LOOKUPS = true
-  }
-
-  if (environment === 'e2e-test') {
-    ENV.baseURL = '/'
-    ENV['ember-cli-mirage'] = {
-      enabled: true
-    }
-    ENV.mirageUrlPrefix = 'origin'
+    // ENV.APP.LOG_RESOLVER = true;
+    // ENV.APP.LOG_ACTIVE_GENERATION = true;
+    // ENV.APP.LOG_TRANSITIONS = true;
+    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.factoryGuy = true
   }
 
   if (environment === 'test') {
     // Testem prefers this...
-    ENV.baseURL = '/'
+    ENV.rootURL = '/'
     ENV.locationType = 'none'
 
     // keep test console output quieter
@@ -52,12 +46,17 @@ module.exports = function (environment) {
     ENV.APP.rootElement = '#ember-testing'
   }
 
-  if (environment === 'production') {
-    ENV.baseURL = '/frost-object-browser'
-    ENV.isDemo = true
+  if (environment === 'e2e-test') {
+    ENV.rootURL = '/'
     ENV['ember-cli-mirage'] = {
       enabled: true
     }
+    ENV.mirageUrlPrefix = 'origin'
+  }
+
+  if (environment === 'production') {
+    ENV.rootURL = '/ember-frost-object-browser'
+    ENV.factoryGuy = true
   }
 
   return ENV

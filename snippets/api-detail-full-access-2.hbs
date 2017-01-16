@@ -1,0 +1,39 @@
+{{frost-object-browser
+  items=processedItems
+  facets=(component 'frost-bunsen-form'
+    bunsenModel=bunsenModel
+    bunsenView=bunsenView
+    onChange=(action "filterItems")
+  )
+  content=(component 'frost-list'
+    onSelect=(action 'selectItem')
+    item=(component 'user-list-item'
+      onCollapse=(action 'collapseItem')
+      onExpand=(action 'expandItem')
+      )
+      expansion=(component 'frost-list-expansion'
+        onCollapseAll=(action 'collapseItems')
+        onExpandAll=(action 'expandItems')
+      )
+      sorting=(component 'frost-sort'
+        sortOrder=sortOrder
+        properties=sortableProperties
+        onChange=(action 'sortItems')
+      )
+    )
+  controls=(array
+    (component 'frost-button'
+      disabled=<disable-logic>
+      priority="secondary"
+      size='medium'
+      text='Delete'
+      onClick=(action 'triggerDelete')
+    )
+    (component 'frost-link' 'detail' model
+      disabled=<disable-logic>
+      priority="secondary"
+      size='medium'
+      onClick=(action 'transitionToDetail')
+    )
+  )
+}}

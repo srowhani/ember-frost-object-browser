@@ -12,12 +12,9 @@ module.exports = function (defaults) {
     sassOptions: {
       includePaths: [
       ]
-    }
+    },
+    snippetPaths: ['snippets', 'tests/snippets']
   })
-
-  if (app.env === 'test' || app.env === 'development') {
-    app.import('bower_components/sinon-chai/lib/sinon-chai.js', {type: 'test'})
-  }
 
   return app.toTree()
 }

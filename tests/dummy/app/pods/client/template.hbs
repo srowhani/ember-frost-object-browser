@@ -1,0 +1,55 @@
+{{frost-object-browser
+  items=items
+  filters=(component 'frost-bunsen-form'
+    autofocus=false
+    bunsenModel=filterModel
+    bunsenView=filterView
+    onChange=(action 'onFilteringChange')
+    value=filters
+  )
+  content=(component 'frost-list'
+    item=(component 'list-item')
+    itemExpansion=(component 'list-item-expansion')
+    items=items
+    selectedItems=selectedItems
+    onLoadNext=(action 'onLoadNext')
+    onSelectionChange=(action 'onSelectionChange')
+    sorting=(component 'frost-sort'
+      sortOrder=sortOrder
+      sortingProperties=sortingProperties
+      onChange=(action 'onSortingChange')
+    )
+  )
+  controls=(component 'frost-action-bar'
+    selectedItems=selectedItems
+    controls=(array
+      (component 'frost-button'
+        disabled=(single-select selectedItems)
+        priority='secondary'
+        size='medium'
+        text='Single-select'
+        onClick=(action 'onGenericAction' selectedItems 'Single-select enabled action')
+      )
+      (component 'frost-button'
+        disabled=(multi-select selectedItems)
+        priority='secondary'
+        size='medium'
+        text='Multi-select'
+        onClick=(action 'onGenericAction' selectedItems 'Multi-select enabled action')
+      )
+      (component 'frost-button'
+        disabled=(not labelIncludesF)
+        priority='secondary'
+        size='medium'
+        text="Label includes 'f'"
+        onClick=(action 'onGenericAction' selectedItems 'Custom enabled action')
+      )
+      (component 'frost-link'
+        priority='primary'
+        routeNames=detailLinkRouteNames
+        size='medium'
+        text='Detail'
+      )
+    )
+  )
+}}

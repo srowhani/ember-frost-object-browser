@@ -1,5 +1,5 @@
 /**
- * TODO
+ * Component definition for the frost-action-bar component
  */
 
 import Ember from 'ember'
@@ -8,46 +8,51 @@ import computed, {readOnly} from 'ember-computed-decorators'
 import {Component} from 'ember-frost-core'
 import {PropTypes} from 'ember-prop-types'
 
-import layout from '../templates/components/frost-object-browser'
+import layout from '../templates/components/frost-action-bar'
 
 export default Component.extend({
+
   // == Dependencies ==========================================================
 
-  // == Properties ============================================================
+  // == Keyword Properties ====================================================
+
+  layout,
+
+  // == PropTypes =============================================================
 
   propTypes: {
-    // Options
-    content: PropTypes.EmberObject.isRequired,
-    controls: PropTypes.EmberObject.isRequired,
-    hook: PropTypes.string.isRequired,
-    filters: PropTypes.EmberObject.isRequired,
-    selectedItems: PropTypes.EmberObject.isRequired
+    // options
+    controls: PropTypes.arrayOf(PropTypes.EmberComponent).isRequired,
+    selectedItems: PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.EmberObject,
+      PropTypes.object
+    ])).isRequired
 
-    // State
+    // state
   },
 
   getDefaultProps () {
     return {
-      // Keywords
-      layout
+      // options
 
-      // Options
+      // state
     }
   },
 
   // == Computed Properties ===================================================
 
   @readOnly
-  @computed('controls.[]', 'items.@each.isSelected')
-  _isActionsVisible (controls, items) {
-    return !isEmpty(controls) && !isEmpty(items) && items.isAny('isSelected', true)
+  @computed('selectedItems.[]')
+  isVisible (selectedItems) {
+    return !isEmpty(selectedItems)
   }
 
   // == Functions =============================================================
 
-  // == Ember Lifecycle Hooks =================================================
-
   // == DOM Events ============================================================
 
+  // == Lifecycle Hooks =======================================================
+
   // == Actions ===============================================================
+
 })

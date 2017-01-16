@@ -1,47 +1,12 @@
-{{yield}}
-
-{{#yield-slot 'info-bar'}}
-  {{yield}}
-{{/yield-slot}}
-
-<div class='frost-object-browser-body'>
-  {{#yield-slot 'facets'}}
-    <div class='frost-object-browser-facets'>
-      {{yield}}
-    </div>
-  {{/yield-slot}}
-
-  <div class='frost-object-browser-content'>
-    {{#yield-slot 'view' (block-params
-      selections
-    )}}
-      {{yield}}
-    {{/yield-slot}}
-
-    {{#yield-slot 'actions' (block-params
-      (hash
-        button=(component 'selection-action-button'
-          selections=selections
-          size='large'
-        )
-        link=(component 'selection-action-link'
-          selections=selections
-          size='large'
-        )
-      )
-      selections
-    )}}
-
-      {{#liquid-if (gt selections.length 0)
-        class='frost-object-browser-actions'
-      }}
-        <div class='frost-object-browser-actions-content'>
-          <div class="items-selected">
-            {{selections.length}} items selected
-          </div>
-          {{yield}}
-        </div>
-      {{/liquid-if}}
-    {{/yield-slot}}
+<div class='{{css}}-facets'>
+  <div class='{{css}}-facets-header'>
+    Refine by
   </div>
+  {{#frost-scroll class=(concat css '-facets-body')}}
+    {{component filters}}
+  {{/frost-scroll}}
+</div>
+<div class='{{css}}-content'>
+  {{component content}}
+  {{component controls}}
 </div>
