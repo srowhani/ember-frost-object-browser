@@ -1,5 +1,7 @@
 @import 'node_modules/ember-frost-core/addon/styles/frost-theme';
 
+@import 'frost-action-bar';
+
 $frost-object-browser-actions-background-color: rgba(255, 255, 255, 0.95);
 $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8px #696868;
 
