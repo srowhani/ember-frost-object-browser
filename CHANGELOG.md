@@ -1,3 +1,8 @@
+# 17.0.2
+
+* **Fixed** consumption in apps by removing file with bad reference.
+
+
 # 17.0.1
 **added** action bar styles
 
