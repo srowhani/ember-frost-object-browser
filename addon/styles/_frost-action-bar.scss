@@ -1,0 +1,25 @@
+$box-shadow-rgba: rgba(0, 0, 0, 0.2);
+
+.frost-action-bar {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+  background-color: $frost-color-white;
+  box-shadow: 0 -2px 8px $box-shadow-rgba;
+  z-index: 1;
+
+  &-selections {
+    align-self: center;
+    color: $frost-color-grey-3;
+    font-size: $frost-font-s;
+  }
+
+  &-buttons > * {
+    margin-left: 10px;
+  }
+}

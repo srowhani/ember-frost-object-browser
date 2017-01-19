@@ -1,3 +1,16 @@
+# 17.0.2
+
+* **Fixed** consumption in apps by removing file with bad reference.
+
+
+# 17.0.1
+**added** action bar styles
+
+
+# 17.0.0
+
+* Coming soon...unblocking upgrades
+
 # 16.0.4
 
 * **Added** configuration option to turn off prototype extensions for Date.
