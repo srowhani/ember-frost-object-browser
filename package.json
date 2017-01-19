@@ -65,7 +65,7 @@
     "ember-frost-core": "1.5.2",
     "ember-frost-fields": "^3.0.0",
     "ember-frost-info-bar": "^8.0.0",
-    "ember-frost-list": "^5.0.0",
+    "ember-frost-list": "^5.2.0",
     "ember-frost-sort": "^7.0.0",
     "ember-frost-tabs": "^2.1.0",
     "ember-frost-test": "1.0.1",
