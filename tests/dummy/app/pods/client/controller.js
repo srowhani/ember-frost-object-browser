@@ -33,14 +33,16 @@ export default Controller.extend({
     {label: 'Id', model: 'id'},
     {label: 'Label', model: 'label'}
   ]),
-  itemsPerPage: 100,
-  lastPage: 0,
+  itemsPerPage: 10,
+  page: 0,
+  scrollTop: 0,
   selectedItems: [],
   sortOrder: ['id'],
   sortingProperties: [
     { label: 'Id', value: 'id' },
     { label: 'Label', value: 'label' }
   ],
+  totalItems: 100, // Typically extracted from meta on the request
 
   // == Computed Properties ===================================================
 
@@ -53,8 +55,8 @@ export default Controller.extend({
   },
 
   @readOnly
-  @computed('filters', 'model.[]', 'sortOrder.[]')
-  items (filters, model, sortOrder) {
+  @computed('filters', 'model.[]', 'page', 'sortOrder.[]')
+  items (filters, model, page, sortOrder) {
     if (isEmpty(model)) {
       return []
     }
@@ -70,7 +72,12 @@ export default Controller.extend({
     }
 
     // Client side sorting
-    return sort(filteredItems, sortOrder)
+    const sortedItems = sort(filteredItems, sortOrder)
+
+    // Client side pagination
+    const itemsPerPage = this.get('itemsPerPage')
+    const pageSliceStart = itemsPerPage * page
+    return sortedItems.slice(pageSliceStart, pageSliceStart + itemsPerPage + 1)
   },
 
   @readOnly
@@ -84,31 +91,10 @@ export default Controller.extend({
   // == Functions =============================================================
 
   fetchPage (page) {
-    // serializer.setFilterPropertyFromQueryParam(controller)
-    // serializer.setSortPropertyFromQueryParam(controller)
-    // return serializer.query(params, controller)
-
-    // Optional
-    // this.get('selectedItems').clear()
-    // this.get('expandedItems').clear()
-
-    this.get('notifications').success(`Fetching page ${page}`, {
-      autoClear: true,
-      clearDuration: 2000
-    })
-    // TODO Use extracted pagination for the request
-    // let queryObject = {
-    //   filter: this.get('filters'),
-    //   sort: this.get('sortOrder'),
-    //   page
-    // }
     this.store.query('list-item', {
       pageSize: this.get('itemsPerPage'),
       start: (page * this.get('itemsPerPage'))
     }).then((response) => {
-      // TODO Extract pagination from meta
-      // let meta = response.get('meta')
-      // this.get('pagination').processPageResponse(response, context, queryObject) : response
       this.set('model', this.store.peekAll('list-item'))
     })
   },
@@ -119,8 +105,10 @@ export default Controller.extend({
 
   actions: {
     onFilteringChange (filters) {
-      // this.set('page', 0)
       this.set('filters', _.cloneDeep(filters))
+      this.store.unloadAll('list-item')
+      this.get('selectedItems').clear()
+      this.fetchPage(0)
     },
 
     onGenericAction (selectedItems, message) {
@@ -130,9 +118,12 @@ export default Controller.extend({
       })
     },
 
-    onLoadNext (page) {
-      this.set('lastPage', this.get('lastPage') + 1)
-      this.fetchPage(this.get('lastPage'))
+    onPaginationChange (page) {
+      this.setProperties({
+        page,
+        scrollTop: 0
+      })
+      this.fetchPage(page)
     },
 
     onSelectionChange (selectedItems) {
@@ -140,8 +131,10 @@ export default Controller.extend({
     },
 
     onSortingChange (sortOrder) {
-      // this.set('page', 0)
       this.get('sortOrder').setObjects(sortOrder)
+      this.store.unloadAll('list-item')
+      this.get('selectedItems').clear()
+      this.fetchPage(0)
     }
   }
 })

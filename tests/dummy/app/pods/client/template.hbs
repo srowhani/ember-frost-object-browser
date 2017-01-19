@@ -12,8 +12,13 @@
     itemExpansion=(component 'list-item-expansion')
     items=items
     selectedItems=selectedItems
-    onLoadNext=(action 'onLoadNext')
     onSelectionChange=(action 'onSelectionChange')
+    pagination=(component 'frost-list-pagination'
+      itemsPerPage=itemsPerPage
+      page=page
+      total=totalItems
+      onChange=(action 'onPaginationChange')
+    )
     sorting=(component 'frost-sort'
       sortOrder=sortOrder
       sortingProperties=sortingProperties

@@ -1,16 +1,18 @@
-$box-shadow-rgba: rgba(0, 0, 0, 0.2);
+$frost-action-bar-box-shadow-color: rgba(0, 0, 0, 0.2);
+$frost-action-bar-background-color: rgba($frost-color-white, 0.85);
 
 .frost-action-bar {
   display: flex;
   position: absolute;
   bottom: 0;
+  left: 1px;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
-  height: 60px;
+  width: calc(100% - 2px);
+  height: $frost-action-bar-height;
   padding: 10px;
-  background-color: $frost-color-white;
-  box-shadow: 0 -2px 8px $box-shadow-rgba;
+  background-color: $frost-action-bar-background-color;
+  box-shadow: 0 -2px 8px $frost-action-bar-box-shadow-color;
   z-index: 1;
 
   &-selections {
