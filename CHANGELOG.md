@@ -1,3 +1,8 @@
+# 17.0.3
+* Added frost-list to the blueprint install (the expected choice for the content component)
+* Fixed the look of the scroll gutter for pagination
+* Fixed the spacing for the last item in the list when the action bar would cover it
+
 # 17.0.2
 
 * **Fixed** consumption in apps by removing file with bad reference.
