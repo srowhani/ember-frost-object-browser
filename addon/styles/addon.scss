@@ -1,5 +1,7 @@
 @import 'node_modules/ember-frost-core/addon/styles/frost-theme';
 
+$frost-action-bar-height: 60px;
+
 @import 'frost-action-bar';
 
 $frost-object-browser-actions-background-color: rgba(255, 255, 255, 0.95);
@@ -16,12 +18,24 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
 }
 
 .frost-object-browser {
-  & .frost-list {
+  .frost-list {
     display: flex;
     flex-direction: column;
     height: 100%;
-  }
 
+    &-item-container.last.is-selected {
+      margin-bottom: $frost-action-bar-height;
+    }
+
+    &-content-container {
+      &.paged {
+        &:before {
+          // Set to the background color of the scroll gutter to match the surrounding area
+          background-color: $frost-color-lgrey-3;
+        }
+      }
+    }
+  }
 
 
 
