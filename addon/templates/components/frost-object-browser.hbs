@@ -1,11 +1,13 @@
-<div class='{{css}}-facets'>
-  <div class='{{css}}-facets-header'>
-    Refine by
+{{#if filters}}
+  <div class='{{css}}-facets'>
+    <div class='{{css}}-facets-header'>
+      Refine by
+    </div>
+    {{#frost-scroll class=(concat css '-facets-body')}}
+      {{component filters}}
+    {{/frost-scroll}}
   </div>
-  {{#frost-scroll class=(concat css '-facets-body')}}
-    {{component filters}}
-  {{/frost-scroll}}
-</div>
+{{/if}}
 <div class='{{css}}-content'>
   {{component content}}
   {{component controls}}
