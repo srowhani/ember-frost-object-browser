@@ -1,3 +1,8 @@
+# 17.0.4
+
+* **Fixed** `frost-object-browser` component to only show facets DOM when the `filters` property is present.
+
+
 # 17.0.3
 * Added frost-list to the blueprint install (the expected choice for the content component)
 * Fixed the look of the scroll gutter for pagination
