@@ -23,6 +23,7 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
     flex-direction: column;
     height: 100%;
   }
+
   &.actions-visible {
     .frost-list-content-container {
       margin-bottom: $frost-action-bar-height;
