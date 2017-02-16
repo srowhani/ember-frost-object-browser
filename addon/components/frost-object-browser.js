@@ -14,7 +14,7 @@ export default Component.extend({
   // == Dependencies ==========================================================
 
   // == Properties ============================================================
-
+  classNameBindings: ['_isActionsVisible:actions-visible'],
   propTypes: {
     // Options
     content: PropTypes.EmberObject.isRequired,

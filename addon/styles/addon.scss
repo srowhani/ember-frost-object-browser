@@ -23,12 +23,9 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
     flex-direction: column;
     height: 100%;
   }
-
-  .frost-list-item-container {
-    &.last {
-      &.is-selected {
-        margin-bottom: $frost-action-bar-height;
-      }
+  &.actions-visible {
+    .frost-list-content-container {
+      margin-bottom: $frost-action-bar-height;
     }
   }
 
@@ -40,12 +37,6 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
       }
     }
   }
-
-
-
-
-
-
 
   display: flex;
   flex-direction: row;
