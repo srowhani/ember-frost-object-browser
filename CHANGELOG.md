@@ -1,3 +1,6 @@
+# 17.0.5
+- actions-visible classNameBinding to fix action bar spacing
+
 # 17.0.4
 
 * **Fixed** `frost-object-browser` component to only show facets DOM when the `filters` property is present.
