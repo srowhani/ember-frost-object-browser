@@ -23,8 +23,8 @@ export default Controller.extend({
   filterModel: {
     type: 'object',
     properties: {
-      id: { type: 'string' },
-      label: { type: 'string' }
+      id: {type: 'string'},
+      label: {type: 'string'}
     }
   },
   filterView: generateFacetView([
@@ -34,8 +34,8 @@ export default Controller.extend({
   selectedItems: [],
   sortOrder: ['id'],
   sortingProperties: [
-    { label: 'Id', value: 'id' },
-    { label: 'Label', value: 'label' }
+    {label: 'Id', value: 'id'},
+    {label: 'Label', value: 'label'}
   ],
 
   // == Computed Properties ===================================================

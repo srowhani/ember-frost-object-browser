@@ -1,9 +1,10 @@
 import Ember from 'ember'
-const {isArray} = Ember
+const {Helper, isArray} = Ember
+const {helper} = Helper
 
 // TODO Better repo location?
 export function multiSelect ([selectedItems]) {
   return isArray(selectedItems) && selectedItems === 0
 }
 
-export default Ember.Helper.helper(multiSelect)
+export default helper(multiSelect)

@@ -1,5 +1,6 @@
 import Ember from 'ember'
 const {Helper, isNone, isPresent} = Ember
+const {helper} = Helper
 
 /* eslint-disable complexity */
 export function stringPluralize (params, hash) {
@@ -15,4 +16,4 @@ export function stringPluralize (params, hash) {
 }
 /* eslint-enable complexity */
 
-export default Helper.helper(stringPluralize)
+export default helper(stringPluralize)
