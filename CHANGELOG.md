@@ -99,7 +99,10 @@ Modified the interface of the object browser to minimize coupling between the pr
 
 See https://github.com/ciena-frost/ember-frost-object-browser#api for the new interface specification.
 
-A new `frost-object-browser-inline` component has also been introduced that implements the `frost-object-browser` component according to the previously stable 5.x interface and marked the usage of this component as deprecated for removal in the next major release (15.x).  This allows users of the legacy format a smoother transition path to the new slots based implementation.
+A new `frost-object-browser-inline` component has also been introduced that implements the `
+frost-object-browser` component according to the previously stable 5.x interface and marked the usage
+of this component as deprecated for removal in the next major release (15.x).  This allows users of
+the legacy format a smoother transition path to the new slots based implementation.
 
 See https://github.com/ciena-frost/ember-frost-object-browser#inline-api for the legacy inline specification.
 
@@ -167,7 +170,8 @@ Use a `# CHANGELOG` section in your Pull Request description to auto-populate th
 
 ## Breaking
 
-* **Removed** support for the frost-list being built into the object-browser (what is showing the object data in list view)
+* **Removed** support for the frost-list being built into the object-browser (what is showing the
+object data in list view)
 
 * **Added** support for the object data as a named block slot
   This was done to increase the flexibilty of what can be set to handle the object data.
