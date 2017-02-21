@@ -1,7 +1,6 @@
 import {expect} from 'chai'
-
-import {describe, it} from 'mocha'
 import {singleSelect} from 'ember-frost-object-browser/helpers/single-select'
+import {describe, it} from 'mocha'
 
 describe.skip('Unit | Helper | single select', function () {
   // Replace this with your real tests.
