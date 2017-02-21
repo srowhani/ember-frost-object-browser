@@ -1,3 +1,12 @@
+# 17.0.6
+* **Fixed** build by disable dependency snapshot which is causing build to fail and not publish.
+
+<!-- Reviewable:start -->
+---
+This change is [<img src="https://reviewable.io/review_button.svg" height="34" align="absmiddle" alt="Reviewable"/>](https://reviewable.io/reviews/ciena-frost/ember-frost-object-browser/104)
+<!-- Reviewable:end -->
+
+
 # 17.0.5
 - actions-visible classNameBinding to fix action bar spacing
 
