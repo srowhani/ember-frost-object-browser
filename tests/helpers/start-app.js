@@ -1,3 +1,5 @@
+/* eslint-disable ember-standard/destructure */
+
 import Application from '../../app'
 import config from '../../config/environment'
 import Ember from 'ember'
