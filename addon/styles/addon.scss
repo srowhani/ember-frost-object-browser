@@ -116,9 +116,9 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
 
   &-content {
     display: flex;
-    flex-direction: column;
     position: relative;
     flex: 1;
+    flex-direction: column;
     min-width: 0;
     height: 100%;
   }

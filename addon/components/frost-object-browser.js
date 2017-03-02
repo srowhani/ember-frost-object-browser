@@ -1,10 +1,3 @@
-/**
- * TODO
- */
-
-import Ember from 'ember'
-const {isEmpty} = Ember
-import computed, {readOnly} from 'ember-computed-decorators'
 import {Component} from 'ember-frost-core'
 import {PropTypes} from 'ember-prop-types'
 
@@ -12,7 +5,7 @@ import layout from '../templates/components/frost-object-browser'
 
 export default Component.extend({
   // == Dependencies ==========================================================
-
+  layout,
   // == Properties ============================================================
   propTypes: {
     // Options
@@ -24,13 +17,8 @@ export default Component.extend({
   },
 
   getDefaultProps () {
-    return {
-      // Keywords
-      layout
-
-      // Options
-    }
-  },
+    return {}
+  }
 
   // == Computed Properties ===================================================
 
