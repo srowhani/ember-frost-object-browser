@@ -24,12 +24,6 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
     height: 100%;
   }
 
-  &.actions-visible {
-    .frost-list-content-container {
-      margin-bottom: $frost-action-bar-height;
-    }
-  }
-
   .frost-list-content-container {
     &.paged {
       &:before {
@@ -121,6 +115,8 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
   }
 
   &-content {
+    display: flex;
+    flex-direction: column;
     position: relative;
     flex: 1;
     min-width: 0;
