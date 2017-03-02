@@ -14,15 +14,12 @@ export default Component.extend({
   // == Dependencies ==========================================================
 
   // == Properties ============================================================
-  classNameBindings: ['_isActionsVisible:actions-visible'],
   propTypes: {
     // Options
     content: PropTypes.EmberObject.isRequired,
     controls: PropTypes.EmberObject.isRequired,
     hook: PropTypes.string.isRequired,
-    filters: PropTypes.EmberObject.isRequired,
-    selectedItems: PropTypes.EmberObject.isRequired
-
+    filters: PropTypes.EmberObject.isRequired
     // State
   },
 
@@ -36,12 +33,6 @@ export default Component.extend({
   },
 
   // == Computed Properties ===================================================
-
-  @readOnly
-  @computed('controls.[]', 'items.@each.isSelected')
-  _isActionsVisible (controls, items) {
-    return !isEmpty(controls) && !isEmpty(items) && items.isAny('isSelected', true)
-  }
 
   // == Functions =============================================================
 
